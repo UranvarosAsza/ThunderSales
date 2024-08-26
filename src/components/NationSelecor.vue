@@ -19,7 +19,7 @@
       <option value="heli">Heli</option>
       <option value="ground">Ground</option>
       <option value="boat">Boat</option>
-      <option value="Ship">Ship</option>
+      <option value="ship">Ship</option>
     </select>
   </nav>
 
@@ -42,6 +42,7 @@
 
 <script lang="ts">
 import VehicleRanks from '../components/VehicleRanks.vue'
+import apiParams from '@/assets/apiParams.json'
 
 export default {
   components: {
@@ -62,106 +63,82 @@ export default {
       //TODO amint változik a keresési paraméter (nation, branch) akkor ki kell üríteni a vehicleEras tömböt
       switch (this.branch) {
         case 'air':
-          // console.log('fighter, assault, bomber')
-
           fetch(
             'https://www.wtvehiclesapi.sgambe.serv00.net/api/vehicles?' +
               'country=' +
               this.nation +
-              '&type=fighter' +
-              '&type=assault' +
-              '&type=bomber'
+              apiParams.air
           )
             .then((res) => res.json())
             .then((data) => {
               this.vehicleEras = Array.from(new Set(data.map((item) => item.era)))
               this.vehicleEras.sort()
-              // console.log(this.vehicleEras)
             })
             .catch((err) => console.log(err.message))
 
           break
         case 'heli':
-          //console.log('attack_helicopter, utility_helicopter')
           fetch(
             'https://www.wtvehiclesapi.sgambe.serv00.net/api/vehicles?' +
               'country=' +
               this.nation +
-              '&type=attack_helicopter' +
-              '&type=utility_helicopter'
+              apiParams.heli
           )
             .then((res) => res.json())
             .then((data) => {
               this.vehicleEras = Array.from(new Set(data.map((item) => item.era)))
               this.vehicleEras.sort()
-              //console.log(this.vehicleEras)
             })
             .catch((err) => console.log(err.message))
 
           break
         case 'ground':
-          // console.log('light_tank, medium_tank, heavy_tank, tank_destroyer, spaa')
           fetch(
             'https://www.wtvehiclesapi.sgambe.serv00.net/api/vehicles?' +
               'country=' +
               this.nation +
-              '&type=light_tank' +
-              '&type=medium_tank' +
-              '&type=heavy_tank' +
-              '&type=tank_destroyer' +
-              '&type=spaa'
+              apiParams.ground
           )
             .then((res) => res.json())
             .then((data) => {
               this.vehicleEras = Array.from(new Set(data.map((item) => item.era)))
               this.vehicleEras.sort()
-              //console.log(this.vehicleEras)
             })
             .catch((err) => console.log(err.message))
 
           break
         case 'boat':
-          //console.log('ship, light_cruiser, boat, heavy_boat, barge')
           fetch(
             'https://www.wtvehiclesapi.sgambe.serv00.net/api/vehicles?' +
               'country=' +
               this.nation +
-              '&type=ship' +
-              '&type=light_cruiser' +
-              '&type=heavy_boat' +
-              '&type=barge'
+              apiParams.boat
           )
             .then((res) => res.json())
             .then((data) => {
               this.vehicleEras = Array.from(new Set(data.map((item) => item.era)))
               this.vehicleEras.sort()
-              //console.log(this.vehicleEras)
             })
             .catch((err) => console.log(err.message))
 
           break
         case 'ship':
-          //console.log('destroyer, frigate, heavy_cruiser, battlecruiser, battleship')
           fetch(
             'https://www.wtvehiclesapi.sgambe.serv00.net/api/vehicles?' +
               'country=' +
               this.nation +
-              '&type=destroyer' +
-              '&type=frigate' +
-              '&type=heavy_cruiser' +
-              '&type=battlecruiser' +
-              '&type=battleship'
+              apiParams.ship
           )
             .then((res) => res.json())
             .then((data) => {
               this.vehicleEras = Array.from(new Set(data.map((item) => item.era)))
               this.vehicleEras.sort()
-              // console.log(this.vehicleEras)
             })
             .catch((err) => console.log(err.message))
 
           break
         default:
+          console.log(this.branch)
           console.log('default')
       }
       //Filter by vehicle type|| tank, lbv, mbv, hbv, exoskeleton,submarine ????

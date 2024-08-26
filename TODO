@@ -1,8 +1,10 @@
-Komponensek:
-Vehicle - meg kell adni a kivétel listát amiket a prém tt-be helyet át
- code cleanup, ki kell szervezni az api hívást egy külön fv-be és paramétert adni neki csak
- kivenni a mount-ból és valahogy a computed-be tenni a jármű lekéréseket
-Kell a lang mappából lopni map-ot a fordításokhoz
-List, listitem
-
-export ?
+//Komponensek:
+//Vehicle
+//TODO meg kell adni a kivétel listát amiket a prém tt-be helyet át
+//TODO code cleanup, ki kell szervezni az api hívást egy külön fv-be és paramétert adni neki csak
+//TODO kivenni a mount-ból és valahogy a computed-be tenni a jármű lekéréseket
+//Fordítás
+//FIXME   - cvs feldolgozás kell hozzá, csv már megvan de 12K sor hosszú és A-Y oszlop
+//Listaolal
+//TODO List, listitem
+//TODO export ?

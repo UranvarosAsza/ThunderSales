@@ -39,6 +39,9 @@ export default {
     rank: String,
     nation: String,
     branch: Number
+  },
+  mounted() {
+    //amikor a teier-ek mountolódnak  akkor kéne járműlistát lekérni
   }
 }
 </script>

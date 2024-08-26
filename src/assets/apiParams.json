@@ -1,0 +1,11 @@
+{
+  "air": "&type=fighter&type=assault&type=bomber&era=",
+  "ground": "&type=light_tank&type=medium_tank&type=heavy_tank&type=tank_destroyer&type=spaa&era=",
+  "heli": "&type=attack_helicopter&type=utility_helicopter&era=",
+  "boat": "&type=ship&type=heavy_boat&type=barge&type=boat&era=",
+  "ship": "&type=destroyer&type=frigate&type=light_cruiser&type=heavy_cruiser&type=battlecruiser&type=battleship&era=",
+  "techtree": "&isPremium=false&isSquadronVehicle=false&excludeEventVehicles=true&excludeKillstreak=true",
+  "event": "nop",
+  "premium": "&isPremium=true",
+  "squadron": "&isSquadronVehicle=true"
+}
