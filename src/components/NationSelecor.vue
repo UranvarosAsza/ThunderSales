@@ -26,13 +26,9 @@
   <p>Search params: {{ nation }}; {{ branch }}</p>
   <button @click="getVehicles">Get vehicles</button>
   <p v-if="vehicleEras.length">The number of ranks in this search: {{ vehicleEras.length }}</p>
-  <!-- <div v-if="vehicles.length">
-    <div v-for="vehicle in vehicles" :key="vehicle.identifier" class="vehicle">
-      <div>Name: {{ vehicle.identifier }}</div>
-      <div>Rank: {{ vehicle.era }}</div>
-    </div>
-  </div> -->
+
   <div>Ranks</div>
+  <!-- eslint-disable-next-line vue/require-v-for-key-->
   <div v-for="vehicleEra in vehicleEras">
     <div>
       <VehicleRanks :nation="nation" :rank="vehicleEra" :branch="branch" />
@@ -41,7 +37,7 @@
 </template>
 
 <script lang="ts">
-import VehicleRanks from '../components/VehicleRanks.vue'
+import VehicleRanks from '@/components/VehicleRanks.vue'
 import apiParams from '@/assets/apiParams.json'
 
 export default {

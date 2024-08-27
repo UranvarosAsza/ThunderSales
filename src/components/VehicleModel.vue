@@ -1,169 +1,58 @@
 <template>
-  <div v-if="vehicles.length" class="vehiclesInARank">
-    <div
-      v-for="vehicle in vehicles"
-      :key="vehicle.identifier"
-      :class="{
-        premium: vehicle.is_premium,
-        squadronVehicle: vehicle.squadron_vehicle,
-        vehicle: !vehicle.is_premium && !vehicle.squadron_vehicle
-      }"
-    >
-      <!--https://' + -->
-      <img :src="vehicle.images.techtree" />
+  <!--egy darab jármű kártya -->
 
-      <div v-if="vehicle.event">Event vehicle</div>
-      <div v-if="vehicle.squadron_vehicle">Squadron vehicle</div>
-      <div class="name">{{ translateVehicleNames(vehicle.identifier) }}</div>
-      <div class="country">{{ vehicle.country }}</div>
-      <div>Rank: {{ vehicle.era }}</div>
-      <div
-        :class="this.showPopupListComputed ? showPopup : hidePopup"
-        @click="openCloseListOptions"
-      >
-        Add to list as:
-        <div>Price: {{ vehicle.value }} Sl</div>
-        <div>Expert crew price: {{ vehicle.value }} Sl</div>
-        <div>{{ this.showPopupListComputed }}</div>
-      </div>
-      <!--<div>{{ translateAllVehicleNames(vehicle.identifier) }}</div>
-      <div>{{ translateVehicleNames(this.vehicle.identifier) }}</div>
+  <div v-if="vehicles.length">
+    <img :src="vehicles[0].images.techtree" />
+    <p class="name">{{ identifier }}</p>
+    <p>Rank {{ rank }}</p>
+    <p>{{ nation }}</p>
 
-      <div>Computed prop: {{ vehicleColorType }}</div>
-      <div>Vehicle type: {{ vehicle.vehicle_type }}</div>
-        <div>isPremium: {{ vehicle.is_premium }}</div>
-        <div>isPack: {{ vehicle.is_pack }}</div>
-        <div>isSquadronvehicle: {{ vehicle.squadron_vehicle }}</div>
-        <div>Price: {{ vehicle.value }} Sl</div>
-        <div>Basic crew price: {{ vehicle.value }} Sl</div>
-        <div>Research cost: {{ vehicle.req_exp }} Rp</div> 
-      <a :href="'https://' + vehicle.images.techtree">link to the picture</a>-->
-    </div>
-  </div>
-  <div v-else>
-    <p>Loading vehicles list</p>
+    <div v-if="vehicles[0].ge_cost">Price: {{ vehicles[0].ge_cost }} GE</div>
+    <div v-else>Price: {{ vehicles[0].value }} Sl</div>
+    <!--
+    <div>Expert crew price: {{ vehicles[0].value }} Sl</div>
+   
+    <button @click="openCloseListOptions">Add to list as:</button>
+    <div>{{ this.showPopupListComputed }}</div>
+    <div :class="this.showPopupListComputed ? showPopup : hidePopup" @click="openCloseListOptions">
+      ASD
+    </div> -->
   </div>
 </template>
 
 <script>
 import vehicleTranslationsEN from '@/assets/vehicleTranslationsEN.json'
-import apiParameters from '@/assets/apiParams.json'
 
 export default {
   props: {
+    identifier: String,
     rank: Number,
     nation: String,
-    branch: String,
-    isPlacedInTechTree: Boolean
+    branch: String
   },
   data() {
     return {
-      showPopupList: false,
       vehicles: [],
-      translatedName: String
+      showPopupListComputed: false,
+      translatedName: ''
     }
   },
   mounted() {
-    //ezt a computedbe kéne
-    switch (this.branch) {
-      case 'air':
-        //ezen belül kéne még két elágazás egy a tt-nek, egy pedig a prém treenek
-        if (this.isPlacedInTechTree == true) {
-          this.getTechtreeVehicles(apiParameters.air)
-        } else {
-          this.getPremiumTreeVehicles(apiParameters.air)
-        }
-        break
-      case 'heli':
-        if (this.isPlacedInTechTree == true) {
-          this.getTechtreeVehicles(apiParameters.heli)
-        } else {
-          this.getPremiumTreeVehicles(apiParameters.heli)
-        }
-        break
-      case 'ground':
-        if (this.isPlacedInTechTree == true) {
-          this.getTechtreeVehicles(apiParameters.ground)
-        } else {
-          this.getPremiumTreeVehicles(apiParameters.ground)
-        }
-        break
-      case 'boat':
-        if (this.isPlacedInTechTree == true) {
-          this.getTechtreeVehicles(apiParameters.boat)
-        } else {
-          this.getPremiumTreeVehicles(apiParameters.boat)
-        }
-        break
-      case 'ship':
-        if (this.isPlacedInTechTree == true) {
-          this.getTechtreeVehicles(apiParameters.ship)
-        } else {
-          this.getPremiumTreeVehicles(apiParameters.ship)
-        }
-        break
-      default:
-        console.log(this.branch)
-        console.log('default')
-    }
+    this.getVehicleData()
   },
   methods: {
-    getTechtreeVehicles(apiParamBranch) {
-      fetch(
-        'https://www.wtvehiclesapi.sgambe.serv00.net/api/vehicles?' +
-          'country=' +
-          this.nation +
-          apiParamBranch +
-          this.rank +
-          apiParameters.techtree
-      )
+    getVehicleData() {
+      fetch('https://www.wtvehiclesapi.sgambe.serv00.net/api/vehicles/' + this.identifier)
         .then((res) => res.json())
-        .then((data) => (this.vehicles = data.filter((vehicle) => vehicle.event === null)))
+        .then((data) => {
+          this.vehicles = [data] // Az egyetlen objektumot egy tömbbe tesszük
+        })
         .catch((err) => console.log(err.message))
     },
 
-    getPremiumTreeVehicles(apiParam) {
-      // 3 api call same params
-      const premiumVehicles = fetch(
-        'https://www.wtvehiclesapi.sgambe.serv00.net/api/vehicles?' +
-          'country=' +
-          this.nation +
-          apiParam +
-          this.rank +
-          apiParameters.premium
-      ).then((res) => res.json())
-      //squadron
-      const squadronVehicles = fetch(
-        'https://www.wtvehiclesapi.sgambe.serv00.net/api/vehicles?' +
-          'country=' +
-          this.nation +
-          apiParam +
-          this.rank +
-          apiParameters.squadron
-      ).then((res) => res.json())
-      //nincs event jármű csak tt járművek filterezve
-      const eventVehicles = fetch(
-        'https://www.wtvehiclesapi.sgambe.serv00.net/api/vehicles?' +
-          'country=' +
-          this.nation +
-          apiParam +
-          this.rank +
-          apiParameters.techtree
-      )
-        .then((res) => res.json())
-        .then((data) => {
-          // Szűrés azokra a járművekre, ahol az "event" paraméter null
-          return data.filter((vehicle) => vehicle.event !== null)
-        })
-      Promise.all([premiumVehicles, squadronVehicles, eventVehicles])
-        .then(([premiumData, squadronData, regularData]) => {
-          // Az adatokat egyesítjük egyetlen tömbbe
-          this.vehicles = [...premiumData, ...squadronData, ...regularData]
-        })
-        .catch((err) => console.log(err.message))
-    },
     openCloseListOptions() {
       this.showPopupListComputed = !this.showPopupListComputed
+      console.log('popupcomputed: ' + showPopupListComputed)
     },
 
     translateVehicleNames(vehicleName) {
@@ -171,9 +60,6 @@ export default {
       const translatedName = vehicleTranslationsEN[vehicleName]
       return translatedName || vehicleName
     }
-  },
-  computed: {
-    showPopupListComputed: false
   }
 }
 </script>
@@ -207,32 +93,7 @@ export default {
   gap: 10px;
   flex-direction: row;
 }
-.premium {
-  min-width: 120px;
-  min-height: 180px;
-  padding: 10px;
-  margin: 20px auto;
-  color: white;
-  font-size: 20;
-  border-radius: 10px;
-  border: 5px, lightgray;
-  padding: 20px;
-  text-align: center;
-  background-color: #524624;
-}
-.squadronVehicle {
-  min-width: 120px;
-  min-height: 180px;
-  padding: 10px;
-  margin: 20px auto;
-  color: white;
-  font-size: 20;
-  border-radius: 10px;
-  border: 5px, lightgray;
-  padding: 20px;
-  text-align: center;
-  background-color: #344c30;
-}
+
 .showPopup {
   color: white;
   font-size: 20;
