@@ -1,22 +1,20 @@
 <template>
   <!--egy darab jármű kártya -->
-
-  <div v-if="vehicles.length">
-    <img :src="vehicles[0].images.techtree" />
-    <p class="name">{{ identifier }}</p>
-    <p>Rank {{ rank }}</p>
-    <p>{{ nation }}</p>
-
-    <div v-if="vehicles[0].ge_cost">Price: {{ vehicles[0].ge_cost }} GE</div>
-    <div v-else>Price: {{ vehicles[0].value }} Sl</div>
-    <!--
-    <div>Expert crew price: {{ vehicles[0].value }} Sl</div>
-   
-    <button @click="openCloseListOptions">Add to list as:</button>
-    <div>{{ this.showPopupListComputed }}</div>
-    <div :class="this.showPopupListComputed ? showPopup : hidePopup" @click="openCloseListOptions">
-      ASD
-    </div> -->
+  <div>
+    <img :src="data.images.techtree" />
+    <div class="name">{{ data.identifier }}</div>
+    <div>Rank {{ data.era }}</div>
+    <div v-if="data.ge_cost && !data.is_pack && !on_marketplace">{{ data.ge_cost }} GE</div>
+    <!-- <div v-else>Price: {{ data.value }} Sl</div> -->
+    <list class="list">
+      <button class="list" @click="addToListAs(data.identifier, picked)">Add</button>
+      <br />
+      <select v-model="picked">
+        <option class="list" value="basicCrew">Basic crew</option>
+        <option class="list" value="expertCrew">Expert crew</option>
+        <option class="list" value="vehicleCost">Just the vehicle</option>
+      </select>
+    </list>
   </div>
 </template>
 
@@ -26,37 +24,60 @@ import vehicleTranslationsEN from '@/assets/vehicleTranslationsEN.json'
 export default {
   props: {
     identifier: String,
-    rank: Number,
-    nation: String,
-    branch: String
+    data: Array
   },
   data() {
     return {
-      vehicles: [],
-      showPopupListComputed: false,
-      translatedName: ''
+      vehiclesData: [],
+      showPopupList: false,
+      translatedName: '',
+      basicCrewTrainingCost: 10000,
+      exptertCrewTrtainigCost: 200000,
+      vehiclePrice: 300000,
+      basicCrew: 'basic',
+      expertCrew: 'expert',
+      vehicleCost: 'vehicle itself',
+      picked: ''
     }
   },
-  mounted() {
-    this.getVehicleData()
+  computed: {
+    //showPopupListComputed
   },
+  mounted() {},
   methods: {
+    /**
+     * lekéri az adott jármű részletes adatait egy tömbbe
+     *
+     */
+    //TODO ezt majd a külön oldalas megjelenítésbe átpakolni
     getVehicleData() {
       fetch('https://www.wtvehiclesapi.sgambe.serv00.net/api/vehicles/' + this.identifier)
         .then((res) => res.json())
         .then((data) => {
-          this.vehicles = [data] // Az egyetlen objektumot egy tömbbe tesszük
+          this.vehiclesData = [data] // Az egyetlen objektumot egy tömbbe tesszük
         })
         .catch((err) => console.log(err.message))
     },
-
+    addToListAs(identifier, listOption) {
+      //hozzáadja a listához csak a járműként, basic, expert crew-val
+      const vehicle = {
+        vehicle_id: this.data.identifier,
+        vehicleCostGe: this.data.ge_cost, //lehet nem is kell mivel a részletes lekérésben van benne a crew sl adat
+        vehicleCostSL: this.data.value, // same
+        listOption: listOption
+      }
+      let vehicles = JSON.parse(sessionStorage.getItem('vehicleData') || '[]')
+      vehicles.push(vehicle)
+      sessionStorage.setItem('vehicleData', JSON.stringify(vehicles))
+      console.log(vehicles)
+    },
     openCloseListOptions() {
-      this.showPopupListComputed = !this.showPopupListComputed
-      console.log('popupcomputed: ' + showPopupListComputed)
+      this.showPopupList = !this.showPopupList
+      //console.log('popupcomputed: ' )
     },
 
     translateVehicleNames(vehicleName) {
-      // kell remaster hogy a csv-t dolgozza fel ( units.csv)
+      //TODO kell remaster hogy a csv-t dolgozza fel ( units.csv)
       const translatedName = vehicleTranslationsEN[vehicleName]
       return translatedName || vehicleName
     }
@@ -64,42 +85,12 @@ export default {
 }
 </script>
 
-<style>
+<style scoped>
 .name {
   font-size: larger;
   font-weight: bold;
 }
-.vehicle {
-  min-width: 120px;
-  min-height: 180px;
-  padding: 10px;
-  margin: 20px auto;
-  color: white;
-  font-size: 20;
-  border-radius: 10px;
-  border: 5px, lightgray;
-  background-color: #2e4451;
-  padding: 20px;
-  text-align: center;
-}
-.vehicle :hover {
-  background-color: #48687a;
-}
-.vehiclesInARank {
-  display: flex;
-  align-items: flex-start;
-  align-content: flex-start;
-  flex-wrap: wrap; /* Tördelés több sorba */
-  gap: 10px;
-  flex-direction: row;
-}
-
-.showPopup {
-  color: white;
-  font-size: 20;
-  text-align: left;
-}
-.hidePopup {
-  display: none;
+.list {
+  background-color: aliceblue;
 }
 </style>

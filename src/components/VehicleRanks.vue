@@ -1,6 +1,6 @@
 <template>
   <!--TODORank header-t kéne készíteni -->
-  <p class="rank">this is a rank {{ rank }}, for {{ nation }} {{ branch }}</p>
+  <p class="rankHeader">Rank {{ rank }} {{ nation }}, {{ branch }}</p>
   <!--<p>Vehcicles of the techtree are going here</p>-->
   <div class="rank">
     <div class="techtree">
@@ -14,12 +14,7 @@
           vehicle: !vehicle.is_premium && !vehicle.squadron_vehicle
         }"
       >
-        <VehicleModel
-          :rank="rank"
-          :nation="nation"
-          :branch="branch"
-          :identifier="vehicle.identifier"
-        />
+        <VehicleModel :identifier="vehicle.identifier" :data="vehicle" />
       </div>
     </div>
     <!--<p>Premium / event vehicles are going here</p>-->
@@ -34,12 +29,7 @@
         }"
       >
         <!-- itt kéne egy v-for végigmenni a premvehicles-en majd minden elemének adni paramétereket-->
-        <VehicleModel
-          :rank="rank"
-          :nation="nation"
-          :branch="branch"
-          :identifier="vehicle.identifier"
-        />
+        <VehicleModel :identifier="vehicle.identifier" :data="vehicle" />
       </div>
     </div>
   </div>
@@ -60,10 +50,8 @@ export default {
   },
   data() {
     return {
-      vehicles: [],
       PremVehicles: [],
       TechTreeVehicles: [],
-      //lehet hogy két tömb kéne egy TT és egy PremTree
       translatedName: ''
     }
   },
@@ -171,6 +159,15 @@ export default {
 </script>
 
 <style scoped>
+.rankHeader {
+  background-color: #2e4451;
+  color: white;
+  border: 5px solid rgb(255, 255, 255);
+  font-size: 30pt;
+  font-weight: 600;
+  margin: auto;
+  text-align: center;
+}
 .rank {
   display: flex;
   gap: 20px;
@@ -218,6 +215,7 @@ export default {
 .vehicle {
   min-width: 120px;
   min-height: 180px;
+  max-height: 400px;
   padding: 10px;
   margin: 20px auto;
   color: white;

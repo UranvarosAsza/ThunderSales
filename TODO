@@ -7,6 +7,7 @@
 //Fordítás
 //FIXME   - cvs feldolgozás kell hozzá, csv már megvan de 12K sor hosszú és A-Y oszlop
 
-//TODO List, listitem
+//TODO List, listitem ezek lehet hogy külön komponensek lesznek
 //TODO export ?
 //TODO nation alapján is kapjon pici zászlót (legalább a saját oldalára a jármű)
+//TODO Css overhaul
