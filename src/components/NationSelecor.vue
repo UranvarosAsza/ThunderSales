@@ -22,11 +22,9 @@
         <option value="boat">Boat</option>
         <option value="ship">Ship</option>
       </select>
+      <button @click="getVehicles">Get vehicles</button>
     </nav>
 
-    <button @click="getVehicles">Get vehicles</button>
-
-    <div>Ranks</div>
     <!-- eslint-disable-next-line vue/require-v-for-key-->
     <div v-for="vehicleEra in vehicleEras">
       <div>
@@ -151,6 +149,9 @@ export default {
 
 <style>
 .nationSelector {
+  max-width: 95%;
+  margin: 0 auto;
+  padding: 20px;
   color: white;
   font-size: 25px;
   background-color: #2e4451;

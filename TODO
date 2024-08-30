@@ -7,8 +7,12 @@
 //Fordítás
 //FIXME   - cvs feldolgozás kell hozzá, csv már megvan de 12K sor hosszú és A-Y oszlop
 
-//TODO List, listitem ezek lehet hogy külön komponensek lesznek
-    toast-ot adni amikor felvisz valamit a listára
+//TODO  toast-ot adni amikor felvisz valamit a listára
+//TODO  táblázatba, subtotalok nemzetenként
+//      minden páros és minden páratlan legyen más színű
+//      gombokat kapjon egy edit egy törlés, edit: más option, törlés: del
+//      alatta pedig a 30-50% számoló, csak a járművek vagy jelenlegi konfig számolása rádiógomb-párok
+
 //TODO export ?
-//TODO nation alapján is kapjon pici zászlót (legalább a saját oldalára a jármű)
+//TODO nation alapján is kapjon pici zászlót (legalább a saját oldalára a jármű) + a táblázatba a sub-totalba
 //TODO Css overhaul
