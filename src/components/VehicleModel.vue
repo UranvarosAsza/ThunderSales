@@ -4,17 +4,17 @@
     <img :src="data.images.techtree" />
     <div class="name">{{ data.identifier }}</div>
     <div>Rank {{ data.era }}</div>
-    <div v-if="data.ge_cost && !data.is_pack && !on_marketplace">{{ data.ge_cost }} GE</div>
+    <div v-if="data.ge_cost && !data.is_pack && !data.on_marketplace">{{ data.ge_cost }} GE</div>
     <!-- <div v-else>Price: {{ data.value }} Sl</div> -->
-    <list class="list">
+    <div class="list">
       <button class="list" @click="addToListAs(data.identifier, picked)">Add</button>
       <br />
       <select v-model="picked">
-        <option class="list" value="basicCrew">Basic crew</option>
-        <option class="list" value="expertCrew">Expert crew</option>
-        <option class="list" value="vehicleCost">Just the vehicle</option>
+        <option value="basicCrew">Basic crew</option>
+        <option value="expertCrew">Expert crew</option>
+        <option value="vehicleCost">Just the vehicle</option>
       </select>
-    </list>
+    </div>
   </div>
 </template>
 
@@ -24,7 +24,7 @@ import vehicleTranslationsEN from '@/assets/vehicleTranslationsEN.json'
 export default {
   props: {
     identifier: String,
-    data: Array
+    data: Object
   },
   data() {
     return {
@@ -87,7 +87,6 @@ export default {
 
 <style scoped>
 .name {
-  font-size: larger;
   font-weight: bold;
 }
 .list {

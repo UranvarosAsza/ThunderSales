@@ -1,42 +1,43 @@
-<template class="background">
-  <nav>
-    <label>Select nation: </label>
-    <select v-model="nation">
-      <option value="usa">USA</option>
-      <option value="germany">GER</option>
-      <option value="ussr">USSR</option>
-      <option value="britain">GBR</option>
-      <option value="china">CHN</option>
-      <option value="italy">ITA</option>
-      <option value="japan">JPN</option>
-      <option value="france">FRA</option>
-      <option value="israel">ISR</option>
-      <option value="sweden">SWE</option>
-    </select>
-    <label>Select branch: </label>
-    <select v-model="branch">
-      <option value="air">Air</option>
-      <option value="heli">Heli</option>
-      <option value="ground">Ground</option>
-      <option value="boat">Boat</option>
-      <option value="ship">Ship</option>
-    </select>
-  </nav>
+<template>
+  <div class="nationSelector">
+    <nav>
+      <label>Select nation: </label>
+      <select v-model="nation">
+        <option value="usa">USA</option>
+        <option value="germany">GER</option>
+        <option value="ussr">USSR</option>
+        <option value="britain">GBR</option>
+        <option value="china">CHN</option>
+        <option value="italy">ITA</option>
+        <option value="japan">JPN</option>
+        <option value="france">FRA</option>
+        <option value="israel">ISR</option>
+        <option value="sweden">SWE</option>
+      </select>
+      <label>Select branch: </label>
+      <select v-model="branch">
+        <option value="air">Air</option>
+        <option value="heli">Heli</option>
+        <option value="ground">Ground</option>
+        <option value="boat">Boat</option>
+        <option value="ship">Ship</option>
+      </select>
+    </nav>
 
-  <p>Search params: {{ nation }}; {{ branch }}</p>
-  <button @click="getVehicles">Get vehicles</button>
-  <p v-if="vehicleEras.length">The number of ranks in this search: {{ vehicleEras.length }}</p>
+    <button @click="getVehicles">Get vehicles</button>
 
-  <div>Ranks</div>
-  <!-- eslint-disable-next-line vue/require-v-for-key-->
-  <div v-for="vehicleEra in vehicleEras">
-    <div>
-      <VehicleRanks :nation="nation" :rank="vehicleEra" :branch="branch" />
+    <div>Ranks</div>
+    <!-- eslint-disable-next-line vue/require-v-for-key-->
+    <div v-for="vehicleEra in vehicleEras">
+      <div>
+        <VehicleRanks :nation="nation" :rank="vehicleEra" :branch="branch" />
+      </div>
     </div>
   </div>
 </template>
 
 <script lang="ts">
+// @ts-ignore
 import VehicleRanks from '@/components/VehicleRanks.vue'
 import apiParams from '@/assets/apiParams.json'
 
@@ -67,6 +68,7 @@ export default {
           )
             .then((res) => res.json())
             .then((data) => {
+              // @ts-ignore
               this.vehicleEras = Array.from(new Set(data.map((item) => item.era)))
               this.vehicleEras.sort()
             })
@@ -82,6 +84,7 @@ export default {
           )
             .then((res) => res.json())
             .then((data) => {
+              // @ts-ignore
               this.vehicleEras = Array.from(new Set(data.map((item) => item.era)))
               this.vehicleEras.sort()
             })
@@ -97,6 +100,7 @@ export default {
           )
             .then((res) => res.json())
             .then((data) => {
+              // @ts-ignore
               this.vehicleEras = Array.from(new Set(data.map((item) => item.era)))
               this.vehicleEras.sort()
             })
@@ -112,6 +116,7 @@ export default {
           )
             .then((res) => res.json())
             .then((data) => {
+              // @ts-ignore
               this.vehicleEras = Array.from(new Set(data.map((item) => item.era)))
               this.vehicleEras.sort()
             })
@@ -127,6 +132,7 @@ export default {
           )
             .then((res) => res.json())
             .then((data) => {
+              // @ts-ignore
               this.vehicleEras = Array.from(new Set(data.map((item) => item.era)))
               this.vehicleEras.sort()
             })
@@ -143,8 +149,29 @@ export default {
 }
 </script>
 
-<style scoped>
-.background {
-  background-color: rgb(116, 115, 115);
+<style>
+.nationSelector {
+  color: white;
+  font-size: 25px;
+  background-color: #2e4451;
+}
+#label {
+  font-size: 15;
+}
+#option {
+  padding: 10px 20px;
+  background-color: #2e4451;
+  color: #fff;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+#option:hover {
+  background-color: #22323b;
+}
+#select {
+  padding: 10px 20px;
+  border-radius: 5px;
 }
 </style>
