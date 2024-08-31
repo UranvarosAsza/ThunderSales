@@ -149,30 +149,39 @@ export default {
 
 <style>
 .nationSelector {
-  max-width: 95%;
   margin: 0 auto;
   padding: 20px;
   color: white;
   font-size: 25px;
   background-color: #2e4451;
 }
-#label {
-  font-size: 15;
-}
-#option {
-  padding: 10px 20px;
-  background-color: #2e4451;
-  color: #fff;
-  border: none;
-  border-radius: 5px;
-  cursor: pointer;
+
+select,
+button {
+  font-size: 16px;
+  padding: 8px 12px;
+  margin: 0 5px;
+  border-radius: 4px;
+  border: 1px solid #ccc;
+  background-color: #fff;
+  box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.1);
 }
 
-#option:hover {
-  background-color: #22323b;
-}
-#select {
+nav {
+  font-size: 18px;
+  font-weight: bold;
   padding: 10px 20px;
+  background-color: #242e33;
+  color: #fff;
   border-radius: 5px;
+  box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.3);
+}
+
+.header {
+  font-size: 24px;
+  font-weight: bold;
+  text-align: center;
+  padding: 20px;
+  color: #fff;
 }
 </style>

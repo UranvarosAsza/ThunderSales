@@ -162,7 +162,7 @@ export default {
 .rankHeader {
   background-color: #2e4451;
   color: white;
-  border: 5px solid rgb(255, 255, 255);
+
   font-size: 30pt;
   font-weight: 600;
   margin: auto;
@@ -226,6 +226,7 @@ export default {
   padding: 20px;
   text-align: center;
 }
+
 .vehicle :hover {
   background-color: #48687a;
 }

@@ -51,7 +51,7 @@ export default {
   color: black;
 }
 .list-container {
-  max-width: 80%;
+  max-width: 90%;
   margin: 0 auto;
   padding: 20px;
   background-color: #f5f5f5;

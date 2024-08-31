@@ -18,6 +18,7 @@ export default {
 
 <style scoped>
 .list {
+  margin: auto;
   background-color: #2e4451;
   height: 75em;
 }

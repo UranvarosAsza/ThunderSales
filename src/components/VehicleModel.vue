@@ -92,4 +92,14 @@ export default {
 .list {
   background-color: aliceblue;
 }
+select,
+button {
+  font-size: 14px;
+  padding: 8px 10px;
+  border-radius: 4px;
+  border: 1px solid #ccc;
+  margin-top: 5px;
+  background-color: #f9f9f9;
+  box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.1);
+}
 </style>

@@ -17,7 +17,10 @@ import { RouterLink, RouterView } from 'vue-router'
   margin: 0px !important;
 }
 .navbar {
-  max-width: 95%;
+  border-top-left-radius: 10px !important;
+  border-top-right-radius: 10px !important;
+  border-bottom-left-radius: 0px !important;
+  border-bottom-right-radius: 0px !important;
   margin: auto;
   background-color: #2e4451;
   padding: 20px;
