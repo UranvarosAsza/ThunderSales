@@ -6,8 +6,8 @@
     <div>Rank {{ data.era }}</div>
     <div v-if="data.ge_cost && !data.is_pack && !data.on_marketplace">{{ data.ge_cost }} GE</div>
     <!-- <div v-else>Price: {{ data.value }} Sl</div> -->
-    <div class="list">
-      <button class="list" @click="addToListAs(data.identifier, picked)">Add</button>
+    <div>
+      <button @click="addToListAs(data.identifier, picked)">Add</button>
       <br />
       <select v-model="picked">
         <option value="basicCrew">Basic crew</option>
@@ -20,6 +20,9 @@
 
 <script>
 import vehicleTranslationsEN from '@/assets/vehicleTranslationsEN.json'
+import { defineComponent } from 'vue'
+import { toast } from 'vue3-toastify'
+import 'vue3-toastify/dist/index.css'
 
 export default {
   props: {
@@ -59,6 +62,10 @@ export default {
         .catch((err) => console.log(err.message))
     },
     addToListAs(identifier, listOption) {
+      if (!listOption) {
+        toast.error('Please select an option before adding!') // Hibaüzenet toast
+        return
+      }
       //hozzáadja a listához csak a járműként, basic, expert crew-val
       const vehicle = {
         vehicle_id: this.data.identifier,
@@ -70,6 +77,8 @@ export default {
       vehicles.push(vehicle)
       sessionStorage.setItem('vehicleData', JSON.stringify(vehicles))
       console.log(vehicles)
+      //not sure if this is needed
+      toast.success('Vehicle added successfully!') // Sikeres értesítés toast
     },
     openCloseListOptions() {
       this.showPopupList = !this.showPopupList
@@ -92,6 +101,7 @@ export default {
 .list {
   background-color: aliceblue;
 }
+
 select,
 button {
   font-size: 14px;

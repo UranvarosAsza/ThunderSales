@@ -7,7 +7,11 @@
 //Fordítás
 //FIXME   - cvs feldolgozás kell hozzá, csv már megvan de 12K sor hosszú és A-Y oszlop
 
-//TODO  toast-ot adni amikor felvisz valamit a listára
+//      toast: https://vue3-toastify.js-bridge.com/
+//még kell annyi hogy amikor meglévő járművet visz fel akkor
+//                  a)vagy a legfrissebb opcióval vigye fel,
+//                  b)vagy adjon toastot hogy ezt a listánál tudja szerkeszteni ha szeretné
+//                  c) mindkettő
 //TODO  táblázatba, subtotalok nemzetenként
 //      minden páros és minden páratlan legyen más színű
 //      gombokat kapjon egy edit egy törlés, edit: más option, törlés: del

@@ -225,6 +225,7 @@ export default {
   background-color: #2e4451;
   padding: 20px;
   text-align: center;
+  box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.1);
 }
 
 .vehicle :hover {
