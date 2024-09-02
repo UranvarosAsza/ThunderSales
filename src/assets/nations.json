@@ -1,0 +1,12 @@
+[
+  { "label": "USA", "value": "usa" },
+  { "label": "Germany", "value": "germany" },
+  { "label": "USSR", "value": "ussr" },
+  { "label": "Britain", "value": "britain" },
+  { "label": "China", "value": "china" },
+  { "label": "Italy", "value": "italy" },
+  { "label": "Japan", "value": "japan" },
+  { "label": "France", "value": "france" },
+  { "label": "Israel", "value": "israel" },
+  { "label": "Sweden", "value": "sweden" }
+]

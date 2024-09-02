@@ -22,14 +22,19 @@
         <option value="boat">Boat</option>
         <option value="ship">Ship</option>
       </select>
-      <button @click="getVehicles">Get vehicles</button>
+      <!--<button @click="getVehicles">Get vehicles</button>-->
     </nav>
 
-    <!-- eslint-disable-next-line vue/require-v-for-key-->
-    <div v-for="vehicleEra in vehicleEras">
-      <div>
-        <VehicleRanks :nation="nation" :rank="vehicleEra" :branch="branch" />
+    <div v-if="vehicleEras.length">
+      <!-- eslint-disable-next-line vue/require-v-for-key-->
+      <div v-for="vehicleEra in vehicleEras">
+        <div>
+          <VehicleRanks :nation="nation" :rank="vehicleEra" :branch="branch" />
+        </div>
       </div>
+    </div>
+    <div v-else class="noVehicles">
+      <h2>Please select a nation and a branch to start</h2>
     </div>
   </div>
 </template>
@@ -46,16 +51,29 @@ export default {
 
   data() {
     return {
-      branch: '',
-      nation: '',
+      branch: sessionStorage.getItem('branch') || '',
+      nation: sessionStorage.getItem('nation') || '',
       vehicles: [],
       vehicleEras: [],
       uniqueVehicleEras: []
     }
   },
+  watch: {
+    branch(newBranch) {
+      sessionStorage.setItem('branch', newBranch)
+      this.getVehicles()
+    },
+    nation(newNation) {
+      sessionStorage.setItem('nation', newNation)
+      this.getVehicles()
+    },
+    vehicleEras: 'getVehicles'
+  },
+  mounted() {
+    this.getVehicles()
+  },
   methods: {
     getVehicles() {
-      //TODO amint változik a keresési paraméter (nation, branch) akkor ki kell üríteni a vehicleEras tömböt
       switch (this.branch) {
         case 'air':
           fetch(
@@ -154,13 +172,15 @@ export default {
   color: white;
   font-size: 25px;
   background-color: #2e4451;
+  border-bottom-left-radius: 10px !important;
+  border-bottom-right-radius: 10px !important;
 }
 
 select,
 button {
   font-size: 16px;
   padding: 8px 12px;
-  margin: 0 5px;
+  margin: 0 10px;
   border-radius: 4px;
   border: 1px solid #ccc;
   background-color: #fff;
@@ -183,5 +203,10 @@ nav {
   text-align: center;
   padding: 20px;
   color: #fff;
+}
+.noVehicles {
+  margin-top: 30px;
+  text-align: center;
+  min-height: 40em;
 }
 </style>

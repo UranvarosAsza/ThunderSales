@@ -5,7 +5,7 @@
 //TODO code cleanup, ki kell szervezni az api hívást egy külön fv-be és paramétert adni neki csak
 
 //Fordítás
-//FIXME   - cvs feldolgozás kell hozzá, csv már megvan de 12K sor hosszú és A-Y oszlop
+//FIXME   - csv feldolgozás kell hozzá, csv már megvan de 12K sor hosszú és A-Y oszlop
 
 //      toast: https://vue3-toastify.js-bridge.com/
 //még kell annyi hogy amikor meglévő járművet visz fel akkor

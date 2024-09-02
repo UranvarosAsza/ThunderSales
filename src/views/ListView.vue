@@ -21,6 +21,8 @@ export default {
   margin: auto;
   background-color: #2e4451;
   height: 75em;
+  border-bottom-left-radius: 10px !important;
+  border-bottom-right-radius: 10px !important;
 }
 .list h1 {
   font-size: 30pt;

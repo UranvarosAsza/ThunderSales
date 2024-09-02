@@ -7,13 +7,14 @@
     <div v-if="data.ge_cost && !data.is_pack && !data.on_marketplace">{{ data.ge_cost }} GE</div>
     <!-- <div v-else>Price: {{ data.value }} Sl</div> -->
     <div>
-      <button @click="addToListAs(data.identifier, picked)">Add</button>
+      <button @click="addToListAs(picked)">Add</button>
       <br />
       <select v-model="picked">
         <option value="basicCrew">Basic crew</option>
         <option value="expertCrew">Expert crew</option>
         <option value="vehicleCost">Just the vehicle</option>
       </select>
+      <!--<button @click="getVehicleData">Add</button>-->
     </div>
   </div>
 </template>
@@ -31,12 +32,9 @@ export default {
   },
   data() {
     return {
-      vehiclesData: [],
+      vehiclesData: {},
       showPopupList: false,
       translatedName: '',
-      basicCrewTrainingCost: 10000,
-      exptertCrewTrtainigCost: 200000,
-      vehiclePrice: 300000,
       basicCrew: 'basic',
       expertCrew: 'expert',
       vehicleCost: 'vehicle itself',
@@ -49,35 +47,46 @@ export default {
   mounted() {},
   methods: {
     /**
-     * lekéri az adott jármű részletes adatait egy tömbbe
+     * lekéri az adott jármű részletes adatait a vehiclesData-ba
      *
      */
-    //TODO ezt majd a külön oldalas megjelenítésbe átpakolni
-    getVehicleData() {
-      fetch('https://www.wtvehiclesapi.sgambe.serv00.net/api/vehicles/' + this.identifier)
-        .then((res) => res.json())
-        .then((data) => {
-          this.vehiclesData = [data] // Az egyetlen objektumot egy tömbbe tesszük
-        })
-        .catch((err) => console.log(err.message))
+    async getVehicleData() {
+      try {
+        const res = await fetch(
+          'https://www.wtvehiclesapi.sgambe.serv00.net/api/vehicles/' + this.identifier
+        )
+        const data = await res.json()
+        this.vehiclesData = data
+        console.log('Vehicle data:', this.vehiclesData)
+      } catch (err) {
+        console.log(err.message)
+      }
     },
-    addToListAs(identifier, listOption) {
+    async addToListAs(listOption) {
       if (!listOption) {
         toast.error('Please select an option before adding!') // Hibaüzenet toast
         return
       }
-      //hozzáadja a listához csak a járműként, basic, expert crew-val
+
+      await this.getVehicleData()
+      //ellenőrzés hogy a járműdata nem üres-e
+      if (!this.vehiclesData || Object.keys(this.vehiclesData).length === 0) {
+        toast.error('Failed to fetch vehicle data!') // Hibaüzenet toast
+        return
+      }
       const vehicle = {
         vehicle_id: this.data.identifier,
         vehicleCostGe: this.data.ge_cost, //lehet nem is kell mivel a részletes lekérésben van benne a crew sl adat
         vehicleCostSL: this.data.value, // same
+        basicCrewTrainingCost: this.vehiclesData.train1_cost,
+        exptertCrewTrtainigCost: this.vehiclesData.train2_cost,
+        aceCrewTrainingCost: this.vehiclesData.train3_cost_gold,
         listOption: listOption
       }
       let vehicles = JSON.parse(sessionStorage.getItem('vehicleData') || '[]')
       vehicles.push(vehicle)
       sessionStorage.setItem('vehicleData', JSON.stringify(vehicles))
       console.log(vehicles)
-      //not sure if this is needed
       toast.success('Vehicle added successfully!') // Sikeres értesítés toast
     },
     openCloseListOptions() {
