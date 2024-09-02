@@ -5,13 +5,17 @@
       <thead>
         <tr>
           <th>Vehicle</th>
-          <th>Cost GE</th>
-          <th>Cost SL</th>
+          <th>Nation</th>
           <th>List option</th>
         </tr>
       </thead>
       <tbody>
-        <ListElement v-for="vehicle in vehicles" :vehicle="vehicle" :key="vehicle.vehicle_id" />
+        <ListElement
+          v-for="vehicle in vehicles"
+          :vehicle="vehicle"
+          :key="vehicle.vehicle_id"
+          @vehicleRemoved="updateList"
+        />
       </tbody>
     </table>
     <button @click="clearList">Clear list</button>
@@ -19,28 +23,38 @@
 </template>
 
 <script>
-import { ref, onMounted } from 'vue'
 import ListElement from './ListElement.vue'
 
 export default {
   components: {
     ListElement
   },
-  setup() {
-    const vehicles = ref([])
-
-    onMounted(() => {
-      vehicles.value = JSON.parse(sessionStorage.getItem('vehicleData') || '[]')
-    })
-
-    const clearList = () => {
-      vehicles.value = []
-      sessionStorage.setItem('vehicleData', JSON.stringify([]))
-    }
-
+  data() {
     return {
-      vehicles,
-      clearList
+      vehicles: []
+    }
+  },
+  watch: {
+    vehicles: {
+      handler(newVehicles) {
+        sessionStorage.setItem('vehicleData', JSON.stringify(newVehicles))
+      },
+      deep: true
+    }
+  },
+  mounted() {
+    this.loadVehicles()
+  },
+  methods: {
+    loadVehicles() {
+      this.vehicles = JSON.parse(sessionStorage.getItem('vehicleData') || '[]')
+    },
+    clearList() {
+      this.vehicles = []
+      sessionStorage.setItem('vehicleData', JSON.stringify([]))
+    },
+    updateList() {
+      this.loadVehicles()
     }
   }
 }
