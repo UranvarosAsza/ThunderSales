@@ -3,20 +3,26 @@
     <td>Name: {{ vehicle.vehicle_id }}</td>
     <td>{{ vehicle.nation }}</td>
     <td>
-      Your total is: {{ totalPrice }}
-      <!--
-       L.O.: {{ vehicle.listOption }},Basic:
-      {{ vehicle.basicCrewTrainingCost }} Sl, Expert: {{ vehicle.exptertCrewTrtainigCost }} Sl, Ace:
-      {{ vehicle.aceCrewTrainingCost }} GE
-     -->
-      <button class="edit">Modify</button>
-
+      Your total is: {{ totalPrice.toLocaleString('hu-HU') }}
+      <button @click="toggleInfoBox" class="tooltip">
+        i
+        <span class="tooltiptext">details</span>
+      </button>
+      <span v-if="showInfoBox" class="info-box">{{ infoText }}</span>
+      <button class="edit" @click="showHideModify">Modify</button>
+      <select v-if="showModify" v-model="selectedListOption">
+        <option value="vehicleCost">Vehicle Cost</option>
+        <option value="basicCrew">Basic Crew</option>
+        <option value="expertCrew">Expert Crew</option>
+      </select>
       <button class="remove" @click="removeFromList">Remove</button>
     </td>
   </tr>
 </template>
 
 <script>
+import { watch } from 'vue'
+
 export default {
   props: {
     vehicle: Object
@@ -24,14 +30,18 @@ export default {
   data() {
     return {
       selectedListOption: '',
-      totalPrice: 0
+      totalPrice: 0,
+      showInfoBox: false,
+      infoText: '',
+      showModify: false
     }
+  },
+  watch: {
+    selectedListOption: 'computeSelectedPrice'
   },
   mounted() {
     this.selectedListOption = this.vehicle.listOption
     this.computeSelectedPrice()
-    // listOption alapján elágaztatjuk, lehet a list opion watch..
-    //computeSelectedPrice(this.selectedListOption)
   },
   methods: {
     computeSelectedPrice() {
@@ -42,85 +52,69 @@ export default {
               this.vehicle.basicCrewTrainingCost +
               this.vehicle.exptertCrewTrtainigCost +
               this.vehicle.vehicleCostSL
+            this.infoText =
+              'Calculated as: vehicle cost: ' +
+              this.vehicle.vehicleCostSL +
+              ' basic crew cost: ' +
+              this.vehicle.basicCrewTrainingCost +
+              ' expert crew cost: ' +
+              this.vehicle.exptertCrewTrtainigCost
           } else {
             this.totalPrice =
               this.vehicle.basicCrewTrainingCost + this.vehicle.exptertCrewTrtainigCost
+            this.infoText =
+              'Calculated as:' +
+              ' basic crew cost: ' +
+              this.vehicle.basicCrewTrainingCost +
+              ' expert crew cost: ' +
+              this.vehicle.exptertCrewTrtainigCost
           }
           break
         case 'basicCrew':
           if (this.vehicle.vehicleCostSL) {
             this.totalPrice = this.vehicle.basicCrewTrainingCost + this.vehicle.vehicleCostSL
+            this.infoText =
+              'Calculated as: vehicle cost: ' +
+              this.vehicle.vehicleCostSL +
+              ' basic crew cost: ' +
+              this.vehicle.basicCrewTrainingCost
           } else {
             this.totalPrice = this.vehicle.basicCrewTrainingCost
+            this.infoText =
+              'Calculated as:' + ' basic crew cost: ' + this.vehicle.basicCrewTrainingCost
           }
           break
         case 'vehicleCost':
           if (this.vehicle.vehicleCostSL) {
             this.totalPrice = this.vehicle.vehicleCostSL
+            this.infoText = 'Calculated as: vehicle cost: ' + this.vehicle.vehicleCostSL
           } else {
             this.totalPrice = 0
+            this.infoText = 'Calculated as:' + '(vehicle cost is in Ge or free (reserve))'
           }
           break
         default:
           console.log('No valid list option selected')
       }
+
+      this.$emit('price-updated', this.totalPrice, this.vehicle.vehicle_id)
     },
     removeFromList() {
       let vehicles = JSON.parse(sessionStorage.getItem('vehicleData') || '[]')
       vehicles = vehicles.filter((v) => v.vehicle_id !== this.vehicle.vehicle_id)
       sessionStorage.setItem('vehicleData', JSON.stringify(vehicles))
       this.$emit('vehicleRemoved')
-    } /*
-    computeSelectedPrice() {
-      //Your total is: totalPrice (?) - details-es hover
-      console.log('selectedlistOption1' + this.selectedListOption)
-      switch (this.selectedListOption) {
-        case 'expertCrew':
-          // expert + basic + vehicle cost
-          if (this.vehicle.vehicleCostSL) {
-            //ha ez nem null akkor nem goldos
-            this.totalPrice =
-              vehicle.basicCrewTrainingCost +
-              vehicle.exptertCrewTrtainigCost +
-              vehicle.vehicleCostSL
-          } else {
-            this.totalPrice = vehicle.basicCrewTrainingCost + vehicle.exptertCrewTrtainigCost
-          }
-
-          break
-        case 'basicCrew':
-          if (vehicle.vehicleCostSL) {
-            this.totalPrice = vehicle.basicCrewTrainingCost + vehicle.vehicleCostSL
-          } else {
-            this.totalPrice = vehicle.basicCrewTrainingCost
-          }
-          // basic + vehicle cost
-          break
-        case 'vehicleCost':
-          if (vehicle.vehicleCostSL) {
-            this.totalPrice = vehicle.vehicleCostSL
-          } else {
-            this.totalPrice = 0
-          }
-          // vehicle cost
-          break
-
-        default:
-          return 'cica'
-      }
-      console.log('selectedlistOption1' + selectedListOption)
-      console.log(totalPrice)
-      return
-    }
-    
-    removeFromList(vehicle.vehicle_id){
-
-
-      //removes the given vehicle from the list
     },
-    editListOption(){
 
-    } */
+    editListOption() {
+      console.log('cica')
+    },
+    toggleInfoBox() {
+      this.showInfoBox = !this.showInfoBox
+    },
+    showHideModify() {
+      this.showModify = !this.showModify
+    }
   }
 }
 </script>
@@ -136,5 +130,52 @@ td {
 }
 .remove:hover {
   background-color: rgba(255, 0, 0, 0.582) !important;
+}
+.info-box {
+  display: inline-block;
+  background-color: #eee;
+  padding: 5px;
+  margin-left: 10px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+}
+.tooltip {
+  position: relative;
+  display: inline-block;
+  border-bottom: 1px dotted black;
+}
+
+.tooltip .tooltiptext {
+  visibility: hidden;
+  background-color: rgba(0, 0, 0, 0.638);
+  color: #fff;
+  text-align: center;
+  border-radius: 6px;
+  padding: 5px 0;
+  position: absolute;
+  z-index: 1;
+  margin-left: -60px;
+  width: 120px;
+  bottom: 100%;
+  left: 50%;
+  margin-left: -60px;
+}
+
+.tooltip .tooltiptext::after {
+  content: ' ';
+  position: absolute;
+  top: 100%; /* At the bottom of the tooltip */
+  left: 50%;
+  margin-left: -5px;
+  border-width: 5px;
+  border-style: solid;
+  border-color: black transparent transparent transparent;
+}
+
+.tooltip:hover .tooltiptext {
+  visibility: visible;
+}
+select {
+  display: inline-block;
 }
 </style>

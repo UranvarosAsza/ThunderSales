@@ -1,7 +1,7 @@
 //Komponensek:
 //Vehicle
 //TODO meg kell adni a kivétel listát amiket a prém tt-be helyet át
-//TODO meg kell egy külön lista az egyáltalán nem mutatott járművekről is:(kínai bt5, peshka, a6m5, német-román pz 38, drónok, tutorial panther (ussr))
+//TODO meg kell egy külön lista az egyáltalán nem mutatott járművekről is:(kínai bt5, peshka, a6m5, német-román pz 38, drónok, tutorial panther (ussr)) plusz: https://docs.google.com/document/d/18UJMjgREFIVBG0HqPckBpTzq2MvOXnN6LOsp94G1wF8/edit
 //VehicleRanks-be
 //TODO code cleanup, ki kell szervezni az api hívást egy külön fv-be és paramétert adni neki csak
 
@@ -14,8 +14,8 @@
 //                  c) mindkettő
 //TODO  táblázatba, subtotalok nemzetenként
 //      minden páros és minden páratlan legyen más színű
-//      edit: más option
-//      alatta pedig a 30-50% számoló, csak a járművek vagy jelenlegi konfig számolása rádiógomb-párok
+//TODO Modify gomb bekötése-> option
+//
 
 //TODO export ?
 //TODO nation alapján is kapjon pici zászlót (legalább a saját oldalára a jármű) + a táblázatba a sub-totalba

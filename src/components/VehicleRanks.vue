@@ -1,10 +1,8 @@
 <template>
-  <!--TODORank header-t kéne készíteni -->
   <p class="rankHeader">Rank {{ rank }} {{ nation }}, {{ branch }}</p>
-  <!--<p>Vehcicles of the techtree are going here</p>-->
+
   <div class="rank">
     <div class="techtree">
-      <!-- itt kéne egy v-for végigmenni a ttvehicles-en majd minden elemének adni paramétereket -->
       <div
         v-for="vehicle in TechTreeVehicles"
         :key="vehicle.identifier"
@@ -17,7 +15,7 @@
         <VehicleModel :identifier="vehicle.identifier" :data="vehicle" />
       </div>
     </div>
-    <!--<p>Premium / event vehicles are going here</p>-->
+
     <div class="premtree">
       <div
         v-for="vehicle in PremVehicles"
@@ -28,7 +26,6 @@
           vehicle: !vehicle.is_premium && !vehicle.squadron_vehicle
         }"
       >
-        <!-- itt kéne egy v-for végigmenni a premvehicles-en majd minden elemének adni paramétereket-->
         <VehicleModel :identifier="vehicle.identifier" :data="vehicle" />
       </div>
     </div>
@@ -57,8 +54,6 @@ export default {
   },
   computed: {},
   mounted() {
-    //amikor a teier-ek mountolódnak  akkor kéne tömböket készíteni
-    //de lehet hogy ez jobb lenne computed-be
     this.fetchVehicles()
   },
   watch: {

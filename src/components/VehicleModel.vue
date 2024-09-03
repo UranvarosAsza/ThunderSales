@@ -21,7 +21,7 @@
 
 <script>
 import vehicleTranslationsEN from '@/assets/vehicleTranslationsEN.json'
-import { defineComponent } from 'vue'
+
 import { toast } from 'vue3-toastify'
 import 'vue3-toastify/dist/index.css'
 
@@ -57,7 +57,6 @@ export default {
         )
         const data = await res.json()
         this.vehiclesData = data
-        console.log('Vehicle data:', this.vehiclesData)
       } catch (err) {
         console.log(err.message)
       }
@@ -82,12 +81,12 @@ export default {
         basicCrewTrainingCost: this.vehiclesData.train1_cost,
         exptertCrewTrtainigCost: this.vehiclesData.train2_cost,
         aceCrewTrainingCost: this.vehiclesData.train3_cost_gold,
-        listOption: listOption
+        listOption: listOption,
+        totalPrice: 0
       }
       let vehicles = JSON.parse(sessionStorage.getItem('vehicleData') || '[]')
       vehicles.push(vehicle)
       sessionStorage.setItem('vehicleData', JSON.stringify(vehicles))
-      console.log(vehicles)
       toast.success('Vehicle added successfully!') // Sikeres értesítés toast
     },
     openCloseListOptions() {
@@ -96,7 +95,7 @@ export default {
     },
 
     translateVehicleNames(vehicleName) {
-      //TODO kell remaster hogy a csv-t dolgozza fel ( units.csv)
+      //kell remaster hogy a csv-t dolgozza fel ( units.csv)
       const translatedName = vehicleTranslationsEN[vehicleName]
       return translatedName || vehicleName
     }

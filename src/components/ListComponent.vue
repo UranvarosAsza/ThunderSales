@@ -15,15 +15,39 @@
           :vehicle="vehicle"
           :key="vehicle.vehicle_id"
           @vehicleRemoved="updateList"
+          @price-updated="updateTotalPrice"
         />
       </tbody>
     </table>
     <button @click="clearList">Clear list</button>
+    <h2>Total Price of All Vehicles: {{ grandTotal.toLocaleString('hu-HU') }} Sl</h2>
+    <div class="discount">
+      <button @click="calculateDiscountedPrice(discount)">
+        Calculate with
+        <div v-if="discount">{{ discount * 100 }}%</div>
+      </button>
+      <label>
+        <input type="radio" v-model="discount" value="0.3" />
+        30%
+      </label>
+      <label>
+        <input type="radio" v-model="discount" value="0.5" />
+        50%
+      </label>
+      <div v-if="grandTotalDiscount">
+        <h1>
+          You need to save {{ grandTotalDiscount.toLocaleString('hu-HU') }} Sl for a
+          {{ discount * 100 }}% sale
+        </h1>
+      </div>
+    </div>
   </div>
 </template>
 
 <script>
 import ListElement from './ListElement.vue'
+import { toast } from 'vue3-toastify'
+import 'vue3-toastify/dist/index.css'
 
 export default {
   components: {
@@ -31,30 +55,60 @@ export default {
   },
   data() {
     return {
-      vehicles: []
+      vehicles: [],
+      grandTotal: 0,
+      discount: null,
+      grandTotalDiscount: null
     }
   },
   watch: {
     vehicles: {
       handler(newVehicles) {
         sessionStorage.setItem('vehicleData', JSON.stringify(newVehicles))
+        this.calculateGrandTotal()
       },
       deep: true
+    },
+    discount(newDiscount) {
+      this.calculateDiscountedPrice()
     }
   },
   mounted() {
     this.loadVehicles()
+    this.calculateGrandTotal() // Ensure total is correct on load
   },
   methods: {
     loadVehicles() {
       this.vehicles = JSON.parse(sessionStorage.getItem('vehicleData') || '[]')
     },
+    updateTotalPrice(newPrice, vehicleId) {
+      const vehicle = this.vehicles.find((v) => v.vehicle_id === vehicleId)
+      if (vehicle) {
+        vehicle.totalPrice = newPrice
+        this.calculateGrandTotal()
+      }
+    },
+    calculateGrandTotal() {
+      this.grandTotal = this.vehicles.reduce((total, vehicle) => {
+        return total + (vehicle.totalPrice || 0)
+      }, 0)
+    },
+
     clearList() {
       this.vehicles = []
       sessionStorage.setItem('vehicleData', JSON.stringify([]))
+      this.grandTotal = 0 // Reset grand total when list is cleared
     },
     updateList() {
       this.loadVehicles()
+      this.calculateGrandTotal() // Recalculate total after removing a vehicle
+    },
+    calculateDiscountedPrice() {
+      if (this.discount != null) {
+        this.grandTotalDiscount = this.grandTotal * (1 - this.discount)
+      } else {
+        toast.error('Please select a discount percentage!')
+      }
     }
   }
 }
@@ -105,5 +159,8 @@ button {
 
 button:hover {
   background-color: #22323b;
+}
+.discount {
+  display: inline;
 }
 </style>
