@@ -66,100 +66,47 @@ export default {
     nation(newNation) {
       sessionStorage.setItem('nation', newNation)
       this.getVehicles()
-    },
-    vehicleEras: 'getVehicles'
+    }
+    // vehicleEras: 'getVehicles'
   },
   mounted() {
     this.getVehicles()
   },
   methods: {
     getVehicles() {
+      if (!this.nation || !this.branch) return
+
+      let apiUrl = ''
+
       switch (this.branch) {
         case 'air':
-          fetch(
-            'https://www.wtvehiclesapi.sgambe.serv00.net/api/vehicles?' +
-              'country=' +
-              this.nation +
-              apiParams.air
-          )
-            .then((res) => res.json())
-            .then((data) => {
-              // @ts-ignore
-              this.vehicleEras = Array.from(new Set(data.map((item) => item.era)))
-              this.vehicleEras.sort()
-            })
-            .catch((err) => console.log(err.message))
-
+          apiUrl = apiParams.url + this.nation + apiParams.air
           break
         case 'heli':
-          fetch(
-            'https://www.wtvehiclesapi.sgambe.serv00.net/api/vehicles?' +
-              'country=' +
-              this.nation +
-              apiParams.heli
-          )
-            .then((res) => res.json())
-            .then((data) => {
-              // @ts-ignore
-              this.vehicleEras = Array.from(new Set(data.map((item) => item.era)))
-              this.vehicleEras.sort()
-            })
-            .catch((err) => console.log(err.message))
-
+          apiUrl = apiParams.url + this.nation + apiParams.heli
           break
         case 'ground':
-          fetch(
-            'https://www.wtvehiclesapi.sgambe.serv00.net/api/vehicles?' +
-              'country=' +
-              this.nation +
-              apiParams.ground
-          )
-            .then((res) => res.json())
-            .then((data) => {
-              // @ts-ignore
-              this.vehicleEras = Array.from(new Set(data.map((item) => item.era)))
-              this.vehicleEras.sort()
-            })
-            .catch((err) => console.log(err.message))
-
+          apiUrl = apiParams.url + this.nation + apiParams.ground
           break
         case 'boat':
-          fetch(
-            'https://www.wtvehiclesapi.sgambe.serv00.net/api/vehicles?' +
-              'country=' +
-              this.nation +
-              apiParams.boat
-          )
-            .then((res) => res.json())
-            .then((data) => {
-              // @ts-ignore
-              this.vehicleEras = Array.from(new Set(data.map((item) => item.era)))
-              this.vehicleEras.sort()
-            })
-            .catch((err) => console.log(err.message))
-
+          apiUrl = apiParams.url + this.nation + apiParams.boat
           break
         case 'ship':
-          fetch(
-            'https://www.wtvehiclesapi.sgambe.serv00.net/api/vehicles?' +
-              'country=' +
-              this.nation +
-              apiParams.ship
-          )
-            .then((res) => res.json())
-            .then((data) => {
-              // @ts-ignore
-              this.vehicleEras = Array.from(new Set(data.map((item) => item.era)))
-              this.vehicleEras.sort()
-            })
-            .catch((err) => console.log(err.message))
-
+          apiUrl = apiParams.url + this.nation + apiParams.ship
           break
         default:
-          console.log(this.branch)
-          console.log('default')
+          console.log('Invalid branch:', this.branch)
+          return
       }
       //Filter by vehicle type|| tank, lbv, mbv, hbv, exoskeleton,submarine ????
+      fetch(apiUrl)
+        .then((res) => res.json())
+        .then((data) => {
+          // @ts-ignore
+          this.vehicleEras = Array.from(new Set(data.map((item) => item.era)))
+          this.vehicleEras.sort()
+        })
+        .catch((err) => console.log(err.message))
     }
   }
 }

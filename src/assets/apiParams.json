@@ -1,4 +1,6 @@
 {
+  "url": "https://www.wtvehiclesapi.sgambe.serv00.net/api/vehicles?country=",
+  "urlForOneVehicle": "",
   "air": "&type=fighter&type=assault&type=bomber&era=",
   "ground": "&type=light_tank&type=medium_tank&type=heavy_tank&type=tank_destroyer&type=spaa&era=",
   "heli": "&type=attack_helicopter&type=utility_helicopter&era=",
