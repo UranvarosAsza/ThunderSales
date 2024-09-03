@@ -1,6 +1,6 @@
 # ThunderSales
 
-Thunder sales app is a web-app helping you to calculate the silver lions and golen eagles before WarThunder sales.
+ThunderSales is a web-app helping you to calculate the silver lions and golen eagles before WarThunder sales.
 
 # API Documentation:
 
