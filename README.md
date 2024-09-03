@@ -1,19 +1,11 @@
 # ThunderSales
 
-This template should help get you started developing with Vue 3 in Vite.
+Thunder sales app is a web-app helping you to calculate the silver lions and golen eagles before WarThunder sales.
 
-npm run dev
+# API Documentation:
 
-````
+https://wtvehiclesapi.sgambe.serv00.net/docs/
 
-### Type-Check, Compile and Minify for Production
+# Toast used:
 
-```sh
-npm run build
-````
-
-### Lint with [ESLint](https://eslint.org/)
-
-```sh
-npm run lint
-```
+https://vue3-toastify.js-bridge.com/
