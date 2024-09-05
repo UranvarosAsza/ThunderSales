@@ -11,10 +11,16 @@
 //                  c) mindkettő
 //TODO  táblázatba, subtotalok nemzetenként
 //      minden páros és minden páratlan legyen más színű
-
+//FIXME átírni a kiszámolt adatok körül a felküldötteket, csak a járműárak menjenek fel ne a totalok
 //TODO export ?
+
 //TODO nation alapján is kapjon pici zászlót (legalább a saját oldalára a jármű) + a táblázatba a sub-totalba
 //TODO Css overhaul
+/*
+Extra dolgok:
+Vegyes, nemzet nélküli TT,
+rejtett jármvek külön
+Speciélis járművek külön*/
 
 //npm run dev
 //npm run build

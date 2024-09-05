@@ -22,10 +22,7 @@
     <button @click="clearList">Clear list</button>
     <h2>Total Price of All Vehicles: {{ grandTotal.toLocaleString('hu-HU') }} Sl</h2>
     <div class="discount">
-      <button @click="calculateDiscountedPrice(discount)">
-        Calculate with
-        <div v-if="discount">{{ discount * 100 }}%</div>
-      </button>
+      <button @click="calculateDiscountedPrice(discount)">Calculate</button>
       <label>
         <input type="radio" v-model="discount" value="0.3" />
         30%
