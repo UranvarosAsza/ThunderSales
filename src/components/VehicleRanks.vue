@@ -48,13 +48,14 @@ export default {
   data() {
     return {
       PremVehicles: [],
-      TechTreeVehicles: [],
-      translatedName: ''
+      TechTreeVehicles: []
     }
   },
   computed: {},
   mounted() {
     this.fetchVehicles()
+    // this.fetchUnits()
+    //console.log(this.$papa.parse(units, this.config))
   },
   watch: {
     // Figyeli a propokat, és ha valamelyik változik, újra lefut a fetchVehicles
@@ -98,6 +99,7 @@ export default {
 
     getTechtreeVehicles(apiParamBranch) {
       fetch(
+        //FIXME apiParams.json
         'https://www.wtvehiclesapi.sgambe.serv00.net/api/vehicles?' +
           'country=' +
           this.nation +
@@ -112,6 +114,7 @@ export default {
     getPremiumTreeVehicles(apiParam) {
       // 3 api call same params
       const premiumVehicles = fetch(
+        //FIXME apiParams.json 3x
         'https://www.wtvehiclesapi.sgambe.serv00.net/api/vehicles?' +
           'country=' +
           this.nation +

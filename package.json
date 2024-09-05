@@ -13,6 +13,7 @@
     "format": "prettier --write src/"
   },
   "dependencies": {
+    "papaparse": "^5.4.1",
     "vue": "^3.4.29",
     "vue-router": "^4.3.3",
     "vue3-toastify": "^0.2.2"
@@ -21,6 +22,7 @@
     "@rushstack/eslint-patch": "^1.8.0",
     "@tsconfig/node20": "^20.1.4",
     "@types/node": "^20.14.5",
+    "@types/papaparse": "^5.3.14",
     "@vitejs/plugin-vue": "^5.0.5",
     "@vitejs/plugin-vue-jsx": "^4.0.0",
     "@vue/eslint-config-prettier": "^9.0.0",

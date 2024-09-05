@@ -2,7 +2,9 @@
   <!--egy darab jármű kártya -->
   <div>
     <img :src="data.images.techtree" />
-    <div class="name">{{ data.identifier }}</div>
+    <!--<div class="name">{{ data.identifier }}</div>-->
+    <div class="name">{{ shortVersionTranslatedName }}</div>
+    <!--<div>{{ translatedName   }}</div>-->
     <div>Rank {{ data.era }}</div>
     <div v-if="data.ge_cost && !data.is_pack && !data.on_marketplace">{{ data.ge_cost }} GE</div>
     <!-- <div v-else>Price: {{ data.value }} Sl</div> -->
@@ -20,21 +22,24 @@
 </template>
 
 <script>
-import vehicleTranslationsEN from '@/assets/vehicleTranslationsEN.json'
-
 import { toast } from 'vue3-toastify'
 import 'vue3-toastify/dist/index.css'
 
 export default {
   props: {
     identifier: String,
-    data: Object
+    data: Object,
+    lang: {
+      type: String,
+      default: 'en' // Alapértelmezett nyelv
+    }
   },
   data() {
     return {
       vehiclesData: {},
       showPopupList: false,
-      translatedName: '',
+      translatedName: '', // Hosszú név (_shop)
+      shortVersionTranslatedName: '', // Rövid név (_1)
       basicCrew: 'basic',
       expertCrew: 'expert',
       vehicleCost: 'vehicle itself',
@@ -44,7 +49,9 @@ export default {
   computed: {
     //showPopupListComputed
   },
-  mounted() {},
+  mounted() {
+    this.getTranslatedName(this.lang, this.identifier)
+  },
   methods: {
     /**
      * lekéri az adott jármű részletes adatait a vehiclesData-ba
@@ -94,10 +101,39 @@ export default {
       //console.log('popupcomputed: ' )
     },
 
-    translateVehicleNames(vehicleName) {
-      //kell remaster hogy a csv-t dolgozza fel ( units.csv)
-      const translatedName = vehicleTranslationsEN[vehicleName]
-      return translatedName || vehicleName
+    /**
+     * Lekér két különböző fordítást: egy rövid (_1) és egy hosszú (_shop) verziót
+     */
+    getTranslatedName(lang, vehiclename) {
+      const parsedCSVData = sessionStorage.getItem('parsedCSVData')
+
+      if (parsedCSVData) {
+        const csvData = JSON.parse(parsedCSVData)
+
+        // Hosszú verzió (_shop)
+        const shopKey = `${vehiclename}_shop`
+        // Rövid verzió (_1)
+        const variantKey = `${vehiclename}_1`
+
+        // Hosszű név (_shop)
+        if (csvData[shopKey]) {
+          this.translatedName = csvData[shopKey][lang === 'fr' ? 'french' : 'english']
+        } else {
+          console.warn(`Nem található rövid fordítás a következőhöz: ${vehiclename}`)
+          this.translatedName = vehiclename // Ha nincs fordítás, az eredeti név jelenik meg
+        }
+
+        // Rövid név (_1)
+        if (csvData[variantKey]) {
+          this.shortVersionTranslatedName =
+            csvData[variantKey][lang === 'fr' ? 'french' : 'english']
+        } else {
+          console.warn(`Nem található hosszú fordítás a következőhöz: ${vehiclename}`)
+          this.shortVersionTranslatedName = vehiclename // Ha nincs fordítás, az eredeti név jelenik meg
+        }
+      } else {
+        console.error('Nincs CSV adat a sessionStorage-ban!')
+      }
     }
   }
 }

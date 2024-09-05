@@ -9,3 +9,7 @@ https://wtvehiclesapi.sgambe.serv00.net/docs/
 # Toast used:
 
 https://vue3-toastify.js-bridge.com/
+
+# CSV Parser for localised vehiclenames:
+
+https://www.papaparse.com/
