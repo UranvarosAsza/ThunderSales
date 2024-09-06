@@ -1,6 +1,6 @@
 <template>
   <tr>
-    <td>Name: {{ vehicle.vehicle_id }}</td>
+    <td>Name: {{ vehicle.shortName }}</td>
     <td>{{ vehicle.nation }}</td>
     <td>
       Your total is: {{ totalPrice.toLocaleString('hu-HU') }}

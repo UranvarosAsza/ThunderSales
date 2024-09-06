@@ -82,6 +82,8 @@ export default {
       }
       const vehicle = {
         vehicle_id: this.data.identifier,
+        shortName: this.shortVersionTranslatedName,
+        longName: this.translatedName,
         nation: this.data.country,
         vehicleCostGe: this.data.ge_cost, //lehet nem is kell mivel a részletes lekérésben van benne a crew sl adat
         vehicleCostSL: this.data.value, // same
