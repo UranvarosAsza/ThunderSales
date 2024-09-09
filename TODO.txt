@@ -1,5 +1,5 @@
-//Komponensek:
-//Vehicle
+Komponensek:
+Vehicle
 //TODO meg kell adni a kivétel listát amiket a prém tt-be helyet át
 //TODO meg kell egy külön lista az egyáltalán nem mutatott járművekről is:(kínai bt5, peshka, a6m5, német-román pz 38, drónok, tutorial panther (ussr)) plusz: https://docs.google.com/document/d/18UJMjgREFIVBG0HqPckBpTzq2MvOXnN6LOsp94G1wF8/edit
 //Fordítás

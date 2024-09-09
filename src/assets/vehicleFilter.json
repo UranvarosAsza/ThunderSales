@@ -1,0 +1,312 @@
+{
+  "unusedPremvehicles": {
+    "description": "unused things, like drones and never-added premium vehicles",
+    "vehicles": [
+      {
+        "vehicle_id": "ucav_mq_1_predator",
+        "place": "PT",
+        "shown": false
+      },
+      {
+        "vehicle_id": "uav_quadcopter",
+        "place": "PT",
+        "shown": false
+      },
+      {
+        "vehicle_id": "ucav_recon_micro",
+        "place": "PT",
+        "shown": false
+      },
+      {
+        "vehicle_id": "ucav_recon_micro_flir",
+        "place": "PT",
+        "shown": false
+      },
+      {
+        "vehicle_id": "germ_pzkpfw_35t_romania_mare",
+        "place": "PT",
+        "shown": true
+      },
+      {
+        "vehicle_id": "ucav_orion",
+        "place": "PT",
+        "shown": true
+      },
+      {
+        "vehicle_id": "a6m5_zero_china",
+        "place": "PT",
+        "shown": true
+      },
+      {
+        "vehicle_id": "ucav_wing_loong_i",
+        "place": "PT",
+        "shown": true
+      },
+      {
+        "vehicle_id": "re_2000_ga_ep",
+        "place": "PT",
+        "shown": true
+      }
+    ]
+  },
+  "unusedTechTreevehicles": {
+    "description": "techtree vehicles that are not playable or never added and have to be filtered out e.g. Tutorial panther 2, deck planes, chinese Pe-2",
+    "vehicles": [
+      {
+        "vehicle_id": "o3u_1",
+        "place": "TT",
+        "shown": false
+      },
+      {
+        "vehicle_id": "soc_1",
+        "place": "TT",
+        "shown": false
+      },
+      {
+        "vehicle_id": "germ_panther_II_tutorial",
+        "place": "TT",
+        "shown": false
+      },
+      {
+        "vehicle_id": "kor_1",
+        "place": "TT",
+        "shown": false
+      },
+      {
+        "vehicle_id": "osprey_mk4",
+        "place": "TT",
+        "shown": false
+      },
+      {
+        "vehicle_id": "walrus_mk1",
+        "place": "TT",
+        "shown": false
+      },
+      {
+        "vehicle_id": "fairey_3f_mk3b",
+        "place": "TT",
+        "shown": false
+      },
+      {
+        "vehicle_id": "pe-2-359_china",
+        "place": "TT",
+        "shown": false
+      },
+      {
+        "vehicle_id": "cn_bt_5",
+        "place": "TT",
+        "shown": false
+      },
+      {
+        "vehicle_id": "cn_type_95_ha_go",
+        "place": "TT",
+        "shown": false
+      },
+      {
+        "vehicle_id": "ro_43",
+        "place": "TT",
+        "shown": false
+      },
+      {
+        "vehicle_id": "aichi_e13a",
+        "place": "TT",
+        "shown": false
+      },
+      {
+        "vehicle_id": "e7k2",
+        "place": "TT",
+        "shown": false
+      },
+      {
+        "vehicle_id": "e8n2",
+        "place": "TT",
+        "shown": false
+      },
+      {
+        "vehicle_id": "gl_832",
+        "place": "TT",
+        "shown": false
+      },
+      {
+        "vehicle_id": "loire_130",
+        "place": "TT",
+        "shown": false
+      }
+    ]
+  },
+  "misplacedTechTreeVehicles": {
+    "description": "techtree vehicles that should be in the premium tree, but they don't have 'event vehicle' status e.g.: P-36 RB, Twitch-drop vehicles,German-italian planes ",
+    "vehicles": [
+      {
+        "vehicle_id": "p-36c_rb",
+        "place": "PT",
+        "shown": true
+      },
+      {
+        "vehicle_id": "p-40e_td",
+        "place": "PT",
+        "shown": true
+      },
+      {
+        "vehicle_id": "a-26c",
+        "place": "PT",
+        "shown": true
+      },
+      {
+        "vehicle_id": "us_lvt_a_1_trb",
+        "place": "PT",
+        "shown": true
+      },
+      {
+        "vehicle_id": "us_m24_chaffee_tl",
+        "place": "PT",
+        "shown": true
+      },
+      {
+        "vehicle_id": "us_m4_sherman_promo",
+        "place": "PT",
+        "shown": true
+      },
+      {
+        "vehicle_id": "us_m5a1_stuart_td",
+        "place": "PT",
+        "shown": true
+      },
+      {
+        "vehicle_id": "fiat_cr42",
+        "place": "PT",
+        "shown": true
+      },
+      {
+        "vehicle_id": "fiat_g50_seria2",
+        "place": "PT",
+        "shown": true
+      },
+      {
+        "vehicle_id": "fiat_g50_seria7as",
+        "place": "PT",
+        "shown": true
+      },
+      {
+        "vehicle_id": "mc200_serie3",
+        "place": "PT",
+        "shown": true
+      },
+      {
+        "vehicle_id": "mc200_serie7",
+        "place": "PT",
+        "shown": true
+      },
+      {
+        "vehicle_id": "mc-202",
+        "place": "PT",
+        "shown": true
+      },
+      {
+        "vehicle_id": "sm_79_1936",
+        "place": "PT",
+        "shown": true
+      },
+      {
+        "vehicle_id": "sm_79_1937",
+        "place": "PT",
+        "shown": true
+      },
+      {
+        "vehicle_id": "sm_79_1939",
+        "place": "PT",
+        "shown": true
+      },
+      {
+        "vehicle_id": "sm_79_1941",
+        "place": "PT",
+        "shown": true
+      },
+      {
+        "vehicle_id": "sm_79_1942",
+        "place": "PT",
+        "shown": true
+      },
+      {
+        "vehicle_id": "sm_79_1943",
+        "place": "PT",
+        "shown": true
+      },
+      {
+        "vehicle_id": "sm_79_iar",
+        "place": "PT",
+        "shown": true
+      },
+      {
+        "vehicle_id": "he-162a-1",
+        "place": "PT",
+        "shown": true
+      },
+      {
+        "vehicle_id": "germ_pzkpfw_II_ausf_C_td",
+        "place": "PT",
+        "shown": true
+      },
+      {
+        "vehicle_id": "germ_pzkpfw_III_ausf_J_td",
+        "place": "PT",
+        "shown": true
+      },
+      {
+        "vehicle_id": "germ_sdkfz_234_2_td",
+        "place": "PT",
+        "shown": true
+      },
+      {
+        "vehicle_id": "germ_pzkpfw_VI_ausf_b_tiger_IIh_kwk46",
+        "place": "PT",
+        "shown": true
+      },
+      {
+        "vehicle_id": "germ_flakpanzer_V_Coelian",
+        "place": "PT",
+        "shown": true
+      },
+      {
+        "vehicle_id": "germ_pzkpfw_Maus",
+        "place": "PT",
+        "shown": true
+      },
+      {
+        "vehicle_id": "germ_pzkpfw_e_100",
+        "place": "PT",
+        "shown": true
+      },
+      {
+        "vehicle_id": "ussr_bt_7_1937_td",
+        "place": "PT",
+        "shown": true
+      },
+      {
+        "vehicle_id": "germ_panther_II",
+        "place": "PT",
+        "shown": true
+      },
+      {
+        "vehicle_id": "tu-2_early",
+        "place": "PT",
+        "shown": true
+      },
+      {
+        "vehicle_id": "la_174",
+        "place": "PT",
+        "shown": true
+      },
+      {
+        "vehicle_id": "d_521",
+        "place": "PT",
+        "shown": true
+      },
+      {
+        "vehicle_id": "jp_destroyer_hatsuzuki",
+        "place": "PT",
+        "shown": true
+      }
+    ]
+  }
+}

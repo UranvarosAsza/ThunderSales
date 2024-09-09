@@ -2,7 +2,7 @@
   <!--egy darab jármű kártya -->
   <div>
     <img :src="data.images.techtree" />
-    <!--<div class="name">{{ data.identifier }}</div>-->
+    <div class="name">{{ data.identifier }}</div>
     <div class="name">{{ shortVersionTranslatedName }}</div>
     <!--<div>{{ translatedName   }}</div>-->
     <div>Rank {{ data.era }}</div>
