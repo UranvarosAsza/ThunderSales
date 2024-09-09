@@ -55,8 +55,6 @@ export default {
   computed: {},
   mounted() {
     this.fetchVehicles()
-    // this.fetchUnits()
-    //console.log(this.$papa.parse(units, this.config))
   },
   watch: {
     // Figyeli a propokat, és ha valamelyik változik, újra lefut a fetchVehicles
@@ -166,7 +164,7 @@ export default {
       // Az API-ból kapott teljes járműadatok hozzáadása a PremVehicles-hez
       this.PremVehicles = [...filteredPremVehicles, ...misplacedVehiclesData]
 
-      console.log('Final Prem Vehicles:', this.PremVehicles)
+      //console.log('Final Prem Vehicles:', this.PremVehicles)
     }
   }
 }

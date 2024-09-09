@@ -3,8 +3,8 @@
   <div>
     <img v-if="data.images" :src="data.images.techtree" alt="Vehicle Image" />
     <!--<div class="name">{{ data.identifier }}</div>-->
-    <div class="name">{{ shortVersionTranslatedName }}</div>
-    <!--<div>{{ translatedName   }}</div>-->
+    <!--<div class="name">{{ shortVersionTranslatedName }}</div>-->
+    <div class="name">{{ translatedName }}</div>
     <div>Rank {{ data.era }}</div>
     <div v-if="data.ge_cost && !data.is_pack && !data.on_marketplace">{{ data.ge_cost }} GE</div>
     <!-- <div v-else>Price: {{ data.value }} Sl</div> -->
@@ -114,7 +114,7 @@ export default {
         // Hosszú verzió (_shop)
         const shopKey = `${vehiclename}_shop`
         // Rövid verzió (_1)
-        const variantKey = `${vehiclename}_1`
+        const variantKey = `${vehiclename}_0`
 
         // Hosszű név (_shop)
         if (csvData[shopKey]) {

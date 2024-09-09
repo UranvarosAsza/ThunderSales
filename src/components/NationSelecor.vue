@@ -3,31 +3,21 @@
     <nav>
       <label>Select nation: </label>
       <select v-model="nation">
-        <option value="usa">USA</option>
-        <option value="germany">GER</option>
-        <option value="ussr">USSR</option>
-        <option value="britain">GBR</option>
-        <option value="china">CHN</option>
-        <option value="italy">ITA</option>
-        <option value="japan">JPN</option>
-        <option value="france">FRA</option>
-        <option value="israel">ISR</option>
-        <option value="sweden">SWE</option>
+        <option v-for="(nationData, nationKey) in nations" :key="nationKey" :value="nationKey">
+          {{ nationKey.toUpperCase() }}
+        </option>
       </select>
+
       <label>Select branch: </label>
       <select v-model="branch">
-        <option value="air">Air</option>
-        <option value="heli">Heli</option>
-        <option value="ground">Ground</option>
-        <option value="boat">Boat</option>
-        <option value="ship">Ship</option>
+        <option v-for="branchName in filteredBranches" :key="branchName" :value="branchName">
+          {{ branchName.charAt(0).toUpperCase() + branchName.slice(1) }}
+        </option>
       </select>
-      <!--<button @click="getVehicles">Get vehicles</button>-->
     </nav>
 
     <div v-if="vehicleEras.length">
-      <!-- eslint-disable-next-line vue/require-v-for-key-->
-      <div v-for="vehicleEra in vehicleEras">
+      <div v-for="vehicleEra in vehicleEras" :key="vehicleEra">
         <div>
           <VehicleRanks :nation="nation" :rank="vehicleEra" :branch="branch" />
         </div>
@@ -43,6 +33,7 @@
 // @ts-ignore
 import VehicleRanks from '@/components/VehicleRanks.vue'
 import apiParams from '@/assets/apiParams.json'
+import nationJson from '@/assets/nations.json'
 
 export default {
   components: {
@@ -55,7 +46,22 @@ export default {
       nation: sessionStorage.getItem('nation') || '',
       vehicles: [],
       vehicleEras: [],
-      uniqueVehicleEras: []
+      nations: nationJson, // JSON-ból származó adatok
+      selectedNationBranches: {} // Az adott nemzet ágazatai
+    }
+  },
+  computed: {
+    filteredBranches() {
+      // Ha nincs kiválasztva nemzet, vagy a nemzet nem található a JSON-ban, üres tömböt adunk vissza
+      //@ts-ignore
+      if (!this.nation || !this.nations[this.nation]) {
+        return []
+      }
+
+      // A nemzet ágazatai, csak a true értékű ágazatok listázása
+      //@ts-ignore
+      const branches = this.nations[this.nation].branches
+      return Object.keys(branches).filter((branch) => branches[branch])
     }
   },
   watch: {
@@ -67,10 +73,11 @@ export default {
       sessionStorage.setItem('nation', newNation)
       this.getVehicles()
     }
-    // vehicleEras: 'getVehicles'
   },
   mounted() {
-    this.getVehicles()
+    if (this.nation) {
+      this.getVehicles()
+    }
   },
   methods: {
     getVehicles() {
@@ -98,11 +105,11 @@ export default {
           console.log('Invalid branch:', this.branch)
           return
       }
-      //Filter by vehicle type|| tank, lbv, mbv, hbv, exoskeleton,submarine ????
+
       fetch(apiUrl)
         .then((res) => res.json())
         .then((data) => {
-          // @ts-ignore
+          //@ts-ignore
           this.vehicleEras = Array.from(new Set(data.map((item) => item.era)))
           this.vehicleEras.sort()
         })

@@ -38,7 +38,7 @@ if (!sessionStorage.getItem('parsedCSVData')) {
         const frenchValue = row['<French>']
 
         // Csak a "_shop" vagy "_1" végződésű kulcsokat mentjük el
-        if (id && (id.endsWith('_shop') || id.endsWith('_1'))) {
+        if (id && (id.endsWith('_shop') || id.endsWith('_0'))) {
           keyValuePairs[id] = {
             english: englishValue,
             french: frenchValue

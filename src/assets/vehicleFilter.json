@@ -380,6 +380,14 @@
         "branch": "ground"
       },
       {
+        "vehicle_id": "germ_panther_II",
+        "place": "PT",
+        "shown": true,
+        "rank": 4,
+        "nation": "germany",
+        "branch": "ground"
+      },
+      {
         "vehicle_id": "germ_pzkpfw_VI_ausf_b_tiger_IIh_kwk46",
         "place": "PT",
         "shown": true,

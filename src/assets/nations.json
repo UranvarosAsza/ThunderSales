@@ -1,12 +1,102 @@
-[
-  { "label": "USA", "value": "usa" },
-  { "label": "Germany", "value": "germany" },
-  { "label": "USSR", "value": "ussr" },
-  { "label": "Britain", "value": "britain" },
-  { "label": "China", "value": "china" },
-  { "label": "Italy", "value": "italy" },
-  { "label": "Japan", "value": "japan" },
-  { "label": "France", "value": "france" },
-  { "label": "Israel", "value": "israel" },
-  { "label": "Sweden", "value": "sweden" }
-]
+{
+  "usa": {
+    "flag_url": "./nationFlags/USA_flag.png",
+    "branches": {
+      "air": true,
+      "ground": true,
+      "heli": true,
+      "boat": true,
+      "ship": true
+    }
+  },
+  "germany": {
+    "flag_url": "./nationFlags/Germany_flag.png",
+    "branches": {
+      "air": true,
+      "ground": true,
+      "heli": true,
+      "boat": true,
+      "ship": true
+    }
+  },
+  "ussr": {
+    "flag_url": "./nationFlags/USSR_flag.png",
+    "branches": {
+      "air": true,
+      "ground": true,
+      "heli": true,
+      "boat": true,
+      "ship": true
+    }
+  },
+  "britain": {
+    "flag_url": "./nationFlags/Britain_flag.png",
+    "branches": {
+      "air": true,
+      "ground": true,
+      "heli": true,
+      "boat": true,
+      "ship": true
+    }
+  },
+  "china": {
+    "flag_url": "./nationFlags/China_flag.png",
+    "branches": {
+      "air": true,
+      "ground": true,
+      "heli": true,
+      "boat": false,
+      "ship": false
+    }
+  },
+  "italy": {
+    "flag_url": "./nationFlags/Italy_flag.png",
+    "branches": {
+      "air": true,
+      "ground": true,
+      "heli": true,
+      "boat": true,
+      "ship": true
+    }
+  },
+  "japan": {
+    "flag_url": "./nationFlags/Japan_flag.png",
+    "branches": {
+      "air": true,
+      "ground": true,
+      "heli": true,
+      "boat": true,
+      "ship": true
+    }
+  },
+  "france": {
+    "flag_url": "./nationFlags/France_flag.png",
+    "branches": {
+      "air": true,
+      "ground": true,
+      "heli": true,
+      "boat": true,
+      "ship": true
+    }
+  },
+  "israel": {
+    "flag_url": "./nationFlags/Israel_flag.png",
+    "branches": {
+      "air": true,
+      "ground": true,
+      "heli": true,
+      "boat": false,
+      "ship": false
+    }
+  },
+  "sweden": {
+    "flag_url": "./nationFlags/Sweden_flag.png",
+    "branches": {
+      "air": true,
+      "ground": true,
+      "heli": true,
+      "boat": false,
+      "ship": false
+    }
+  }
+}
