@@ -1,8 +1,8 @@
 <template>
   <!--egy darab jármű kártya -->
   <div>
-    <img :src="data.images.techtree" />
-    <div class="name">{{ data.identifier }}</div>
+    <img v-if="data.images" :src="data.images.techtree" alt="Vehicle Image" />
+    <!--<div class="name">{{ data.identifier }}</div>-->
     <div class="name">{{ shortVersionTranslatedName }}</div>
     <!--<div>{{ translatedName   }}</div>-->
     <div>Rank {{ data.era }}</div>
@@ -24,6 +24,7 @@
 <script>
 import { toast } from 'vue3-toastify'
 import 'vue3-toastify/dist/index.css'
+import apiParams from '@/assets/apiParams.json'
 
 export default {
   props: {
@@ -59,9 +60,7 @@ export default {
      */
     async getVehicleData() {
       try {
-        const res = await fetch(
-          'https://www.wtvehiclesapi.sgambe.serv00.net/api/vehicles/' + this.identifier
-        )
+        const res = await fetch(apiParams.urlForOneVehicle + this.identifier)
         const data = await res.json()
         this.vehiclesData = data
       } catch (err) {

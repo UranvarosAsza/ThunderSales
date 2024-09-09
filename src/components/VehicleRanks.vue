@@ -35,6 +35,7 @@
 <script>
 import VehicleModel from './VehicleModel.vue'
 import apiParameters from '@/assets/apiParams.json'
+import vehicleFilter from '@/assets/vehicleFilter.json'
 
 export default {
   components: {
@@ -67,28 +68,28 @@ export default {
     fetchVehicles() {
       switch (this.branch) {
         case 'air':
-          this.getTechtreeVehicles(apiParameters.air)
-          this.getPremiumTreeVehicles(apiParameters.air)
+          this.getTechtreeVehicles(apiParameters[this.branch])
+          this.getPremiumTreeVehicles(apiParameters[this.branch])
 
           break
         case 'heli':
-          this.getTechtreeVehicles(apiParameters.heli)
-          this.getPremiumTreeVehicles(apiParameters.heli)
+          this.getTechtreeVehicles(apiParameters[this.branch])
+          this.getPremiumTreeVehicles(apiParameters[this.branch])
 
           break
         case 'ground':
-          this.getTechtreeVehicles(apiParameters.ground)
-          this.getPremiumTreeVehicles(apiParameters.ground)
+          this.getTechtreeVehicles(apiParameters[this.branch])
+          this.getPremiumTreeVehicles(apiParameters[this.branch])
 
           break
         case 'boat':
-          this.getTechtreeVehicles(apiParameters.boat)
-          this.getPremiumTreeVehicles(apiParameters.boat)
+          this.getTechtreeVehicles(apiParameters[this.branch])
+          this.getPremiumTreeVehicles(apiParameters[this.branch])
 
           break
         case 'ship':
-          this.getTechtreeVehicles(apiParameters.ship)
-          this.getPremiumTreeVehicles(apiParameters.ship)
+          this.getTechtreeVehicles(apiParameters[this.branch])
+          this.getPremiumTreeVehicles(apiParameters[this.branch])
 
           break
         default:
@@ -98,59 +99,74 @@ export default {
     },
 
     getTechtreeVehicles(apiParamBranch) {
-      fetch(
-        //FIXME apiParams.json
-        'https://www.wtvehiclesapi.sgambe.serv00.net/api/vehicles?' +
-          'country=' +
-          this.nation +
-          apiParamBranch +
-          this.rank +
-          apiParameters.techtree
-      )
+      fetch(apiParameters.url + this.nation + apiParamBranch + this.rank + apiParameters.techtree)
         .then((res) => res.json())
-        .then((data) => (this.TechTreeVehicles = data.filter((vehicle) => vehicle.event === null)))
+        .then((data) => {
+          // Filtereljük ki az unusedTechTreevehicles és a misplacedTechTreeVehicles járműveket
+          this.TechTreeVehicles = data.filter(
+            (vehicle) =>
+              !vehicleFilter.unusedTechTreevehicles.vehicles.some(
+                (unusedVehicle) => unusedVehicle.vehicle_id === vehicle.identifier
+              ) &&
+              !vehicleFilter.misplacedTechTreeVehicles.vehicles.some(
+                (misplacedVehicle) =>
+                  misplacedVehicle.vehicle_id === vehicle.identifier &&
+                  misplacedVehicle.rank === this.rank &&
+                  misplacedVehicle.nation === this.nation
+              ) &&
+              vehicle.event === null
+          )
+        })
         .catch((err) => console.log(err.message))
     },
-    getPremiumTreeVehicles(apiParam) {
-      // 3 api call same params
-      const premiumVehicles = fetch(
-        //FIXME apiParams.json 3x
-        'https://www.wtvehiclesapi.sgambe.serv00.net/api/vehicles?' +
-          'country=' +
-          this.nation +
-          apiParam +
-          this.rank +
-          apiParameters.premium
+    async getPremiumTreeVehicles(apiParam) {
+      const premiumVehicles = await fetch(
+        apiParameters.url + this.nation + apiParam + this.rank + apiParameters.premium
       ).then((res) => res.json())
-      //squadron
-      const squadronVehicles = fetch(
-        'https://www.wtvehiclesapi.sgambe.serv00.net/api/vehicles?' +
-          'country=' +
-          this.nation +
-          apiParam +
-          this.rank +
-          apiParameters.squadron
+
+      const squadronVehicles = await fetch(
+        apiParameters.url + this.nation + apiParam + this.rank + apiParameters.squadron
       ).then((res) => res.json())
-      //nincs event jármű csak tt járművek filterezve
-      const eventVehicles = fetch(
-        'https://www.wtvehiclesapi.sgambe.serv00.net/api/vehicles?' +
-          'country=' +
-          this.nation +
-          apiParam +
-          this.rank +
-          apiParameters.techtree
+
+      const eventVehicles = await fetch(
+        apiParameters.url + this.nation + apiParam + this.rank + apiParameters.techtree
       )
         .then((res) => res.json())
         .then((data) => {
-          // Szűrés azokra a járművekre, ahol az "event" paraméter null
           return data.filter((vehicle) => vehicle.event !== null)
         })
-      Promise.all([premiumVehicles, squadronVehicles, eventVehicles])
-        .then(([premiumData, squadronData, regularData]) => {
-          // Az adatokat egyesítjük egyetlen tömbbe
-          this.PremVehicles = [...premiumData, ...squadronData, ...regularData]
+
+      const filteredPremVehicles = [
+        ...premiumVehicles,
+        ...squadronVehicles,
+        ...eventVehicles
+      ].filter(
+        (vehicle) =>
+          !vehicleFilter.unusedPremvehicles.vehicles.some(
+            (unusedVehicle) => unusedVehicle.vehicle_id === vehicle.identifier
+          )
+      )
+
+      // Szűrjük ki a misplacedTechTreeVehicles-ből a jelenlegi nation/rank/branch járműveket
+      const misplacedVehicles = vehicleFilter.misplacedTechTreeVehicles.vehicles.filter(
+        (misplacedVehicle) =>
+          misplacedVehicle.rank === this.rank &&
+          misplacedVehicle.nation === this.nation &&
+          misplacedVehicle.branch === this.branch // Szűrés a branch-re
+      )
+
+      // Lekérjük az API-ból a misplaced vehicles részletes adatait
+      const misplacedVehiclesData = await Promise.all(
+        misplacedVehicles.map(async (misplacedVehicle) => {
+          const res = await fetch(apiParameters.urlForOneVehicle + misplacedVehicle.vehicle_id)
+          return res.json()
         })
-        .catch((err) => console.log(err.message))
+      )
+
+      // Az API-ból kapott teljes járműadatok hozzáadása a PremVehicles-hez
+      this.PremVehicles = [...filteredPremVehicles, ...misplacedVehiclesData]
+
+      console.log('Final Prem Vehicles:', this.PremVehicles)
     }
   }
 }

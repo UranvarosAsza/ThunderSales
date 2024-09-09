@@ -27,7 +27,7 @@ if (!sessionStorage.getItem('parsedCSVData')) {
       }
 
       const parsedData = Papa.parse(csvText, config)
-
+      //FIXME lehet hogy nem a _1 kell hanem a _2 végű majd meg kell nézni
       // Feldolgozott adatokat alakítsuk kulcs-érték párokká
       //const keyValuePairs: Record<string, string> = {}
       const keyValuePairs: Record<string, { english: string; french: string }> = {}
