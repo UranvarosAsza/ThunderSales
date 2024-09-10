@@ -13,3 +13,8 @@ https://vue3-toastify.js-bridge.com/
 # CSV Parser for localised vehiclenames:
 
 https://www.papaparse.com/
+
+## Vehicle filtering is based on:
+
+Turteł's awesome doc:
+https://docs.google.com/document/d/18UJMjgREFIVBG0HqPckBpTzq2MvOXnN6LOsp94G1wF8/edit

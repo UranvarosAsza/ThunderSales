@@ -1,6 +1,4 @@
 //Komponensek:
-//Vehicle
-//VehicleFIlter based on: https://docs.google.com/document/d/18UJMjgREFIVBG0HqPckBpTzq2MvOXnN6LOsp94G1wF8/edit
 
 //még kell annyi hogy amikor meglévő járművet visz fel akkor
 //                  a)vagy a legfrissebb opcióval vigye fel,

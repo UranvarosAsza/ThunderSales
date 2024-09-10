@@ -46,6 +46,7 @@
 </template>
 
 <script lang="ts">
+//FIXME
 // @ts-ignore
 import VehicleRanks from '@/components/VehicleRanks.vue'
 import apiParams from '@/assets/apiParams.json'
@@ -59,18 +60,24 @@ export default {
     return {
       branch: sessionStorage.getItem('branch') || '',
       nation: sessionStorage.getItem('nation') || '',
-      vehicles: [],
-      vehicleEras: [],
+      //FIXME
+      // @ts-ignore
+      vehicles: JSON.parse(sessionStorage.getItem('vehicles')) || [], // Visszaállítjuk a mentett jármű adatokat
+      //FIXME
+      // @ts-ignore
+      vehicleEras: JSON.parse(sessionStorage.getItem('vehicleEras')) || [], // Visszaállítjuk a mentett era adatokat
       nations: nationJson
     }
   },
   computed: {
     filteredBranches() {
-      //@ts-ignore
+      //FIXME
+      // @ts-ignore
       if (!this.nation || !this.nations[this.nation]) {
         return []
       }
-      //@ts-ignore
+      //FIXME
+      // @ts-ignore
       const branches = this.nations[this.nation].branches
       return Object.keys(branches).filter((branch) => branches[branch])
     }
@@ -86,30 +93,63 @@ export default {
     }
   },
   methods: {
-    //@ts-ignore
+    //FIXME
+    // @ts-ignore
     selectNation(nationKey) {
       this.nation = nationKey
       sessionStorage.setItem('nation', nationKey)
 
-      // Ellenőrzés, hogy van-e "air" branch, és ha igen, állítsuk be alapértelmezettként
+      // Ellenőrizzük, hogy van-e "air" branch, és ha igen, állítsuk be alapértelmezettként
+      //FIXME
       //@ts-ignore
       if (this.nations[nationKey].branches.air) {
-        this.branch = 'air'
-        sessionStorage.setItem('branch', 'air')
+        this.selectBranch('air') // Most a selectBranch hívjuk meg itt is
       } else {
         this.branch = '' // Ha nincs "air", akkor üres
         sessionStorage.removeItem('branch')
       }
 
-      this.getVehicles() // Frissítsük a járműveket is
+      // Töröljük a tárolt jármű adatokat, ha nemzetet váltunk
+      sessionStorage.removeItem('vehicles')
+      sessionStorage.removeItem('vehicleEras')
     },
-    //@ts-ignore
+    //FIXME
+    // @ts-ignore
     selectBranch(branchName) {
       this.branch = branchName
+      sessionStorage.setItem('branch', branchName)
+
+      // Töröljük a jármű adatokat, ha branch-et váltunk
+      sessionStorage.removeItem('vehicles')
+      sessionStorage.removeItem('vehicleEras')
+
+      this.getVehicles() // Járművek frissítése
     },
     getVehicles() {
       if (!this.nation || !this.branch) return
 
+      // Ellenőrizzük, hogy van-e már elmentett jármű adat
+
+      const storedVehicles = JSON.parse(
+        //FIXME
+        //@ts-ignore
+        sessionStorage.getItem(`vehicles_${this.nation}_${this.branch}`)
+      )
+
+      const storedVehicleEras = JSON.parse(
+        //FIXME
+        //@ts-ignore
+        sessionStorage.getItem(`vehicleEras_${this.nation}_${this.branch}`)
+      )
+
+      // Ha már elmentettük korábban, visszaolvassuk
+      if (storedVehicles && storedVehicleEras) {
+        this.vehicles = storedVehicles
+        this.vehicleEras = storedVehicleEras
+        return
+      }
+
+      // Ha nincsenek elmentett adatok, futtassuk le az API hívást
       let apiUrl = ''
 
       switch (this.branch) {
@@ -136,12 +176,44 @@ export default {
       fetch(apiUrl)
         .then((res) => res.json())
         .then((data) => {
+          this.vehicles = data
+          //FIXME
           //@ts-ignore
           this.vehicleEras = Array.from(new Set(data.map((item) => item.era)))
           this.vehicleEras.sort()
+
+          // Elmentjük a lekért adatokat a sessionStorage-be nemzet+branch alapján
+          sessionStorage.setItem(
+            `vehicles_${this.nation}_${this.branch}`,
+            JSON.stringify(this.vehicles)
+          )
+          sessionStorage.setItem(
+            `vehicleEras_${this.nation}_${this.branch}`,
+            JSON.stringify(this.vehicleEras)
+          )
         })
         .catch((err) => console.log(err.message))
     }
+  },
+  mounted() {
+    // Visszaállítjuk a kiválasztott nation-t és branch-et a sessionStorage-ból, ha vannak értékek
+    const storedNation = sessionStorage.getItem('nation')
+    const storedBranch = sessionStorage.getItem('branch')
+
+    if (storedNation) {
+      this.nation = storedNation
+      // Ellenőrizzük, hogy a nemzet elérhető-e, és frissítjük a branch-et, ha szükséges
+      //FIXME
+      // @ts-ignore
+      if (this.nations[storedNation].branches.air && !storedBranch) {
+        this.branch = 'air'
+      } else {
+        this.branch = storedBranch || '' // Ha nincs tárolva branch, üres marad
+      }
+    }
+
+    // Frissítjük a jármű adatokat, ha nincsenek elmentve
+    this.getVehicles()
   }
 }
 </script>

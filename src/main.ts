@@ -26,12 +26,15 @@ if (!sessionStorage.getItem('parsedCSVData')) {
         skipFirstNLines: 870
       }
 
+      //@ts-ignore
       const parsedData = Papa.parse(csvText, config)
-      //FIXME lehet hogy nem a _1 kell hanem a _2 végű majd meg kell nézni
+      //FIXME átírni a változóneveket hogy legyen egy név meg egy hosszú név,
+      //FIXME nem a _1 kell hanem a _0 végü
       // Feldolgozott adatokat alakítsuk kulcs-érték párokká
       //const keyValuePairs: Record<string, string> = {}
       const keyValuePairs: Record<string, { english: string; french: string }> = {}
 
+      //@ts-ignore
       parsedData.data.forEach((row: any) => {
         const id = row['<ID|readonly|noverify>']
         const englishValue = row['<English>']
@@ -71,4 +74,5 @@ app.use(Vue3Toastify, {
 })
 
 app.mount('#app')
+//@ts-ignore
 app.use(Papa)
