@@ -1,6 +1,7 @@
 {
   "usa": {
-    "flag_url": "./nationFlags/USA_flag.png",
+    "flag_url": "src/assets/nationFlags/USA_flag.png",
+    "displayed_name_EN": "USA",
     "branches": {
       "air": true,
       "ground": true,
@@ -10,7 +11,8 @@
     }
   },
   "germany": {
-    "flag_url": "./nationFlags/Germany_flag.png",
+    "flag_url": "src/assets/nationFlags/Germany_flag.png",
+    "displayed_name_EN": "Germany",
     "branches": {
       "air": true,
       "ground": true,
@@ -20,7 +22,8 @@
     }
   },
   "ussr": {
-    "flag_url": "./nationFlags/USSR_flag.png",
+    "flag_url": "src/assets/nationFlags/USSR_flag.png",
+    "displayed_name_EN": "USSR",
     "branches": {
       "air": true,
       "ground": true,
@@ -30,7 +33,8 @@
     }
   },
   "britain": {
-    "flag_url": "./nationFlags/Britain_flag.png",
+    "flag_url": "src/assets/nationFlags/Britain_flag.png",
+    "displayed_name_EN": "Britain",
     "branches": {
       "air": true,
       "ground": true,
@@ -40,7 +44,8 @@
     }
   },
   "china": {
-    "flag_url": "./nationFlags/China_flag.png",
+    "flag_url": "src/assets/nationFlags/China_flag.png",
+    "displayed_name_EN": "China",
     "branches": {
       "air": true,
       "ground": true,
@@ -50,7 +55,8 @@
     }
   },
   "italy": {
-    "flag_url": "./nationFlags/Italy_flag.png",
+    "flag_url": "src/assets/nationFlags/Italy_flag.png",
+    "displayed_name_EN": "Italy",
     "branches": {
       "air": true,
       "ground": true,
@@ -60,7 +66,8 @@
     }
   },
   "japan": {
-    "flag_url": "./nationFlags/Japan_flag.png",
+    "flag_url": "src/assets/nationFlags/Japan_flag.png",
+    "displayed_name_EN": "Japan",
     "branches": {
       "air": true,
       "ground": true,
@@ -70,7 +77,8 @@
     }
   },
   "france": {
-    "flag_url": "./nationFlags/France_flag.png",
+    "flag_url": "src/assets/nationFlags/France_flag.png",
+    "displayed_name_EN": "France",
     "branches": {
       "air": true,
       "ground": true,
@@ -80,7 +88,8 @@
     }
   },
   "israel": {
-    "flag_url": "./nationFlags/Israel_flag.png",
+    "flag_url": "src/assets/nationFlags/Israel_flag.png",
+    "displayed_name_EN": "Israel",
     "branches": {
       "air": true,
       "ground": true,
@@ -90,7 +99,8 @@
     }
   },
   "sweden": {
-    "flag_url": "./nationFlags/Sweden_flag.png",
+    "flag_url": "src/assets/nationFlags/Sweden_flag.png",
+    "displayed_name_EN": "Sweden",
     "branches": {
       "air": true,
       "ground": true,
