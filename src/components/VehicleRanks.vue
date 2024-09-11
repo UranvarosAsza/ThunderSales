@@ -1,5 +1,5 @@
 <template>
-  <p class="rankHeader">Rank {{ rank }} {{ nation }}, {{ branch }}</p>
+  <p class="rankHeader">Rank {{ rankInRoman }}</p>
 
   <div class="rank">
     <div class="techtree">
@@ -49,12 +49,14 @@ export default {
   data() {
     return {
       PremVehicles: [],
-      TechTreeVehicles: []
+      TechTreeVehicles: [],
+      rankInRoman: ''
     }
   },
   computed: {},
   mounted() {
     this.fetchVehicles()
+    this.rankNumbersInRoman(this.rank)
   },
   watch: {
     // Figyeli a propokat, és ha valamelyik változik, újra lefut a fetchVehicles
@@ -165,6 +167,37 @@ export default {
       this.PremVehicles = [...filteredPremVehicles, ...misplacedVehiclesData]
 
       //console.log('Final Prem Vehicles:', this.PremVehicles)
+    },
+    rankNumbersInRoman(rankNumberInArabic) {
+      switch (rankNumberInArabic) {
+        case 1:
+          this.rankInRoman = 'I'
+          break
+        case 2:
+          this.rankInRoman = 'II'
+          break
+        case 3:
+          this.rankInRoman = 'III'
+          break
+        case 4:
+          this.rankInRoman = 'IV'
+          break
+        case 5:
+          this.rankInRoman = 'V'
+          break
+        case 6:
+          this.rankInRoman = 'VI'
+          break
+        case 7:
+          this.rankInRoman = 'VII'
+          break
+        case 8:
+          this.rankInRoman = 'VIII'
+          break
+        default:
+          this.rankInRoman = rankNumberInArabic.toString()
+          console.log('rankNumber converting failed')
+      }
     }
   }
 }
@@ -178,7 +211,7 @@ export default {
   font-size: 30pt;
   font-weight: 600;
   margin: auto;
-  text-align: center;
+  text-align: left;
 }
 .rank {
   display: flex;
