@@ -10,7 +10,7 @@ https://wtvehiclesapi.sgambe.serv00.net/docs/
 
 https://vue3-toastify.js-bridge.com/
 
-# CSV Parser for localised vehiclenames:
+# CSV Parser for localised vehicle names:
 
 https://www.papaparse.com/
 
