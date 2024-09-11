@@ -18,7 +18,7 @@
         </div>
       </div>
 
-      <label>Select branch:</label>
+      <label v-if="nation">Select branch:</label>
       <div class="branch-boxes">
         <div
           v-for="branchName in filteredBranches"
