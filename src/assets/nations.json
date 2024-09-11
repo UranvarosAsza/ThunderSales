@@ -33,7 +33,7 @@
     }
   },
   "britain": {
-    "flag_url": "src/assets/nationFlags/britain_flag.png",
+    "flag_url": "/britain_flag.png",
     "displayed_name_EN": "Britain",
     "branches": {
       "air": true,
@@ -44,7 +44,7 @@
     }
   },
   "china": {
-    "flag_url": "src/assets/nationFlags/bhina_flag.png",
+    "flag_url": "/china_flag.png",
     "displayed_name_EN": "China",
     "branches": {
       "air": true,
