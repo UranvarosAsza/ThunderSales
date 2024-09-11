@@ -1,6 +1,6 @@
 {
   "usa": {
-    "flag_url": "src/assets/nationFlags/USA_flag.png",
+    "flag_url": "/nationFlags/usa_flag.png",
     "displayed_name_EN": "USA",
     "branches": {
       "air": true,
@@ -11,7 +11,7 @@
     }
   },
   "germany": {
-    "flag_url": "src/assets/nationFlags/Germany_flag.png",
+    "flag_url": "/nationFlags/germany_flag.png",
     "displayed_name_EN": "Germany",
     "branches": {
       "air": true,
@@ -22,7 +22,7 @@
     }
   },
   "ussr": {
-    "flag_url": "src/assets/nationFlags/USSR_flag.png",
+    "flag_url": "/nationFlags/ussr_flag.png",
     "displayed_name_EN": "USSR",
     "branches": {
       "air": true,
@@ -33,7 +33,7 @@
     }
   },
   "britain": {
-    "flag_url": "/britain_flag.png",
+    "flag_url": "/nationFlags/britain_flag.png",
     "displayed_name_EN": "Britain",
     "branches": {
       "air": true,
@@ -44,7 +44,7 @@
     }
   },
   "china": {
-    "flag_url": "/china_flag.png",
+    "flag_url": "/nationFlags/china_flag.png",
     "displayed_name_EN": "China",
     "branches": {
       "air": true,
@@ -55,7 +55,7 @@
     }
   },
   "italy": {
-    "flag_url": "src/assets/nationFlags/Italy_flag.png",
+    "flag_url": "/nationFlags/italy_flag.png",
     "displayed_name_EN": "Italy",
     "branches": {
       "air": true,
@@ -66,7 +66,7 @@
     }
   },
   "japan": {
-    "flag_url": "src/assets/nationFlags/Japan_flag.png",
+    "flag_url": "/nationFlags/japan_flag.png",
     "displayed_name_EN": "Japan",
     "branches": {
       "air": true,
@@ -77,7 +77,7 @@
     }
   },
   "france": {
-    "flag_url": "src/assets/nationFlags/France_flag.png",
+    "flag_url": "/nationFlags/france_flag.png",
     "displayed_name_EN": "France",
     "branches": {
       "air": true,
@@ -88,7 +88,7 @@
     }
   },
   "israel": {
-    "flag_url": "src/assets/nationFlags/Israel_flag.png",
+    "flag_url": "/nationFlags/israel_flag.png",
     "displayed_name_EN": "Israel",
     "branches": {
       "air": true,
@@ -99,7 +99,7 @@
     }
   },
   "sweden": {
-    "flag_url": "src/assets/nationFlags/Sweden_flag.png",
+    "flag_url": "/nationFlags/sweden_flag.png",
     "displayed_name_EN": "Sweden",
     "branches": {
       "air": true,
