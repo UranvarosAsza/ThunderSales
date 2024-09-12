@@ -39,12 +39,14 @@ export default {
     return {
       vehiclesData: {},
       showPopupList: false,
+      //FIXME
       translatedName: '', // Hosszú név (_shop)
       shortVersionTranslatedName: '', // Rövid név (_1)
       basicCrew: 'basic',
       expertCrew: 'expert',
       vehicleCost: 'vehicle itself',
-      picked: ''
+      picked: '',
+      type: ''
     }
   },
   computed: {
@@ -79,6 +81,15 @@ export default {
         toast.error('Failed to fetch vehicle data!') // Hibaüzenet toast
         return
       }
+
+      //vehicle type selection for the sales: is it TT/Prem/Squadron
+
+      if (this.data.squadron_vehicle == true) {
+        this.type = 'SQ'
+      } else if (this.data.is_premium == true) {
+        this.type = 'PR'
+      } else this.type = 'TT'
+
       const vehicle = {
         vehicle_id: this.data.identifier,
         shortName: this.shortVersionTranslatedName,
@@ -90,16 +101,16 @@ export default {
         exptertCrewTrtainigCost: this.vehiclesData.train2_cost,
         aceCrewTrainingCost: this.vehiclesData.train3_cost_gold,
         listOption: listOption,
+        vehicleType: this.type, // lehet normal, squadron, premium
         totalPrice: 0
       }
-      let vehicles = JSON.parse(sessionStorage.getItem('vehicleData') || '[]')
-      vehicles.push(vehicle)
-      sessionStorage.setItem('vehicleData', JSON.stringify(vehicles))
+      let vehiclesPrices = JSON.parse(sessionStorage.getItem('vehicleData') || '[]')
+      vehiclesPrices.push(vehicle)
+      sessionStorage.setItem('vehicleData', JSON.stringify(vehiclesPrices))
       toast.success('Vehicle added successfully!') // Sikeres értesítés toast
     },
     openCloseListOptions() {
       this.showPopupList = !this.showPopupList
-      //console.log('popupcomputed: ' )
     },
 
     /**

@@ -56,7 +56,7 @@ if (!sessionStorage.getItem('parsedCSVData')) {
         // 5MB korlát
         sessionStorage.setItem('parsedCSVData', keyValuePairsJSON)
         console.log('parsedCSVData had been saved')
-        console.log('Parsed key-value pairs: ', keyValuePairs)
+        //console.log('Parsed key-value pairs: ', keyValuePairs)
       } else {
         console.warn(
           'A CSV fájl (key-value párok) feldolgozott adata túl nagy a sessionStorage-hoz!'

@@ -16,13 +16,12 @@
         <option value="expertCrew">Expert Crew</option>
       </select>
       <button class="remove" @click="removeFromList">Remove</button>
+      {{ vehicle.vehicleType }}
     </td>
   </tr>
 </template>
 
 <script>
-import { watch } from 'vue'
-
 export default {
   props: {
     vehicle: Object
@@ -37,68 +36,73 @@ export default {
     }
   },
   watch: {
-    selectedListOption: 'computeSelectedPrice'
+    selectedListOption(newOption) {
+      this.vehicle.listOption = newOption
+      this.computeSelectedPrice()
+      this.updateVehicle()
+    }
   },
   mounted() {
     this.selectedListOption = this.vehicle.listOption
     this.computeSelectedPrice()
   },
   methods: {
+    updateVehicle() {
+      let vehicles = JSON.parse(sessionStorage.getItem('vehicleData') || '[]')
+      const vehicleIndex = vehicles.findIndex((v) => v.vehicle_id === this.vehicle.vehicle_id)
+
+      if (vehicleIndex !== -1) {
+        vehicles[vehicleIndex] = this.vehicle
+        sessionStorage.setItem('vehicleData', JSON.stringify(vehicles))
+      }
+
+      // Emit the updated price after saving the changes
+      this.$emit('price-updated', {
+        vehicleTotal: this.totalPrice,
+        vehicleGoldPrice: this.vehicle.gePrice,
+        vehiclePrice: this.totalPrice,
+        basicCrewPrice: this.vehicle.basicCrewTrainingCost,
+        expertCrewPrice: this.vehicle.exptertCrewTrtainigCost,
+        vehicleId: this.vehicle.vehicle_id,
+        selectedOption: this.selectedListOption,
+        vehicleType: this.vehicle.vehicleType
+      })
+    },
     computeSelectedPrice() {
       switch (this.selectedListOption) {
         case 'expertCrew':
-          if (this.vehicle.vehicleCostSL) {
-            this.totalPrice =
-              this.vehicle.basicCrewTrainingCost +
-              this.vehicle.exptertCrewTrtainigCost +
-              this.vehicle.vehicleCostSL
-            this.infoText =
-              'Calculated as: vehicle cost: ' +
-              this.vehicle.vehicleCostSL +
-              ' basic crew cost: ' +
-              this.vehicle.basicCrewTrainingCost +
-              ' expert crew cost: ' +
-              this.vehicle.exptertCrewTrtainigCost
-          } else {
-            this.totalPrice =
-              this.vehicle.basicCrewTrainingCost + this.vehicle.exptertCrewTrtainigCost
-            this.infoText =
-              'Calculated as:' +
-              ' basic crew cost: ' +
-              this.vehicle.basicCrewTrainingCost +
-              ' expert crew cost: ' +
-              this.vehicle.exptertCrewTrtainigCost
-          }
+          this.totalPrice =
+            this.vehicle.basicCrewTrainingCost +
+            this.vehicle.exptertCrewTrtainigCost +
+            (this.vehicle.vehicleCostSL || 0)
+          this.infoText = `Calculated as: vehicle cost: ${this.vehicle.vehicleCostSL || 0}, basic crew cost: ${this.vehicle.basicCrewTrainingCost}, expert crew cost: ${this.vehicle.exptertCrewTrtainigCost}`
           break
         case 'basicCrew':
-          if (this.vehicle.vehicleCostSL) {
-            this.totalPrice = this.vehicle.basicCrewTrainingCost + this.vehicle.vehicleCostSL
-            this.infoText =
-              'Calculated as: vehicle cost: ' +
-              this.vehicle.vehicleCostSL +
-              ' basic crew cost: ' +
-              this.vehicle.basicCrewTrainingCost
-          } else {
-            this.totalPrice = this.vehicle.basicCrewTrainingCost
-            this.infoText =
-              'Calculated as:' + ' basic crew cost: ' + this.vehicle.basicCrewTrainingCost
-          }
+          this.totalPrice = this.vehicle.basicCrewTrainingCost + (this.vehicle.vehicleCostSL || 0)
+          this.infoText = `Calculated as: vehicle cost: ${this.vehicle.vehicleCostSL || 0}, basic crew cost: ${this.vehicle.basicCrewTrainingCost}`
           break
         case 'vehicleCost':
-          if (this.vehicle.vehicleCostSL) {
-            this.totalPrice = this.vehicle.vehicleCostSL
-            this.infoText = 'Calculated as: vehicle cost: ' + this.vehicle.vehicleCostSL
-          } else {
-            this.totalPrice = 0
-            this.infoText = 'Calculated as:' + '(vehicle cost is in Ge or free (reserve))'
-          }
+          this.totalPrice = this.vehicle.vehicleCostSL || 0
+          this.infoText = `Calculated as: vehicle cost: ${this.vehicle.vehicleCostSL || '(vehicle cost is in Ge or free (reserve))'}`
           break
         default:
           console.log('No valid list option selected')
       }
 
-      this.$emit('price-updated', this.totalPrice, this.vehicle.vehicle_id)
+      // Esemény kibocsátása egy objektummal
+      this.$emit('price-updated', {
+        //komponensek: jármű ára, basic crew, expert crew, id, listoption esetleg később talizmán ár,
+        vehicleTotal: this.totalPrice,
+        vehicleGoldPrice: this.vehicle.gePrice,
+        vehiclePrice: this.totalPrice,
+        basicCrewPrice: this.vehicle.basicCrewTrainingCost,
+        expertCrewPrice: this.vehicle.exptertCrewTrtainigCost,
+        vehicleId: this.vehicle.vehicle_id,
+        selectedOption: this.selectedListOption,
+        vehicleType: this.vehicle.vehicleType
+      })
     },
+
     removeFromList() {
       let vehicles = JSON.parse(sessionStorage.getItem('vehicleData') || '[]')
       vehicles = vehicles.filter((v) => v.vehicle_id !== this.vehicle.vehicle_id)
@@ -106,9 +110,6 @@ export default {
       this.$emit('vehicleRemoved')
     },
 
-    editListOption() {
-      console.log('cica')
-    },
     toggleInfoBox() {
       this.showInfoBox = !this.showInfoBox
     },
