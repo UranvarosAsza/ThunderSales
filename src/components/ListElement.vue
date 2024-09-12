@@ -16,7 +16,16 @@
         <option value="expertCrew">Expert Crew</option>
       </select>
       <button class="remove" @click="removeFromList">Remove</button>
-      {{ vehicle.vehicleType }}
+      <span
+        :class="[
+          'vehicle-type-label',
+          vehicle.vehicleType === 'TT' ? 'vehicle-tt' : '',
+          vehicle.vehicleType === 'SQ' ? 'vehicle-sq' : '',
+          vehicle.vehicleType === 'PR' ? 'vehicle-pr' : ''
+        ]"
+      >
+        {{ vehicle.vehicleType }}
+      </span>
     </td>
   </tr>
 </template>
@@ -37,6 +46,7 @@ export default {
   },
   watch: {
     selectedListOption(newOption) {
+      //@ts-ignore
       this.vehicle.listOption = newOption
       this.computeSelectedPrice()
       this.updateVehicle()
@@ -121,6 +131,25 @@ export default {
 </script>
 
 <style>
+.vehicle-type-label {
+  display: inline-block;
+  padding: 4px 8px;
+  border-radius: 12px;
+  font-size: 0.8em;
+  color: white;
+}
+
+.vehicle-tt {
+  background-color: #416173; /* Kék háttér */
+}
+
+.vehicle-sq {
+  background-color: #5c8655; /* Zöld háttér */
+}
+
+.vehicle-pr {
+  background-color: #7f6c38; /* Arany háttér */
+}
 td {
   padding: 10px;
   border: 2px solid #2e4451;
