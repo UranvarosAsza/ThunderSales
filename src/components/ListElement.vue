@@ -4,11 +4,11 @@
     <td>{{ vehicle.nation }}</td>
     <td>
       Your total is: {{ totalPrice.toLocaleString('hu-HU') }}
-      <button @click="toggleInfoBox" class="tooltip">
+      <button @click="toggleInfoBox" class="my-tooltip">
         i
-        <span class="tooltiptext">details</span>
+        <span class="my-tooltiptext">details</span>
       </button>
-      <span v-if="showInfoBox" class="info-box">{{ infoText }}</span>
+      <span v-if="showInfoBox" class="my-info-box">{{ infoText }}</span>
       <button class="edit" @click="showHideModify">Modify</button>
       <select v-if="showModify" v-model="selectedListOption">
         <option value="vehicleCost">Vehicle Cost</option>
@@ -161,7 +161,7 @@ td {
 .remove:hover {
   background-color: rgba(255, 0, 0, 0.582) !important;
 }
-.info-box {
+.my-info-box {
   display: inline-block;
   background-color: #eee;
   padding: 5px;
@@ -169,13 +169,13 @@ td {
   border: 1px solid #ccc;
   border-radius: 5px;
 }
-.tooltip {
+.my-tooltip {
   position: relative;
   display: inline-block;
   border-bottom: 1px dotted black;
 }
 
-.tooltip .tooltiptext {
+.my-tooltip .my-tooltiptext {
   visibility: hidden;
   background-color: rgba(0, 0, 0, 0.638);
   color: #fff;
@@ -191,7 +191,7 @@ td {
   margin-left: -60px;
 }
 
-.tooltip .tooltiptext::after {
+.my-tooltip .my-tooltiptext::after {
   content: ' ';
   position: absolute;
   top: 100%; /* At the bottom of the tooltip */
@@ -202,7 +202,7 @@ td {
   border-color: black transparent transparent transparent;
 }
 
-.tooltip:hover .tooltiptext {
+.my-tooltip:hover .my-tooltiptext {
   visibility: visible;
 }
 select {

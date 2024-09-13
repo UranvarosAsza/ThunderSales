@@ -1,4 +1,3 @@
-import './assets/main.css'
 import Vue3Toastify, { type ToastContainerOptions } from 'vue3-toastify'
 import 'vue3-toastify/dist/index.css'
 
@@ -9,7 +8,9 @@ import router from './router'
 import Papa from 'papaparse'
 // @ts-ignore
 import units from '@/assets/units.csv'
-
+import 'bootstrap'
+import 'bootstrap/dist/css/bootstrap.min.css'
+import './assets/main.css'
 const app = createApp(App)
 
 if (!sessionStorage.getItem('parsedCSVData')) {

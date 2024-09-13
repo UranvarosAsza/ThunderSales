@@ -1,5 +1,5 @@
 <template>
-  <div class="nationSelector">
+  <div class="container-fluid nationSelector">
     <nav>
       <label>Select a nation:</label>
       <div class="nation-boxes">
@@ -222,6 +222,8 @@ export default {
 .branch-boxes {
   display: flex;
   justify-content: center;
+  align-items: center; /* Ez igazítja középre vertikálisan, ha szükséges */
+  flex-wrap: wrap;
   gap: 10px;
   margin-top: 20px;
 }
@@ -233,6 +235,8 @@ export default {
   cursor: pointer;
   transition: background-color 0.3s;
   border-radius: 5px;
+  min-width: 120px;
+  text-align: center;
 }
 
 .branch-box.active {
@@ -273,7 +277,7 @@ export default {
 
 .nation-name {
   position: absolute;
-  top: -35px;
+  top: -45px;
   left: 50%;
   transform: translateX(-50%);
   font-weight: bold;
@@ -281,6 +285,7 @@ export default {
   font-size: 25px;
 }
 .nationSelector {
+  max-width: 1799px;
   margin: 0 auto;
   padding: 20px;
   color: white;
@@ -288,17 +293,6 @@ export default {
   background-color: #2e4451;
   border-bottom-left-radius: 10px !important;
   border-bottom-right-radius: 10px !important;
-}
-
-select,
-button {
-  font-size: 16px;
-  padding: 8px 12px;
-  margin: 0 10px;
-  border-radius: 4px;
-  border: 1px solid #ccc;
-  background-color: #fff;
-  box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.1);
 }
 
 nav {

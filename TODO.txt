@@ -1,0 +1,26 @@
+TODO Css overhaul 
+    -vehicleRanks
+    -vehicleModel
+    -egész listView
+TODO meglévő járművet visz fel akkor:
+                 a)vagy a legfrissebb opcióval vigye fel,
+                 b)vagy adjon toastot hogy ezt a listánál tudja szerkeszteni ha szeretné
+                 c) mindkettő
+TODO táblázatba, subtotalok nemzetenként
+TODO a táblázat számlálónál tudja megmondani hogy packos járműnek a gold értékét ne vegye figyelembe
+TODO nation alapján is kapjon pici zászlót a táblázatba a sub-totalba
+TODO minden páros és minden páratlan legyen más színű
+
+TODO táblázatexport -inport 2x, egy a kiszámolandó egy pedig a részletes számolás
+
+
+Extra dolgok:
+Vegyes, nemzet nélküli TT,
+rejtett jármvek külön
+Speciális járművek külön
+saját jármű-adatos oldal ??
+
+
+//npm run dev
+//npm run build
+//npm run lint

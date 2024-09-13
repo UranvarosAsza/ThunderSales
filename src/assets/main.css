@@ -1,3 +1,41 @@
-#body {
-  margin: 0px !important;
+.my-nav {
+  background-color: #2e4451 !important;
+  border-radius: 0;
+  color: white;
+  max-width: 1799px;
+  margin: auto;
+  box-shadow: 0px 2px 5px black;
+}
+.navbar-toggler {
+  border-color: white;
+  margin-left: 8px; /* A gomb színének megváltoztatása */
+}
+.navbar-toggler-icon {
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 30 30'%3E%3Cpath stroke='rgba(255, 255, 255, 1)' stroke-width='2' d='M4 7h22M4 15h22M4 23h22'/%3E%3C/svg%3E");
+}
+.nav-link a {
+  text-decoration: none;
+}
+a.router-link-exact-active {
+  text-decoration: underline;
+}
+
+.my-nav a,
+p {
+  color: white;
+  margin: 0 15px;
+  font-size: 20pt;
+}
+select,
+button {
+  font-size: 16px;
+  padding: 8px 12px;
+  margin: 0 10px;
+  border-radius: 4px;
+  border: 1px solid #ccc;
+  background-color: #fff;
+  box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.1);
+}
+body {
+  background-color: #2e4451;
 }

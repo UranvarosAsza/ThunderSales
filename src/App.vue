@@ -1,8 +1,30 @@
 <template>
   <div>
-    <nav class="navbar">
-      <RouterLink to="/">Home</RouterLink>
-      <RouterLink to="/list">List</RouterLink>
+    <nav class="navbar navbar-expand-lg bg-body-tertiary my-nav">
+      <div class="container-fluid">
+        <button
+          class="navbar-toggler"
+          type="button"
+          data-bs-toggle="collapse"
+          data-bs-target="#navbarTogglerDemo01"
+          aria-controls="navbarTogglerDemo01"
+          aria-expanded="false"
+          aria-label="Toggle navigation"
+        >
+          <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarTogglerDemo01">
+          <p>ThunderSales</p>
+          <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+            <li class="nav-item">
+              <a class="nav-link"><RouterLink to="/">Home</RouterLink></a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link"><RouterLink to="/list">List</RouterLink></a>
+            </li>
+          </ul>
+        </div>
+      </div>
     </nav>
     <RouterView />
   </div>
@@ -12,29 +34,4 @@
 import { RouterLink, RouterView } from 'vue-router'
 </script>
 
-<style scoped>
-#body {
-  margin: 0px !important;
-}
-.navbar {
-  border-top-left-radius: 10px !important;
-  border-top-right-radius: 10px !important;
-  border-bottom-left-radius: 0px !important;
-  border-bottom-right-radius: 0px !important;
-  margin: auto;
-  background-color: #2e4451;
-  padding: 20px;
-  text-align: center;
-}
-
-.navbar a {
-  color: #ffffff;
-  text-decoration: none;
-  margin: 0 15px;
-  font-size: 2em;
-}
-
-.navbar a:hover {
-  text-decoration: underline;
-}
-</style>
+<style></style>
