@@ -1,32 +1,33 @@
 <template>
   <p class="rankHeader">Rank {{ rankInRoman }}</p>
 
-  <div class="rank">
-    <div class="techtree">
-      <div
-        v-for="vehicle in TechTreeVehicles"
-        :key="vehicle.identifier"
-        :class="{
-          premium: vehicle.is_premium,
-          squadronVehicle: vehicle.squadron_vehicle,
-          vehicle: !vehicle.is_premium && !vehicle.squadron_vehicle
-        }"
-      >
-        <VehicleModel :identifier="vehicle.identifier" :data="vehicle" />
+  <div class="container--fluid">
+    <div class="row frameFroRow">
+      <div class="col-sm-6 col-xxl-8 techtree">
+        <div
+          v-for="vehicle in TechTreeVehicles"
+          :key="vehicle.identifier"
+          :class="{
+            premium: vehicle.is_premium,
+            squadronVehicle: vehicle.squadron_vehicle,
+            vehicle: !vehicle.is_premium && !vehicle.squadron_vehicle
+          }"
+        >
+          <VehicleModel :identifier="vehicle.identifier" :data="vehicle" />
+        </div>
       </div>
-    </div>
-
-    <div class="premtree">
-      <div
-        v-for="vehicle in PremVehicles"
-        :key="vehicle.identifier"
-        :class="{
-          premium: vehicle.is_premium,
-          squadronVehicle: vehicle.squadron_vehicle,
-          vehicle: !vehicle.is_premium && !vehicle.squadron_vehicle
-        }"
-      >
-        <VehicleModel :identifier="vehicle.identifier" :data="vehicle" />
+      <div class="col-sm-6 col-xxl-4 premtree">
+        <div
+          v-for="vehicle in PremVehicles"
+          :key="vehicle.identifier"
+          :class="{
+            premium: vehicle.is_premium,
+            squadronVehicle: vehicle.squadron_vehicle,
+            vehicle: !vehicle.is_premium && !vehicle.squadron_vehicle
+          }"
+        >
+          <VehicleModel :identifier="vehicle.identifier" :data="vehicle" />
+        </div>
       </div>
     </div>
   </div>
@@ -203,48 +204,31 @@ export default {
 }
 </script>
 
-<style scoped>
-.rankHeader {
-  background-color: #2e4451;
-  color: white;
-
-  font-size: 30pt;
-  font-weight: 600;
-  margin: auto;
-  text-align: left;
-}
-.rank {
-  display: flex;
-  gap: 20px;
-  background-color: #242e33;
-  background-color: #242e33;
-  border-color: darkgray;
-  border: 5px solid;
-}
+<style>
 .techtree,
 .premtree {
   display: flex;
   /* Kártyák tördelése több sorra */
   gap: 10px;
+  padding: 0;
 }
 .techtree {
-  display: flex;
   flex-wrap: wrap; /* Tördelés több sorba */
 
   align-items: flex-start;
   justify-content: flex-start;
   align-content: flex-start;
   gap: 10px;
-  flex: 5;
+
   background-color: #242e33;
 }
 .premtree {
   justify-content: flex-start;
   align-items: flex-start;
   align-content: flex-start;
-  flex: 2;
+
   background-color: #3c341b;
-  display: flex;
+
   flex-wrap: wrap; /* Tördelés több sorba */
   gap: 10px;
 }

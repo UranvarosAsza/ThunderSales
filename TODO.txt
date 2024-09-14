@@ -1,5 +1,4 @@
 TODO Css overhaul 
-    -vehicleRanks
     -vehicleModel
     -egész listView
 TODO meglévő járművet visz fel akkor:

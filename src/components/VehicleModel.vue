@@ -1,7 +1,7 @@
 <template>
   <!--egy darab jármű kártya -->
-  <div>
-    <img v-if="data.images" :src="data.images.techtree" alt="Vehicle Image" />
+  <div class="container--fluid">
+    <img class="img-fluid" v-if="data.images" :src="data.images.techtree" alt="Vehicle Image" />
     <!--<div class="name">{{ data.identifier }}</div>-->
     <!--<div class="name">{{ shortVersionTranslatedName }}</div>-->
     <div class="name">{{ translatedName }}</div>

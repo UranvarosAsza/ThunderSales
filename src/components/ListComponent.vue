@@ -1,5 +1,5 @@
 <template>
-  <div class="list-container">
+  <div class="container--fluid list-container">
     <h1>Here is your list:</h1>
     <table class="vehicle-table">
       <thead>
@@ -179,8 +179,10 @@ export default {
   color: black;
 }
 .list-container {
-  max-width: 90%;
-  margin: 0 auto;
+  max-width: 1799px;
+  margin-top: 30px;
+  margin-left: auto;
+  margin-right: auto;
   padding: 20px;
   background-color: #f5f5f5;
   border-radius: 8px;

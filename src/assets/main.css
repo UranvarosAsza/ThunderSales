@@ -39,3 +39,27 @@ button {
 body {
   background-color: #2e4451;
 }
+
+.rank {
+  gap: 20px;
+  background-color: #242e33;
+  background-color: #242e33;
+  border-color: darkgray;
+  border: 5px solid;
+}
+.rankHeader {
+  background-color: #2e4451;
+  color: white;
+
+  font-size: 30pt;
+  font-weight: 600;
+  margin: auto;
+  text-align: left;
+}
+.frameFroRow {
+  border-color: darkgray;
+  border: 5px solid;
+}
+.natieonSelectorBox {
+  border: 5px solid #242e33;
+}

@@ -1,6 +1,6 @@
 <template>
   <div class="container-fluid nationSelector">
-    <nav>
+    <nav class="natieonSelectorBox">
       <label>Select a nation:</label>
       <div class="nation-boxes">
         <div
