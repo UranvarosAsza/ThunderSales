@@ -63,3 +63,10 @@ body {
 .natieonSelectorBox {
   border: 5px solid #242e33;
 }
+.name {
+  font-weight: bold;
+}
+.vehicleCard {
+  padding-top: 5px;
+  padding-bottom: 5px;
+}

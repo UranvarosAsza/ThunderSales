@@ -1,5 +1,8 @@
 TODO Css overhaul 
-    -vehicleModel
+    -vehicleModel - dinamikus betűméret
+        kis méretben csak text
+        hover
+        card? 
     -egész listView
 TODO meglévő járművet visz fel akkor:
                  a)vagy a legfrissebb opcióval vigye fel,
@@ -12,6 +15,7 @@ TODO minden páros és minden páratlan legyen más színű
 
 TODO táblázatexport -inport 2x, egy a kiszámolandó egy pedig a részletes számolás
 
+TODO backupd db arra az esetre ha az api halott
 
 Extra dolgok:
 Vegyes, nemzet nélküli TT,

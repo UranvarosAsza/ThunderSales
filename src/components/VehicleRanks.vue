@@ -3,30 +3,54 @@
 
   <div class="container--fluid">
     <div class="row frameFroRow">
-      <div class="col-sm-6 col-xxl-8 techtree">
-        <div
-          v-for="vehicle in TechTreeVehicles"
-          :key="vehicle.identifier"
-          :class="{
-            premium: vehicle.is_premium,
-            squadronVehicle: vehicle.squadron_vehicle,
-            vehicle: !vehicle.is_premium && !vehicle.squadron_vehicle
-          }"
-        >
-          <VehicleModel :identifier="vehicle.identifier" :data="vehicle" />
+      <div class="col-sm-8 col-md-9 col-lg-9 col-xl-8 techtree">
+        <div class="row row-cols-sm-2 row-cols-md-3 row-cols-xl-4 row-cols-xxl-5 g-3 red">
+          <div v-for="vehicle in TechTreeVehicles" :key="vehicle.identifier" class="col">
+            <div
+              :class="[
+                'box',
+                {
+                  premium: vehicle.is_premium,
+                  squadronVehicle: vehicle.squadron_vehicle,
+                  vehicle: !vehicle.is_premium && !vehicle.squadron_vehicle
+                }
+              ]"
+            >
+              <VehicleModel :identifier="vehicle.identifier" :data="vehicle" />
+            </div>
+          </div>
         </div>
       </div>
-      <div class="col-sm-6 col-xxl-4 premtree">
+      <div class="col-sm-4 col-md-3 col-lg-3 col-xl-4 premtree">
+        <!--
         <div
           v-for="vehicle in PremVehicles"
           :key="vehicle.identifier"
-          :class="{
+          :class="['col', {
             premium: vehicle.is_premium,
             squadronVehicle: vehicle.squadron_vehicle,
             vehicle: !vehicle.is_premium && !vehicle.squadron_vehicle
-          }"
+          }
+          ]"
         >
           <VehicleModel :identifier="vehicle.identifier" :data="vehicle" />
+        </div>
+       -->
+        <div class="row row-cols-sm-1 row-cols-xl-2 g-3 red">
+          <div v-for="vehicle in PremVehicles" :key="vehicle.identifier" class="col">
+            <div
+              :class="[
+                'box',
+                {
+                  premium: vehicle.is_premium,
+                  squadronVehicle: vehicle.squadron_vehicle,
+                  vehicle: !vehicle.is_premium && !vehicle.squadron_vehicle
+                }
+              ]"
+            >
+              <VehicleModel :identifier="vehicle.identifier" :data="vehicle" />
+            </div>
+          </div>
         </div>
       </div>
     </div>
@@ -205,92 +229,64 @@ export default {
 </script>
 
 <style>
+.red {
+  width: 100%;
+}
+
+.box {
+  margin: auto;
+  min-width: 190px;
+  min-height: 250px;
+  border-radius: 10px;
+  border: 5px solid lightgray;
+
+  width: calc(20% - 10px);
+  flex-wrap: wrap;
+  align-self: flex-start;
+  color: rgb(255, 255, 255);
+  text-align: center;
+  font-weight: bold;
+  font-size: 1vw;
+}
+
 .techtree,
 .premtree {
+  width: 100%;
+  padding-top: 20px;
+  padding-bottom: 20px;
   display: flex;
-  /* Kártyák tördelése több sorra */
-  gap: 10px;
-  padding: 0;
+  flex-flow: row wrap;
+  justify-content: start;
+  align-items: flex-start;
+  gap: 10%;
 }
 .techtree {
-  flex-wrap: wrap; /* Tördelés több sorba */
-
-  align-items: flex-start;
-  justify-content: flex-start;
-  align-content: flex-start;
-  gap: 10px;
-
   background-color: #242e33;
 }
 .premtree {
-  justify-content: flex-start;
-  align-items: flex-start;
-  align-content: flex-start;
-
   background-color: #3c341b;
+}
 
-  flex-wrap: wrap; /* Tördelés több sorba */
-  gap: 10px;
-}
-.techtree .card {
-  flex: 1 1 calc(20% - 10px);
-}
-.premtree .card {
-  flex: 1 1 calc(50% - 10px);
-}
-.card :hover {
-  background-color: #48687a;
-}
-.vehicle {
-  min-width: 120px;
-  min-height: 180px;
-  max-height: 400px;
-  padding: 10px;
-  margin: 20px auto;
-  color: white;
-  font-size: 20;
-  border-radius: 10px;
-  border: 5px, lightgray;
-  background-color: #2e4451;
-  padding: 20px;
-  text-align: center;
+.vehicle,
+.premium,
+.squadronVehicle {
   box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.1);
 }
 
-.vehicle :hover {
-  background-color: #48687a;
+.vehicle {
+  background-color: #2e4451;
 }
+
 .premium {
-  min-width: 120px;
-  min-height: 180px;
-  padding: 10px;
-  margin: 20px auto;
-  color: white;
-  font-size: 20;
-  border-radius: 10px;
-  border: 5px, lightgray;
-  padding: 20px;
-  text-align: center;
   background-color: #524624;
 }
-.premium :hover {
-  background-color: #716032;
-  border: 5px, #716032;
-}
+
 .squadronVehicle {
-  min-width: 120px;
-  min-height: 180px;
-  padding: 10px;
-  margin: 20px auto;
-  color: white;
-  font-size: 20;
-  border-radius: 10px;
-  border: 5px, lightgray;
-  padding: 20px;
-  text-align: center;
   background-color: #344c30;
 }
-.squadronVehicle :hover {
-  background-color: #42613d;
+.vehicle:hover,
+.premium:hover,
+.squadronVehicle:hover {
+  background-color: #48687a; /* Egységes hover szín */
 }
 </style>

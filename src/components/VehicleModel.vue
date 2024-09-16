@@ -1,12 +1,15 @@
 <template>
   <!--egy darab jármű kártya -->
-  <div class="container--fluid">
-    <img class="img-fluid" v-if="data.images" :src="data.images.techtree" alt="Vehicle Image" />
+  <div class="vehicleCard">
+    <img v-if="data.images" :src="data.images.techtree" alt="Vehicle Image" />
     <!--<div class="name">{{ data.identifier }}</div>-->
     <!--<div class="name">{{ shortVersionTranslatedName }}</div>-->
     <div class="name">{{ translatedName }}</div>
     <div>Rank {{ data.era }}</div>
-    <div v-if="data.ge_cost && !data.is_pack && !data.on_marketplace">{{ data.ge_cost }} GE</div>
+    <!--FIXME rossz sorrend-->
+    <div v-if="data.ge_cost">{{ data.ge_cost }} GE</div>
+    <div v-else-if="data.is_pack">Pack</div>
+    <div v-else-if="data.on_marketplace">Market</div>
     <!-- <div v-else>Price: {{ data.value }} Sl</div> -->
     <div>
       <button @click="addToListAs(picked)">Add</button>
@@ -151,22 +154,4 @@ export default {
 }
 </script>
 
-<style scoped>
-.name {
-  font-weight: bold;
-}
-.list {
-  background-color: aliceblue;
-}
-
-select,
-button {
-  font-size: 14px;
-  padding: 8px 10px;
-  border-radius: 4px;
-  border: 1px solid #ccc;
-  margin-top: 5px;
-  background-color: #f9f9f9;
-  box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.1);
-}
-</style>
+<style></style>

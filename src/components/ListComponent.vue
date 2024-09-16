@@ -1,7 +1,7 @@
 <template>
   <div class="container--fluid list-container">
     <h1>Here is your list:</h1>
-    <table class="vehicle-table">
+    <table class="table table-striped vehicle-table">
       <thead>
         <tr>
           <th>Vehicle</th>
