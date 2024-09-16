@@ -6,12 +6,14 @@
     <!--<div class="name">{{ shortVersionTranslatedName }}</div>-->
     <div class="name">{{ translatedName }}</div>
     <div>Rank {{ data.era }}</div>
-    <!--FIXME rossz sorrend-->
-    <div v-if="data.ge_cost">{{ data.ge_cost }} GE</div>
-    <div v-else-if="data.is_pack">Pack</div>
-    <div v-else-if="data.on_marketplace">Market</div>
+    <!--TODO ez a sorrend kell majd az öszzeadásba is-->
+    <div v-if="data.on_marketplace" class="type">Market</div>
+    <div v-else-if="data.is_pack" class="type">Pack</div>
+    <div v-else-if="data.ge_cost" class="type">{{ data.ge_cost }} GE</div>
+    <div v-else class="type"><br /></div>
+
     <!-- <div v-else>Price: {{ data.value }} Sl</div> -->
-    <div>
+    <div class="lowerPart">
       <button @click="addToListAs(picked)">Add</button>
       <br />
       <select v-model="picked">
@@ -154,4 +156,24 @@ export default {
 }
 </script>
 
-<style></style>
+<style scoped>
+.hidden {
+  display: none;
+}
+.name {
+  font-weight: bold;
+  text-wrap: balance;
+}
+.type {
+  font-weight: lighter;
+  font-size: smaller;
+}
+.vehicleCard {
+  min-height: 185px;
+  padding-top: 5px;
+  padding-bottom: 5px;
+}
+button {
+  margin-bottom: 5px;
+}
+</style>

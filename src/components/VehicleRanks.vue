@@ -235,18 +235,17 @@ export default {
 
 .box {
   margin: auto;
-  min-width: 190px;
-  min-height: 250px;
+  width: 180px;
+  min-height: 270px;
   border-radius: 10px;
-  border: 5px solid lightgray;
-
-  width: calc(20% - 10px);
+  border: 3px solid lightgray;
+  overflow-wrap: break-word;
   flex-wrap: wrap;
   align-self: flex-start;
   color: rgb(255, 255, 255);
   text-align: center;
   font-weight: bold;
-  font-size: 1vw;
+  font-size: 17pt;
 }
 
 .techtree,

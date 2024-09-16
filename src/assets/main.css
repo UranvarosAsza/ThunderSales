@@ -45,7 +45,7 @@ body {
   background-color: #242e33;
   background-color: #242e33;
   border-color: darkgray;
-  border: 5px solid;
+  border: 3px solid;
 }
 .rankHeader {
   background-color: #2e4451;
@@ -58,15 +58,8 @@ body {
 }
 .frameFroRow {
   border-color: darkgray;
-  border: 5px solid;
+  border: 3px solid;
 }
 .natieonSelectorBox {
-  border: 5px solid #242e33;
-}
-.name {
-  font-weight: bold;
-}
-.vehicleCard {
-  padding-top: 5px;
-  padding-bottom: 5px;
+  border: 3px solid #242e33;
 }
