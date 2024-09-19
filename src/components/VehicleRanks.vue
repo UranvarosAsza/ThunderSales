@@ -235,8 +235,8 @@ export default {
 
 .box {
   margin: auto;
-  width: 180px;
-  min-height: 270px;
+  width: 170px;
+
   border-radius: 10px;
   border: 3px solid lightgray;
   overflow-wrap: break-word;

@@ -1,6 +1,8 @@
 <template>
   <div class="container--fluid list-container">
     <h1>Here is your list:</h1>
+    <h3>List filters:</h3>
+
     <table class="table table-striped vehicle-table">
       <thead>
         <tr>
@@ -51,6 +53,7 @@
 <script>
 import ListElement from './ListElement.vue'
 import { toast } from 'vue3-toastify'
+import updates from '@/assets/updates.json'
 import 'vue3-toastify/dist/index.css'
 
 export default {

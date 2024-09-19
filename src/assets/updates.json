@@ -1,0 +1,64 @@
+{
+  "updates": [
+    {
+      "name": "Dance of Dragons",
+      "start_date": "2024-09-10",
+      "version": "2.39"
+    },
+    {
+      "name": "Seek & Destroy",
+      "start_date": "2024-06-19",
+      "version": "2.37"
+    },
+    {
+      "name": "Alpha Strike",
+      "start_date": "2024-03-13",
+      "version": "2.35"
+    },
+    {
+      "name": "Air Superiority",
+      "start_date": "2023-12-14",
+      "version": "2.33"
+    },
+    {
+      "name": "Kings of Battle",
+      "start_date": "2023-10-31",
+      "version": "2.31"
+    },
+    {
+      "name": "Sons of Attila",
+      "start_date": "2023-09-19",
+      "version": "2.29"
+    },
+    {
+      "name": "La Royale",
+      "start_date": "2023-06-14",
+      "version": "2.27"
+    },
+    {
+      "name": "Sky Guardians",
+      "start_date": "2023-03-07",
+      "version": "2.25"
+    },
+    {
+      "name": "Apex Predators",
+      "start_date": "2022-12-20",
+      "version": "2.23"
+    },
+    {
+      "name": "Fire and Ice",
+      "start_date": "2022-10-26",
+      "version": "2.21"
+    },
+    {
+      "name": "Drone Age",
+      "start_date": "2022-09-14",
+      "version": "2.19"
+    },
+    {
+      "name": "Danger Zone",
+      "start_date": "2022-06-15",
+      "version": "2.17"
+    }
+  ]
+}

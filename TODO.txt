@@ -2,10 +2,8 @@ TODO Css overhaul -ongoing
     -vehicleModel 
         kis méretben csak text
     -egész listView
-TODO meglévő járművet visz fel akkor:
-                 a)vagy a legfrissebb opcióval vigye fel,
-                 b)vagy adjon toastot hogy ezt a listánál tudja szerkeszteni ha szeretné
-                 c) mindkettő
+        modifier gombok a tetejére a számoláshoz: without squadron vehicles, without crew, show xp cost, esetleg az xp-t összegezni
+
 TODO táblázatba, subtotalok nemzetenként
 TODO a táblázat számlálónál tudja megmondani hogy packos járműnek a gold értékét ne vegye figyelembe
 TODO nation alapján is kapjon pici zászlót a táblázatba a sub-totalba

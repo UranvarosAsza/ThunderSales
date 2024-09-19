@@ -5,23 +5,24 @@
     <!--<div class="name">{{ data.identifier }}</div>-->
     <!--<div class="name">{{ shortVersionTranslatedName }}</div>-->
     <div class="name">{{ translatedName }}</div>
-    <div>Rank {{ data.era }}</div>
+    <div class="type">Rank {{ data.era }}</div>
     <!--TODO ez a sorrend kell majd az öszzeadásba is-->
     <div v-if="data.on_marketplace" class="type">Market</div>
     <div v-else-if="data.is_pack" class="type">Pack</div>
     <div v-else-if="data.ge_cost" class="type">{{ data.ge_cost }} GE</div>
     <div v-else class="type"><br /></div>
+    <!--<div v-if="!data.release_date" class="red">aaaaaaa</div>-->
 
     <!-- <div v-else>Price: {{ data.value }} Sl</div> -->
     <div class="lowerPart">
       <button @click="addToListAs(picked)">Add</button>
-      <br />
-      <select v-model="picked">
+
+      <!-- <select v-model="picked">
         <option value="basicCrew">Basic crew</option>
         <option value="expertCrew">Expert crew</option>
         <option value="vehicleCost">Just the vehicle</option>
       </select>
-      <!--<button @click="getVehicleData">Add</button>-->
+      <button @click="getVehicleData">Add</button>-->
     </div>
   </div>
 </template>
@@ -30,6 +31,7 @@
 import { toast } from 'vue3-toastify'
 import 'vue3-toastify/dist/index.css'
 import apiParams from '@/assets/apiParams.json'
+import { reduceEachLeadingCommentRange } from 'typescript'
 
 export default {
   props: {
@@ -50,7 +52,7 @@ export default {
       basicCrew: 'basic',
       expertCrew: 'expert',
       vehicleCost: 'vehicle itself',
-      picked: '',
+      picked: 'vehicleCost',
       type: ''
     }
   },
@@ -75,11 +77,6 @@ export default {
       }
     },
     async addToListAs(listOption) {
-      if (!listOption) {
-        toast.error('Please select an option before adding!') // Hibaüzenet toast
-        return
-      }
-
       await this.getVehicleData()
       //ellenőrzés hogy a járműdata nem üres-e
       if (!this.vehiclesData || Object.keys(this.vehiclesData).length === 0) {
@@ -88,7 +85,6 @@ export default {
       }
 
       //vehicle type selection for the sales: is it TT/Prem/Squadron
-
       if (this.data.squadron_vehicle == true) {
         this.type = 'SQ'
       } else if (this.data.is_premium == true) {
@@ -96,6 +92,7 @@ export default {
       } else this.type = 'TT'
 
       const vehicle = {
+        vehicleAddDate: this.data.release_date || 0,
         vehicle_id: this.data.identifier,
         shortName: this.shortVersionTranslatedName,
         longName: this.translatedName,
@@ -106,13 +103,31 @@ export default {
         exptertCrewTrtainigCost: this.vehiclesData.train2_cost,
         aceCrewTrainingCost: this.vehiclesData.train3_cost_gold,
         listOption: listOption,
-        vehicleType: this.type, // lehet normal, squadron, premium
+        vehicleType: this.type,
         totalPrice: 0
       }
+
       let vehiclesPrices = JSON.parse(sessionStorage.getItem('vehicleData') || '[]')
-      vehiclesPrices.push(vehicle)
-      sessionStorage.setItem('vehicleData', JSON.stringify(vehiclesPrices))
-      toast.success('Vehicle added successfully!') // Sikeres értesítés toast
+
+      // Ellenőrizzük, hogy a jármű már benne van-e
+      if (vehiclesPrices.some((v) => v.vehicle_id === vehicle.vehicle_id)) {
+        toast.error('Vehicle is already in the list.')
+      } else {
+        vehiclesPrices.push(vehicle)
+        vehiclesPrices.sort((a, b) => {
+          // Először a nation szerint rendezünk
+          if (a.nation < b.nation) return -1
+          if (a.nation > b.nation) return 1
+
+          // Ha a nation megegyezik, akkor a longName szerint rendezünk
+          if (a.longName < b.longName) return -1
+          if (a.longName > b.longName) return 1
+
+          return 0
+        })
+        sessionStorage.setItem('vehicleData', JSON.stringify(vehiclesPrices))
+        toast.success('Vehicle added successfully!')
+      }
     },
     openCloseListOptions() {
       this.showPopupList = !this.showPopupList
@@ -128,6 +143,7 @@ export default {
         const csvData = JSON.parse(parsedCSVData)
 
         // Hosszú verzió (_shop)
+        //FIXME
         const shopKey = `${vehiclename}_shop`
         // Rövid verzió (_1)
         const variantKey = `${vehiclename}_0`
@@ -169,11 +185,14 @@ export default {
   font-size: smaller;
 }
 .vehicleCard {
-  min-height: 185px;
+  min-height: 150px;
   padding-top: 5px;
   padding-bottom: 5px;
 }
 button {
   margin-bottom: 5px;
+}
+.red {
+  background-color: red;
 }
 </style>

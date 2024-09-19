@@ -1,6 +1,6 @@
 <template>
   <tr>
-    <td>Name: {{ vehicle.shortName }}</td>
+    <td>{{ vehicle.longName }}</td>
     <td>{{ vehicle.nation }}</td>
     <td>
       Your total is: {{ totalPrice.toLocaleString('hu-HU') }}
@@ -26,11 +26,16 @@
       >
         {{ vehicle.vehicleType }}
       </span>
+      <div class="my-tooltip explanationMark" v-if="this.saleText">
+        !<span class="my-tooltiptext_long"> {{ this.saleText }}</span>
+      </div>
     </td>
   </tr>
 </template>
 
 <script>
+import updates from '@/assets/updates.json'
+
 export default {
   props: {
     vehicle: Object
@@ -41,12 +46,14 @@ export default {
       totalPrice: 0,
       showInfoBox: false,
       infoText: '',
+      saleText: '',
       showModify: false
     }
   },
   watch: {
     selectedListOption(newOption) {
-      //@ts-ignore
+      //FIXME
+      // eslint-disable-next-line vue/no-mutating-props
       this.vehicle.listOption = newOption
       this.computeSelectedPrice()
       this.updateVehicle()
@@ -55,6 +62,7 @@ export default {
   mounted() {
     this.selectedListOption = this.vehicle.listOption
     this.computeSelectedPrice()
+    this.setSaleText()
   },
   methods: {
     updateVehicle() {
@@ -92,8 +100,13 @@ export default {
           this.infoText = `Calculated as: vehicle cost: ${this.vehicle.vehicleCostSL || 0}, basic crew cost: ${this.vehicle.basicCrewTrainingCost}`
           break
         case 'vehicleCost':
+          if (this.vehicle.vehicleCostSL == 0 && this.vehicle.vehicleCostGe) {
+            this.infoText = `Calculated as: vehicle cost: ${this.vehicle.vehicleCostGe}Ge`
+          } else {
+            this.infoText = `Calculated as: vehicle cost: ${this.vehicle.vehicleCostSL || '(vehicle cost is free (reserve))'}`
+          }
           this.totalPrice = this.vehicle.vehicleCostSL || 0
-          this.infoText = `Calculated as: vehicle cost: ${this.vehicle.vehicleCostSL || '(vehicle cost is in Ge or free (reserve))'}`
+
           break
         default:
           console.log('No valid list option selected')
@@ -119,7 +132,18 @@ export default {
       sessionStorage.setItem('vehicleData', JSON.stringify(vehicles))
       this.$emit('vehicleRemoved')
     },
-
+    //TODO ezt kitenni a vehicleModel-be és véltozóként adni a vehicle-hez a text-et és az isRemovable-t -> majd gombra tenni azt hogy ezeket ki lehessen szedni ha sórolni akarna
+    setSaleText() {
+      //ha squdronjármű vagy a dátuma az utolsó 2 patch dátumánál korábbi akkor nem lesz leárazva
+      if (this.vehicle.vehicleType == 'SQ') {
+        this.saleText = ' This is a squdron vehicle, the discount does not apply'
+      } else if (this.vehicle.vehicleAddDate > updates.updates[2].start_date) {
+        this.saleText =
+          ' This is a new vehicle, only vehicles introduced after ' +
+          updates.updates[2].name +
+          ' are discounted'
+      }
+    },
     toggleInfoBox() {
       this.showInfoBox = !this.showInfoBox
     },
@@ -131,6 +155,16 @@ export default {
 </script>
 
 <style>
+.explanationMark {
+  font-weight: bold;
+  font-size: x-large;
+  color: red;
+  margin-left: 10px;
+}
+
+.longtext {
+  width: 500px;
+}
 .vehicle-type-label {
   display: inline-block;
   padding: 4px 8px;
@@ -172,9 +206,11 @@ td {
 .my-tooltip {
   position: relative;
   display: inline-block;
-  border-bottom: 1px dotted black;
 }
-
+.my-tooltip_long {
+  position: relative;
+  display: inline-block;
+}
 .my-tooltip .my-tooltiptext {
   visibility: hidden;
   background-color: rgba(0, 0, 0, 0.638);
@@ -190,6 +226,22 @@ td {
   left: 50%;
   margin-left: -60px;
 }
+.my-tooltip .my-tooltiptext_long {
+  visibility: hidden;
+  background-color: rgba(0, 0, 0, 0.638);
+  color: #fff;
+  font-size: medium;
+  text-align: center;
+  border-radius: 6px;
+  padding: 5px 0;
+  position: absolute;
+  z-index: 1;
+  margin-left: -60px;
+  width: 500px;
+  bottom: 100%;
+  left: 50%;
+  margin-left: -60px;
+}
 
 .my-tooltip .my-tooltiptext::after {
   content: ' ';
@@ -201,11 +253,29 @@ td {
   border-style: solid;
   border-color: black transparent transparent transparent;
 }
+.my-tooltip .my-tooltiptext_long::after {
+  content: ' ';
+  position: absolute;
+  top: 100%; /* At the bottom of the tooltip */
+  left: 12%;
+  margin-left: -5px;
+  border-width: 5px;
+  border-style: solid;
+  border-color: black transparent transparent transparent;
+}
 
 .my-tooltip:hover .my-tooltiptext {
   visibility: visible;
 }
+.my-tooltip:hover .my-tooltiptext_long {
+  visibility: visible;
+}
 select {
   display: inline-block;
+}
+.discountError {
+  background-color: salmon;
+  font-weight: bolder;
+  color: white;
 }
 </style>
