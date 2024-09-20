@@ -26,16 +26,14 @@
       >
         {{ vehicle.vehicleType }}
       </span>
-      <div class="my-tooltip explanationMark" v-if="this.saleText">
-        !<span class="my-tooltiptext_long"> {{ this.saleText }}</span>
+      <div class="my-tooltip explanationMark" v-if="vehicle.isRemovable">
+        !<span class="my-tooltiptext_long"> {{ vehicle.saleText }}</span>
       </div>
     </td>
   </tr>
 </template>
 
 <script>
-import updates from '@/assets/updates.json'
-
 export default {
   props: {
     vehicle: Object
@@ -46,23 +44,28 @@ export default {
       totalPrice: 0,
       showInfoBox: false,
       infoText: '',
-      saleText: '',
       showModify: false
     }
   },
   watch: {
     selectedListOption(newOption) {
-      //FIXME
+      // Frissítjük a vehicle listOption-ját
       // eslint-disable-next-line vue/no-mutating-props
       this.vehicle.listOption = newOption
       this.computeSelectedPrice()
       this.updateVehicle()
+    },
+    vehicle: {
+      handler(newVehicle) {
+        this.selectedListOption = newVehicle.listOption // Amikor a vehicle prop frissül, frissítjük a legördülő értékét
+        this.computeSelectedPrice() // Újraszámoljuk az árat is
+      },
+      deep: true // Mélyfigyelést használunk, hogy a vehicle bármely változása esetén triggereljen
     }
   },
   mounted() {
     this.selectedListOption = this.vehicle.listOption
     this.computeSelectedPrice()
-    this.setSaleText()
   },
   methods: {
     updateVehicle() {
@@ -70,11 +73,12 @@ export default {
       const vehicleIndex = vehicles.findIndex((v) => v.vehicle_id === this.vehicle.vehicle_id)
 
       if (vehicleIndex !== -1) {
-        vehicles[vehicleIndex] = this.vehicle
+        // Frissítjük a jármű adatait a sessionStorage-ban
+        vehicles[vehicleIndex] = { ...this.vehicle, listOption: this.selectedListOption }
         sessionStorage.setItem('vehicleData', JSON.stringify(vehicles))
       }
 
-      // Emit the updated price after saving the changes
+      // Eseményt küldünk a szülő komponensnek a frissített árral
       this.$emit('price-updated', {
         vehicleTotal: this.totalPrice,
         vehicleGoldPrice: this.vehicle.gePrice,
@@ -86,8 +90,12 @@ export default {
         vehicleType: this.vehicle.vehicleType
       })
     },
+    /**
+     * kiszámolja hogy egy sorban mi az összes költség és a hint-et hogy miből épül fel.
+     */
     computeSelectedPrice() {
       switch (this.selectedListOption) {
+        //FIXME eventes meg prém járművek pontos árai
         case 'expertCrew':
           this.totalPrice =
             this.vehicle.basicCrewTrainingCost +
@@ -131,18 +139,6 @@ export default {
       vehicles = vehicles.filter((v) => v.vehicle_id !== this.vehicle.vehicle_id)
       sessionStorage.setItem('vehicleData', JSON.stringify(vehicles))
       this.$emit('vehicleRemoved')
-    },
-    //TODO ezt kitenni a vehicleModel-be és véltozóként adni a vehicle-hez a text-et és az isRemovable-t -> majd gombra tenni azt hogy ezeket ki lehessen szedni ha sórolni akarna
-    setSaleText() {
-      //ha squdronjármű vagy a dátuma az utolsó 2 patch dátumánál korábbi akkor nem lesz leárazva
-      if (this.vehicle.vehicleType == 'SQ') {
-        this.saleText = ' This is a squdron vehicle, the discount does not apply'
-      } else if (this.vehicle.vehicleAddDate > updates.updates[2].start_date) {
-        this.saleText =
-          ' This is a new vehicle, only vehicles introduced after ' +
-          updates.updates[2].name +
-          ' are discounted'
-      }
     },
     toggleInfoBox() {
       this.showInfoBox = !this.showInfoBox

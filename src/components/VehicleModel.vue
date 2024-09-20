@@ -31,7 +31,7 @@
 import { toast } from 'vue3-toastify'
 import 'vue3-toastify/dist/index.css'
 import apiParams from '@/assets/apiParams.json'
-import { reduceEachLeadingCommentRange } from 'typescript'
+import updates from '@/assets/updates.json'
 
 export default {
   props: {
@@ -53,7 +53,9 @@ export default {
       expertCrew: 'expert',
       vehicleCost: 'vehicle itself',
       picked: 'vehicleCost',
-      type: ''
+      type: '',
+      saleText: '',
+      isRemovable: false
     }
   },
   computed: {
@@ -91,6 +93,8 @@ export default {
         this.type = 'PR'
       } else this.type = 'TT'
 
+      this.setSaleText()
+
       const vehicle = {
         vehicleAddDate: this.data.release_date || 0,
         vehicle_id: this.data.identifier,
@@ -102,6 +106,9 @@ export default {
         basicCrewTrainingCost: this.vehiclesData.train1_cost,
         exptertCrewTrtainigCost: this.vehiclesData.train2_cost,
         aceCrewTrainingCost: this.vehiclesData.train3_cost_gold,
+        isEvent: this.vehiclesData.event,
+        isRemovable: this.isRemovable,
+        saleText: this.saleText,
         listOption: listOption,
         vehicleType: this.type,
         totalPrice: 0
@@ -132,7 +139,19 @@ export default {
     openCloseListOptions() {
       this.showPopupList = !this.showPopupList
     },
-
+    setSaleText() {
+      //ha squdronjármű vagy a dátuma az utolsó 2 patch dátumánál korábbi akkor nem lesz leárazva
+      if (this.type == 'SQ') {
+        this.saleText = ' This is a squdron vehicle, the discount does not apply'
+        this.isRemovable = true
+      } else if (this.data.release_date > updates.updates[2].start_date) {
+        this.saleText =
+          ' This is a new vehicle, only vehicles introduced after ' +
+          updates.updates[2].name +
+          ' are discounted'
+        this.isRemovable = true
+      }
+    },
     /**
      * Lekér két különböző fordítást: egy rövid (_1) és egy hosszú (_shop) verziót
      */

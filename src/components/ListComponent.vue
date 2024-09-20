@@ -1,8 +1,19 @@
 <template>
   <div class="container--fluid list-container">
     <h1>Here is your list:</h1>
-    <h3>List filters:</h3>
 
+    <span class="reduceButtons">
+      <button
+        type="button"
+        class="allToVehiclePriceButton"
+        @click="setAllVehicleOptionToVehiclepirce()"
+      >
+        Reduce to just vehicle cost
+      </button>
+      <button type="button" class="removeButton" @click="removeRemovableVehicles()">
+        Remove non-discountable vehicles
+      </button>
+    </span>
     <table class="table table-striped vehicle-table">
       <thead>
         <tr>
@@ -53,7 +64,6 @@
 <script>
 import ListElement from './ListElement.vue'
 import { toast } from 'vue3-toastify'
-import updates from '@/assets/updates.json'
 import 'vue3-toastify/dist/index.css'
 
 export default {
@@ -162,7 +172,6 @@ export default {
       this.loadVehicles()
       this.calculateGrandTotal() // Recalculate total after removing a vehicle
     },
-
     calculateDiscountedPrice() {
       if (this.discount === null) {
         toast.error('Please select a discount percentage!')
@@ -172,12 +181,47 @@ export default {
       this.grandTotalDiscount =
         this.techTreeVehicleTotal * (1 - this.discount) + this.crewsAndSquadronVehiclePrices
       this.grandTotalGeDiscount = this.goldTotal * (1 - this.discount)
+    },
+    removeRemovableVehicles() {
+      //ha a jármű removable akkor mehet ki a listából
+      this.vehiclesPrices = this.vehiclesPrices.filter((vehicle) => !vehicle.isRemovable)
+      this.calculateGrandTotal()
+      // Frissítjük a sessionStorage-t is
+      sessionStorage.setItem('vehicleData', JSON.stringify(this.vehiclesPrices))
+    },
+    setAllVehicleOptionToVehiclepirce() {
+      //mindegyik list option-t vehiclePrice-ra tenni
+      for (let i = 0; i < this.vehiclesPrices.length; i++) {
+        this.vehiclesPrices[i].listOption = 'vehicleCost'
+      }
+      this.calculateGrandTotal()
+      sessionStorage.setItem('vehicleData', JSON.stringify(this.vehiclesPrices))
     }
   }
 }
 </script>
 
 <style scoped>
+.reduceButtons {
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-end;
+}
+.removeButton {
+  flex: end;
+  background-color: rgba(255, 0, 0, 0.72);
+  margin-bottom: 20px;
+}
+.removeButton:hover {
+  background-color: red;
+}
+.allToVehiclePriceButton {
+  background-color: rgba(0, 128, 0, 0.72);
+  margin-bottom: 20px;
+}
+.allToVehiclePriceButton:hover {
+  background-color: green;
+}
 .list-container h1 {
   color: black;
 }
