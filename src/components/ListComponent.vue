@@ -1,20 +1,22 @@
 <template>
   <div class="container--fluid list-container">
-    <h1>Here is your list:</h1>
+    <div v-if="vehiclesPrices.length" class="tableHeader">
+      <h1>Here is your list:</h1>
 
-    <span class="reduceButtons">
-      <button
-        type="button"
-        class="allToVehiclePriceButton"
-        @click="setAllVehicleOptionToVehiclepirce()"
-      >
-        Reduce to just vehicle cost
-      </button>
-      <button type="button" class="removeButton" @click="removeRemovableVehicles()">
-        Remove non-discountable vehicles
-      </button>
-    </span>
-    <table class="table table-striped vehicle-table">
+      <span class="reduceButtons">
+        <button
+          type="button"
+          class="allToVehiclePriceButton"
+          @click="setAllVehicleOptionToVehiclepirce()"
+        >
+          Change to vehicle cost only
+        </button>
+        <button type="button" class="removeButton" @click="removeRemovableVehicles()">
+          Remove vehicles without discount
+        </button>
+      </span>
+    </div>
+    <table v-if="vehiclesPrices.length" class="table table-striped vehicle-table">
       <thead>
         <tr>
           <th>Vehicle</th>
@@ -32,31 +34,36 @@
         />
       </tbody>
     </table>
-    <button @click="clearList">Clear list</button>
-    <h2>
-      Total Price of All Vehicles:
-      <span v-if="grandTotal">{{ grandTotal.toLocaleString('hu-HU') }} Sl </span>
-      <span v-if="goldTotal">and {{ goldTotal.toLocaleString('hu-HU') }} GE</span>
-    </h2>
-    <div class="discount">
-      <button @click="calculateDiscountedPrice(discount)">Calculate</button>
-      <label>
-        <input type="radio" v-model="discount" value="0.3" />
-        30%
-      </label>
-      <label>
-        <input type="radio" v-model="discount" value="0.5" />
-        50%
-      </label>
-      <div v-if="grandTotalDiscount">
-        <h1>
-          You need to save {{ grandTotalDiscount.toLocaleString('hu-HU') }} Sl
-          <span v-if="grandTotalGeDiscount">
-            and {{ grandTotalGeDiscount.toLocaleString('hu-HU') }} GE
-          </span>
-          for a {{ discount * 100 }}% sale
-        </h1>
+    <div v-if="vehiclesPrices.length" class="tableFooter">
+      <button @click="clearList">Clear list</button>
+      <h2>
+        Total Price of All Vehicles:
+        <span v-if="grandTotal">{{ grandTotal.toLocaleString('hu-HU') }} Sl </span>
+        <span v-if="goldTotal">and {{ goldTotal.toLocaleString('hu-HU') }} GE</span>
+      </h2>
+      <div class="discount">
+        <button @click="calculateDiscountedPrice(discount)">Calculate</button>
+        <label>
+          <input type="radio" v-model="discount" value="0.3" />
+          30%
+        </label>
+        <label>
+          <input type="radio" v-model="discount" value="0.5" />
+          50%
+        </label>
+        <div v-if="grandTotalDiscount">
+          <h1>
+            You need to save {{ grandTotalDiscount.toLocaleString('hu-HU') }} Sl
+            <span v-if="grandTotalGeDiscount">
+              and {{ grandTotalGeDiscount.toLocaleString('hu-HU') }} GE
+            </span>
+            for a {{ discount * 100 }}% sale
+          </h1>
+        </div>
       </div>
+    </div>
+    <div v-else>
+      <h2>Your list is empty, please add some vehicles!</h2>
     </div>
   </div>
 </template>
