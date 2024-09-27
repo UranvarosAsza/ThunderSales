@@ -12,6 +12,7 @@ TODO Css overhaul -ongoing
         figylemeztetés az sq és új járműveknék a táblázatban, infoboxot átvinni még
         ListElementet törölni
         file inport
+    Add gomb a járműkártyákon -> leszedni és maga a járműkártya @click legyen 
 TODO táblázatba, subtotalok nemzetenként
 TODO a táblázat számlálónál tudja megmondani hogy packos járműnek a gold értékét ne vegye figyelembe
 TODO nation alapján is kapjon pici zászlót a táblázatba a sub-totalba
@@ -20,8 +21,11 @@ TODO táblázatexport -inport 2x, egy a kiszámolandó egy pedig a részletes sz
 
 TODO backupd db arra az esetre ha az api halott
 
+TODO Rossz a sorrendje a nemzeteknek xd ->, jpn, chn, ita, rossz
+    usa ger, ussr, gbr, jpn, chn, ita, fra, swd isr
 Extra dolgok:
 Táblázat vastagabb sorokkal nagyobb képekkel
+Rankok öszecsukása ?
 
 Vegyes, nemzet nélküli TT,
 rejtett jármvek külön

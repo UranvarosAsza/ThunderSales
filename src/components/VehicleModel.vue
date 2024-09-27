@@ -104,13 +104,14 @@ export default {
         vehicleCostGe: this.data.ge_cost, //lehet nem is kell mivel a részletes lekérésben van benne a crew sl adat
         vehicleCostSL: this.data.value, // same
         basicCrewTrainingCost: this.vehiclesData.train1_cost,
-        exptertCrewTrtainigCost: this.vehiclesData.train2_cost,
+        expertCrewTrainingCost: this.vehiclesData.train2_cost,
         aceCrewTrainingCost: this.vehiclesData.train3_cost_gold,
         isEvent: this.vehiclesData.event,
         isRemovable: this.isRemovable,
         saleText: this.saleText,
         listOption: listOption,
         vehicleType: this.type,
+        vehicleBaseRPCost: this.vehiclesData.req_exp,
         totalPrice: 0
       }
 

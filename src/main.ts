@@ -1,4 +1,4 @@
-import Vue3Toastify, { type ToastContainerOptions } from 'vue3-toastify'
+import Vue3Toastify from 'vue3-toastify'
 import 'vue3-toastify/dist/index.css'
 
 import { createApp } from 'vue'
@@ -11,6 +11,9 @@ import units from '@/assets/units.csv'
 import 'bootstrap'
 import 'bootstrap/dist/css/bootstrap.min.css'
 import './assets/main.css'
+import PrimeVue from 'primevue/config'
+import Aura from '@primevue/themes/aura'
+
 const app = createApp(App)
 
 if (!sessionStorage.getItem('parsedCSVData')) {
@@ -77,3 +80,9 @@ app.use(Vue3Toastify, {
 app.mount('#app')
 //@ts-ignore
 app.use(Papa)
+//app.use(PrimeVue, { unstyled: true });
+app.use(PrimeVue, {
+  theme: {
+    preset: Aura
+  }
+})

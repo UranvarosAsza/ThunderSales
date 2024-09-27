@@ -1,81 +1,178 @@
 <template>
-  <div class="container--fluid list-container">
-    <div v-if="vehiclesPrices.length" class="tableHeader">
+  <div class="container-fluid">
+    <div class="list-container">
       <h1>Here is your list:</h1>
 
-      <span class="reduceButtons">
-        <button
-          type="button"
-          class="allToVehiclePriceButton"
-          @click="setAllVehicleOptionToVehiclepirce()"
+      <DataTable
+        :value="vehiclesPrices"
+        ref="dt"
+        rowGroupMode="subheader"
+        groupRowsBy="nation"
+        showGridlines
+        stripedRows
+        class="vehicle-table"
+        editMode="row"
+        @row-edit-save="onRowEditSave"
+        :pt="{
+          table: { style: 'min-width: 50rem' },
+          column: {
+            bodycell: ({ state }) => ({
+              style: state['d_editing'] && 'padding-top: 0.75rem; padding-bottom: 0.75rem'
+            })
+          }
+        }"
+      >
+        <template #header>
+          <div style="text-align: left">
+            <button icon="pi pi-external-link" label="Export" @click="exportCSV($event)">
+              Export
+            </button>
+            <div class="reduceButtons">
+              <button
+                label="Change to vehicle cost only"
+                class="allToVehiclePriceButton"
+                @click="setAllVehicleOptionToVehiclepirce"
+              >
+                Change to vehicle cost only
+              </button>
+              <button
+                label="Remove vehicles without discount"
+                class="removeButton"
+                @click="removeRemovableVehicles"
+              >
+                Remove vehicles without discount
+              </button>
+            </div>
+          </div>
+        </template>
+        <Column
+          field="longName"
+          header="Vehicle"
+          :headerStyle="{ width: '20%' }"
+          :bodyStyle="{ width: '20%' }"
         >
-          Change to vehicle cost only
-        </button>
-        <button type="button" class="removeButton" @click="removeRemovableVehicles()">
-          Remove vehicles without discount
-        </button>
-      </span>
-    </div>
-    <table v-if="vehiclesPrices.length" class="table table-striped vehicle-table">
-      <thead>
-        <tr>
-          <th>Vehicle</th>
-          <th>Nation</th>
-          <th>List option</th>
-        </tr>
-      </thead>
-      <tbody>
-        <ListElement
-          v-for="vehicle in vehiclesPrices"
-          :vehicle="vehicle"
-          :key="vehicle.vehicle_id"
-          @vehicleRemoved="updateList"
-          @price-updated="updateTotalPrice"
-        />
-      </tbody>
-    </table>
-    <div v-if="vehiclesPrices.length" class="tableFooter">
-      <button @click="clearList">Clear list</button>
-      <h2>
-        Total Price of All Vehicles:
-        <span v-if="grandTotal">{{ grandTotal.toLocaleString('hu-HU') }} Sl </span>
-        <span v-if="goldTotal">and {{ goldTotal.toLocaleString('hu-HU') }} GE</span>
-      </h2>
-      <div class="discount">
-        <button @click="calculateDiscountedPrice(discount)">Calculate</button>
-        <label>
-          <input type="radio" v-model="discount" value="0.3" />
-          30%
-        </label>
-        <label>
-          <input type="radio" v-model="discount" value="0.5" />
-          50%
-        </label>
-        <div v-if="grandTotalDiscount">
-          <h1>
-            You need to save {{ grandTotalDiscount.toLocaleString('hu-HU') }} Sl
-            <span v-if="grandTotalGeDiscount">
-              and {{ grandTotalGeDiscount.toLocaleString('hu-HU') }} GE
+          <template #body="slotProps">
+            {{ slotProps.data.longName }}
+            <span
+              :class="[
+                'vehicle-type-label',
+                slotProps.data.vehicleType === 'TT' ? 'vehicle-tt' : '',
+                slotProps.data.vehicleType === 'SQ' ? 'vehicle-sq' : '',
+                slotProps.data.vehicleType === 'PR' ? 'vehicle-pr' : ''
+              ]"
+            >
+              {{ slotProps.data.vehicleType }}
             </span>
-            for a {{ discount * 100 }}% sale
-          </h1>
-        </div>
-      </div>
-    </div>
-    <div v-else>
-      <h2>Your list is empty, please add some vehicles!</h2>
+            <div class="my-tooltip explanationMark" v-if="slotProps.data.isRemovable">
+              !<span class="my-tooltiptext_long"> {{ slotProps.data.saleText }}</span>
+            </div>
+          </template>
+        </Column>
+        <Column
+          field="nation"
+          header="Nation"
+          :headerStyle="{ width: '10%' }"
+          :bodyStyle="{ width: '10%' }"
+        ></Column>
+        <Column
+          field="totalPrice"
+          header="Cost"
+          :headerStyle="{ width: '50%' }"
+          :bodyStyle="{ width: '50%' }"
+        ></Column>
+        <Column
+          field="listOption"
+          header="List Option"
+          :headerStyle="{ width: '10%' }"
+          :bodyStyle="{ width: '10%' }"
+        >
+          <template #body="slotProps">
+            <Dropdown
+              v-model="slotProps.data.listOption"
+              :options="listOptions"
+              optionLabel="label"
+              optionValue="value"
+              @change="computeSelectedPrice(slotProps.data)"
+            ></Dropdown>
+            <Select v-if="showModify" v-model="selectedListOption">
+              <option value="vehicleCost">Vehicle Cost</option>
+              <option value="basicCrew">Basic Crew</option>
+              <option value="expertCrew">Expert Crew</option>
+            </Select>
+          </template>
+        </Column>
+        <Column
+          field="vehicleBaseRPCost"
+          header="Rp Cost"
+          :editor="true"
+          :editable="true"
+          :headerStyle="{ width: '10%' }"
+          :bodyStyle="{ width: '10%' }"
+        >
+          <template #editor="slotProps">
+            <InputNumber v-model="slotProps.data.vehicleBaseRPCost" />
+          </template>
+        </Column>
+        <Column
+          field="delButton"
+          header=""
+          :headerStyle="{ width: '10%' }"
+          :bodyStyle="{ width: '10%' }"
+        >
+          <template #body="slotProps">
+            <button
+              label="Remove vehicle"
+              class="removeButton"
+              @click="removeFromList(slotProps.data)"
+            >
+              Remove
+            </button>
+          </template>
+        </Column>
+        <Column
+          :rowEditor="true"
+          style="width: 10%; min-width: 8rem"
+          bodyStyle="text-align:center { width: '150px' }"
+          :headerStyle="{ width: '150px' }"
+        ></Column>
+        <template #groupheader="slotProps">
+          <div class="flex items-center gap-2">
+            <span>{{ slotProps.data.nation }}</span>
+          </div>
+        </template>
+
+        <template #groupfooter="slotProps">
+          <div class="flex justify-end font-bold w-full">
+            Total Cost in Nation: {{ calculateNationTotal(slotProps.data.nation) }}
+          </div>
+        </template>
+      </DataTable>
+      <button @click="clearList">Clear list</button>
     </div>
   </div>
 </template>
 
 <script>
-import ListElement from './ListElement.vue'
+//import ListElement from './ListElement.vue'
 import { toast } from 'vue3-toastify'
 import 'vue3-toastify/dist/index.css'
+import DataTable from 'primevue/datatable'
+import Column from 'primevue/column'
+//import ColumnGroup from 'primevue/columngroup' // optional
+import InputText from 'primevue/inputtext'
+import Dropdown from 'primevue/dropdown'
+import InputNumber from 'primevue/inputnumber'
+import Select from 'primevue/select'
 
 export default {
   components: {
-    ListElement
+    //ListElement,
+    DataTable,
+    Column,
+    Dropdown,
+    InputText,
+    Select,
+    InputNumber
   },
   data() {
     return {
@@ -86,7 +183,21 @@ export default {
       grandTotalDiscount: null,
       grandTotalGeDiscount: null,
       techTreeVehicleTotal: 0, //nem lehet benne a squadronjármű-ár és a prém-jármű ár
-      crewsAndSquadronVehiclePrices: 0
+      crewsAndSquadronVehiclePrices: 0,
+      alma: 100,
+      columns: [
+        { field: 'longName', header: 'Vehicle' },
+        { field: 'nation', header: 'Nation' },
+        { field: 'listOption', header: 'List Option' },
+        { field: 'totalPrice', header: 'Cost' },
+        { field: 'vehicleBaseRPCost', header: 'Rp Needed' },
+        { field: 'delButton', header: '' }
+      ],
+      listOptions: [
+        { label: 'Vehicle Cost', value: 'vehicleCost' },
+        { label: 'Basic Crew', value: 'basicCrew' },
+        { label: 'Expert Crew', value: 'expertCrew' }
+      ]
     }
   },
   watch: {
@@ -97,31 +208,72 @@ export default {
       },
       deep: true
     },
-    discount(newDiscount) {
+    discount() {
       this.calculateDiscountedPrice()
     }
   },
   mounted() {
     this.loadVehicles()
     this.calculateGrandTotal() // Ensure total is correct on load
+    this.vehiclesPrices.forEach((vehicle) => {
+      this.computeSelectedPrice(vehicle)
+    })
   },
   methods: {
     loadVehicles() {
       this.vehiclesPrices = JSON.parse(sessionStorage.getItem('vehicleData') || '[]')
     },
-    updateTotalPrice(vehicleData) {
-      const vehicle = this.vehiclesPrices.find((v) => v.vehicle_id === vehicleData.vehicleId)
-      if (vehicle) {
-        // Frissítjük a jármű adatait a JSON alapján
-        vehicle.vehicleTotal = vehicleData.vehicleTotal
-        vehicle.vehicleGoldPrice = vehicleData.vehicleGoldPrice
-        vehicle.vehiclePrice = vehicleData.vehiclePrice
-        vehicle.basicCrewPrice = vehicleData.basicCrewPrice
-        vehicle.expertCrewPrice = vehicleData.expertCrewPrice
-        vehicle.vehicleId = vehicleData.vehicleId
-        vehicle.selectedOption = vehicleData.selectedOption
-        vehicle.vehicleType = vehicleData.vehicleType
-        this.calculateGrandTotal()
+    exportCSV() {
+      this.$refs.dt.exportCSV()
+    },
+    calculateNationTotal(nation) {
+      let total = 0
+      this.vehiclesPrices.forEach((vehicle) => {
+        if (vehicle.nation === nation) {
+          total += vehicle.totalPrice // Az adott jármű totalPrice mezője alapján
+        }
+      })
+      return total
+    },
+    onRowEditSave(event) {
+      const editedVehicle = event.data
+      const index = this.vehiclesPrices.findIndex(
+        (vehicle) => vehicle.vehicle_id === editedVehicle.vehicle_id
+      )
+      if (index !== -1) {
+        this.vehiclesPrices.splice(index, 1, { ...this.vehiclesPrices[index], ...editedVehicle })
+        // Frissítjük a megfelelő elemet
+      }
+      sessionStorage.setItem('vehicleData', JSON.stringify(this.vehiclesPrices))
+      this.calculateGrandTotal() // Frissítjük az összértéket
+    },
+
+    removeFromList(vehicle) {
+      // A megadott járművet töröljük
+      this.vehiclesPrices = this.vehiclesPrices.filter((v) => v.vehicle_id !== vehicle.vehicle_id)
+      sessionStorage.setItem('vehicleData', JSON.stringify(this.vehiclesPrices))
+      this.updateList() // Frissítjük a listát
+    },
+    computeSelectedPrice(vehicle) {
+      const vehicleCostSL = vehicle.vehicleCostSL
+      const basicCrewTrainingCost = vehicle.basicCrewTrainingCost
+      const expertCrewTrainingCost = vehicle.expertCrewTrainingCost
+
+      switch (vehicle.listOption) {
+        case 'expertCrew':
+          vehicle.totalPrice = basicCrewTrainingCost + expertCrewTrainingCost + vehicleCostSL
+          vehicle.infoText = `Calculated as: vehicle cost: ${vehicleCostSL}, basic crew cost: ${basicCrewTrainingCost}, expert crew cost: ${expertCrewTrainingCost}`
+          break
+        case 'basicCrew':
+          vehicle.totalPrice = basicCrewTrainingCost + vehicleCostSL
+          vehicle.infoText = `Calculated as: vehicle cost: ${vehicleCostSL}, basic crew cost: ${basicCrewTrainingCost}`
+          break
+        case 'vehicleCost':
+          vehicle.infoText = `Calculated as: vehicle cost: ${vehicleCostSL}`
+          vehicle.totalPrice = vehicleCostSL
+          break
+        default:
+          console.log('No valid list option selected for', vehicle)
       }
     },
     // kiszámolja az összesített jármű-crew összegeket discount előtt
@@ -169,6 +321,21 @@ export default {
 
       this.grandTotal = this.techTreeVehicleTotal + this.crewsAndSquadronVehiclePrices
     },
+    updateTotalPrice(vehicleData) {
+      const vehicle = this.vehiclesPrices.find((v) => v.vehicle_id === vehicleData.vehicleId)
+      if (vehicle) {
+        // Frissítjük a jármű adatait a JSON alapján
+        vehicle.vehicleTotal = vehicleData.vehicleTotal
+        vehicle.vehicleGoldPrice = vehicleData.vehicleGoldPrice
+        vehicle.vehiclePrice = vehicleData.vehiclePrice
+        vehicle.basicCrewPrice = vehicleData.basicCrewPrice
+        vehicle.expertCrewPrice = vehicleData.expertCrewPrice
+        vehicle.vehicleId = vehicleData.vehicleId
+        vehicle.selectedOption = vehicleData.selectedOption
+        vehicle.vehicleType = vehicleData.vehicleType
+        this.calculateGrandTotal()
+      }
+    },
     clearList() {
       this.vehiclesPrices = [] //
       sessionStorage.setItem('vehicleData', JSON.stringify([]))
@@ -177,7 +344,7 @@ export default {
     },
     updateList() {
       this.loadVehicles()
-      this.calculateGrandTotal() // Recalculate total after removing a vehicle
+      this.calculateGrandTotal()
     },
     calculateDiscountedPrice() {
       if (this.discount === null) {
@@ -201,6 +368,9 @@ export default {
       for (let i = 0; i < this.vehiclesPrices.length; i++) {
         this.vehiclesPrices[i].listOption = 'vehicleCost'
       }
+      this.vehiclesPrices.forEach((vehicle) => {
+        this.computeSelectedPrice(vehicle)
+      })
       this.calculateGrandTotal()
       sessionStorage.setItem('vehicleData', JSON.stringify(this.vehiclesPrices))
     }
@@ -209,6 +379,80 @@ export default {
 </script>
 
 <style scoped>
+.container-fluid {
+  margin: 0 auto;
+}
+
+.list-container {
+  margin: 0 auto;
+  padding: 20px;
+  background-color: #f5f5f5;
+  border-radius: 8px;
+  text-align: center;
+}
+
+h1 {
+  color: #2e4451;
+}
+
+.vehicle-table {
+  width: 100%;
+  border: 2px solid #2e4451;
+  margin-bottom: 20px;
+}
+
+.vehicle-table > th,
+.vehicle-table > td {
+  border: 2px solid #2e4451;
+  padding: 10px;
+  text-align: left;
+}
+
+.vehicle-table th {
+  background-color: #2e4451;
+  color: white;
+}
+
+.vehicle-table td {
+  background-color: #dbe4ff;
+}
+
+button {
+  padding: 10px 20px;
+  margin: 10px 0;
+  background-color: #2e4451;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+button:hover {
+  background-color: #22323b;
+}
+
+.clear-list-btn {
+  margin-bottom: 20px;
+}
+
+.reduceButtons {
+  display: flex;
+  justify-content: flex-end;
+  margin-bottom: 20px;
+}
+
+.discount {
+  display: inline-block;
+  margin-top: 20px;
+}
+
+.discount h4 {
+  display: inline;
+}
+
+.discount input {
+  margin-right: 10px;
+}
 .reduceButtons {
   display: flex;
   flex-direction: row;
@@ -278,5 +522,16 @@ button:hover {
 }
 .discount {
   display: inline;
+}
+.vehicle-tt {
+  background-color: #416173; /* Kék háttér */
+}
+
+.vehicle-sq {
+  background-color: #5c8655; /* Zöld háttér */
+}
+
+.vehicle-pr {
+  background-color: #7f6c38; /* Arany háttér */
 }
 </style>
