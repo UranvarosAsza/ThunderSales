@@ -1,9 +1,17 @@
 TODO Css overhaul -ongoing
     -vehicleModel 
         kis méretben csak text
+
     -egész listView
         modifier gombok a tetejére a számoláshoz:  show xp cost, esetleg az xp-t összegezni
         listában az event-vehicle-ök jármű költsége ne legyen felszámolva
+
+        DataTable : https://primevue.org/
+        select colums
+        edit rows
+        figylemeztetés az sq és új járműveknék a táblázatban, infoboxot átvinni még
+        ListElementet törölni
+        file inport
 TODO táblázatba, subtotalok nemzetenként
 TODO a táblázat számlálónál tudja megmondani hogy packos járműnek a gold értékét ne vegye figyelembe
 TODO nation alapján is kapjon pici zászlót a táblázatba a sub-totalba
@@ -13,6 +21,8 @@ TODO táblázatexport -inport 2x, egy a kiszámolandó egy pedig a részletes sz
 TODO backupd db arra az esetre ha az api halott
 
 Extra dolgok:
+Táblázat vastagabb sorokkal nagyobb képekkel
+
 Vegyes, nemzet nélküli TT,
 rejtett jármvek külön
 Speciális járművek külön
