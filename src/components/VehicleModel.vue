@@ -97,12 +97,12 @@ export default {
 
       const vehicle = {
         vehicleAddDate: this.data.release_date || 0,
-        vehicle_id: this.data.identifier,
+        id: this.data.identifier,
         shortName: this.shortVersionTranslatedName,
         longName: this.translatedName,
         nation: this.data.country,
-        vehicleCostGe: this.data.ge_cost, //lehet nem is kell mivel a részletes lekérésben van benne a crew sl adat
-        vehicleCostSL: this.data.value, // same
+        geCost: this.data.ge_cost, //lehet nem is kell mivel a részletes lekérésben van benne a crew sl adat
+        slCost: this.data.value, // same
         basicCrewTrainingCost: this.vehiclesData.train1_cost,
         expertCrewTrainingCost: this.vehiclesData.train2_cost,
         aceCrewTrainingCost: this.vehiclesData.train3_cost_gold,
@@ -111,14 +111,14 @@ export default {
         saleText: this.saleText,
         listOption: listOption,
         vehicleType: this.type,
-        vehicleBaseRPCost: this.vehiclesData.req_exp,
+        rpCost: this.vehiclesData.req_exp,
         totalPrice: 0
       }
 
       let vehiclesPrices = JSON.parse(sessionStorage.getItem('vehicleData') || '[]')
 
       // Ellenőrizzük, hogy a jármű már benne van-e
-      if (vehiclesPrices.some((v) => v.vehicle_id === vehicle.vehicle_id)) {
+      if (vehiclesPrices.some((v) => v.id === vehicle.id)) {
         toast.error('Vehicle is already in the list.')
       } else {
         vehiclesPrices.push(vehicle)
