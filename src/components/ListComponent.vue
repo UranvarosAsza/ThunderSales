@@ -112,7 +112,7 @@
               optionLabel="label"
               optionValue="value"
               class="w-full md:w-56"
-              @change="computeSelectedPrice(slotProps.data)"
+              @change="handleListOptionChange(slotProps.data)"
             >
               <option value="vehicleCost">Vehicle Cost</option>
               <option value="basicCrew">Basic Crew</option>
@@ -149,13 +149,14 @@
           </div>
         </template>
         <template #footer>
-          <h2>Your total costs for all nations are: {{ grandTotal.toLocaleString('hu-HU') }} .</h2>
-          <div class="discount">
-            <button></button>
+          <div v-if="vehiclesPrices.length" class="discount">
+            <button @click="clearList">Clear list</button>
+            <h2>
+              Your total costs for all nations are: {{ grandTotal.toLocaleString('hu-HU') }} .
+            </h2>
           </div>
         </template>
       </DataTable>
-      <button @click="clearList">Clear list</button>
     </div>
   </div>
 </template>
@@ -248,7 +249,21 @@ export default {
         reader.readAsText(file) // Fájl beolvasása szövegként
       }
     },
+    handleListOptionChange(vehicle) {
+      // Find the vehicle in the sessionStorage and update its listOption
+      const vehicleData = JSON.parse(sessionStorage.getItem('vehicleData')) || []
 
+      // Find the specific vehicle by its ID or another unique identifier
+      const index = vehicleData.findIndex((v) => v.id === vehicle.id)
+      if (index !== -1) {
+        // Update the listOption for the vehicle
+        vehicleData[index].listOption = vehicle.listOption
+        // Update sessionStorage with the modified vehicleData array
+        sessionStorage.setItem('vehicleData', JSON.stringify(vehicleData))
+      }
+      this.computeSelectedPrice(vehicle)
+      this.calculateGrandTotal()
+    },
     parseCSV(fileContent) {
       const rows = fileContent.split('\n').map((row) => row.split(','))
       const headers = rows[0]
@@ -273,6 +288,7 @@ export default {
         const updatedData = [...vehicleData, ...importedData]
         sessionStorage.setItem('vehicleData', JSON.stringify(updatedData))
       } else {
+        toast.error('CSV header does not match the expected format.')
         console.error('CSV header does not match the expected format.')
       }
       this.updateList()
@@ -285,7 +301,7 @@ export default {
     },
     exportCSV() {
       const vehicleData = JSON.parse(sessionStorage.getItem('vehicleData')) || []
-
+      console.log(vehicleData)
       const csvHeaders = [
         'Vehicle',
         'Nation',
@@ -398,14 +414,18 @@ export default {
             toast.error('OOF! (vehicletype)')
             break
         }
+
         //listoption alapján a crew árak:
         switch (vehicle.listOption) {
           case 'expertCrew':
-            this.crewsAndSquadronVehiclePrices += vehicle.basicCrewPrice + vehicle.expertCrewPrice
+            this.crewsAndSquadronVehiclePrices +=
+              vehicle.basicCrewTrainingCost + vehicle.expertCrewTrainingCost
+            // this.crewsAndSquadronVehiclePrices += vehicle.basicCrewPrice + vehicle.expertCrewPrice
             //this.infoText = Calculated as: vehicle cost: ${this.vehicle.vehicleCostSL || 0}, basic crew cost: ${this.vehicle.basicCrewTrainingCost}, expert crew cost: ${this.vehicle.exptertCrewTrtainigCost}
             break
           case 'basicCrew':
-            this.crewsAndSquadronVehiclePrices += vehicle.basicCrewPrice
+            this.crewsAndSquadronVehiclePrices += vehicle.basicCrewTrainingCost
+            //this.crewsAndSquadronVehiclePrices += vehicle.basicCrewPrice
             //this.infoText = Calculated as: vehicle cost: ${this.vehicle.vehicleCostSL || 0}, basic crew cost: ${this.vehicle.basicCrewTrainingCost}
             break
           case 'vehicleCost':
@@ -478,6 +498,10 @@ export default {
 </script>
 
 <style scoped>
+.p-datatable-column-sorted {
+  background: inherit !important;
+}
+
 .hidden {
   display: none;
 }

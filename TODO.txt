@@ -1,7 +1,7 @@
 TODO Css overhaul -ongoing
     -vehicleModel 
         kis méretben csak text
-        fix kártya magasság méretek 210px talán jó is ?
+        fix kártya magasság méretek 210px talán jó is ? -> középre kell igazítani a dlgokat flex?
 
     -egész listView
         modifier gombok a tetejére a számoláshoz:  esetleg az xp-t összegezni
@@ -9,14 +9,16 @@ TODO Css overhaul -ongoing
         TODO prém/pack járművek ge költségének számolása áthozni a listElementből
             TODO a táblázat számlálónál tudja megmondani hogy packos járműnek a gold értékét ne vegye figyelembe
         edit rows -> rp cost
-        file inport ->listOption mentése még nem jó
-        
-       
+
+        inportnál ne hozzáadja a listhez mindet hanem id-alapján csekkoljon
+        TODO import után az isremovable nem frissül -> dátumot még bele kell adni és inport után lefuttatni
+
         ListElementet törölni
         tooltip idő paramétereivel játszani kicsit pl: v-tooltip="{ value: 'Confirm to proceed', showDelay: 1000, hideDelay: 300 }"
 
 TODO nation alapján is kapjon pici zászlót a táblázatba a sub-totalba
 
+TODO listElement code refactor
 TODO backupd db arra az esetre ha az api halott
 
 Extra dolgok:

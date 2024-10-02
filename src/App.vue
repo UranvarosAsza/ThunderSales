@@ -22,6 +22,17 @@
             <li class="nav-item">
               <a class="nav-link"><RouterLink to="/list">List</RouterLink></a>
             </li>
+            <!--
+            <li class="nav-item">
+              <a class="nav-link help"
+                ><i
+                  class="pi pi-question-circle"
+                  style="font-size: 1.2em"
+                  v-tooltip.bottom="'Help'"
+                ></i
+              ></a>
+            </li>
+            -->
           </ul>
         </div>
       </div>
@@ -34,4 +45,9 @@
 import { RouterLink, RouterView } from 'vue-router'
 </script>
 
-<style></style>
+<style scoped>
+.help {
+  margin-top: auto !important;
+  vertical-align: sub;
+}
+</style>
