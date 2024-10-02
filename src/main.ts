@@ -13,6 +13,8 @@ import 'bootstrap/dist/css/bootstrap.min.css'
 import './assets/main.css'
 import PrimeVue from 'primevue/config'
 import Aura from '@primevue/themes/aura'
+import Tooltip from 'primevue/tooltip'
+import 'primeicons/primeicons.css'
 
 const app = createApp(App)
 
@@ -76,7 +78,7 @@ app.use(Vue3Toastify, {
   position: 'bottom-center', // pozíció beállítása (példa: jobb felső sarok)
   transition: 'slide'
 })
-
+app.directive('tooltip', Tooltip)
 app.mount('#app')
 //@ts-ignore
 app.use(Papa)

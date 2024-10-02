@@ -1,6 +1,7 @@
 <template>
   <!--egy darab jármű kártya -->
-  <div class="vehicleCard">
+  <div class="vehicleCard" @click="addToListAs(picked)" v-tooltip.top="'Add to the list'">
+    <!--<div class="hoverTip">Add to the list</div>-->
     <img v-if="data.images" :src="data.images.techtree" alt="Vehicle Image" />
     <!--<div class="name">{{ data.identifier }}</div>-->
     <!--<div class="name">{{ shortVersionTranslatedName }}</div>-->
@@ -10,20 +11,13 @@
     <div v-if="data.on_marketplace" class="type">Market</div>
     <div v-else-if="data.is_pack" class="type">Pack</div>
     <div v-else-if="data.ge_cost" class="type">{{ data.ge_cost }} GE</div>
-    <div v-else class="type"><br /></div>
+    <div v-else class="type hidden"><br /></div>
     <!--<div v-if="!data.release_date" class="red">aaaaaaa</div>-->
 
-    <!-- <div v-else>Price: {{ data.value }} Sl</div> -->
+    <!-- <div v-else>Price: {{ data.value }} Sl</div>
     <div class="lowerPart">
       <button @click="addToListAs(picked)">Add</button>
-
-      <!-- <select v-model="picked">
-        <option value="basicCrew">Basic crew</option>
-        <option value="expertCrew">Expert crew</option>
-        <option value="vehicleCost">Just the vehicle</option>
-      </select>
-      <button @click="getVehicleData">Add</button>-->
-    </div>
+    </div> -->
   </div>
 </template>
 
@@ -42,6 +36,7 @@ export default {
       default: 'en' // Alapértelmezett nyelv
     }
   },
+  components: {},
   data() {
     return {
       vehiclesData: {},
@@ -141,9 +136,9 @@ export default {
       this.showPopupList = !this.showPopupList
     },
     setSaleText() {
-      //ha squdronjármű vagy a dátuma az utolsó 2 patch dátumánál korábbi akkor nem lesz leárazva
+      //ha squadronjármű vagy a dátuma az utolsó 2 patch dátumánál korábbi akkor nem lesz leárazva
       if (this.type == 'SQ') {
-        this.saleText = ' This is a squdron vehicle, the discount does not apply'
+        this.saleText = ' This is a squadron vehicle, the discount does not apply'
         this.isRemovable = true
       } else if (this.data.release_date > updates.updates[2].start_date) {
         this.saleText =
@@ -205,8 +200,9 @@ export default {
   font-size: smaller;
 }
 .vehicleCard {
-  min-height: 150px;
-  padding-top: 5px;
+  cursor: pointer;
+  min-height: 210px;
+  padding-top: 10px;
   padding-bottom: 5px;
 }
 button {

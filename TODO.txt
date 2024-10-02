@@ -1,26 +1,24 @@
 TODO Css overhaul -ongoing
     -vehicleModel 
         kis méretben csak text
+        fix kártya magasság méretek 210px talán jó is ?
 
     -egész listView
-        modifier gombok a tetejére a számoláshoz:  show xp cost, esetleg az xp-t összegezni
-        listában az event-vehicle-ök jármű költsége ne legyen felszámolva
-
-        DataTable : https://primevue.org/
-        
-        edit rows
-        figylemeztetés az sq és új járműveknék a táblázatban, infoboxot átvinni még
-        ListElementet törölni
+        modifier gombok a tetejére a számoláshoz:  esetleg az xp-t összegezni
+        TODO listában az event-vehicle-ök jármű költsége ne legyen felszámolva
+        TODO prém/pack járművek ge költségének számolása áthozni a listElementből
+            TODO a táblázat számlálónál tudja megmondani hogy packos járműnek a gold értékét ne vegye figyelembe
+        edit rows -> rp cost
         file inport ->listOption mentése még nem jó
-    Add gomb a járműkártyákon -> leszedni és maga a járműkártya @click legyen 
+        
+       
+        ListElementet törölni
+        tooltip idő paramétereivel játszani kicsit pl: v-tooltip="{ value: 'Confirm to proceed', showDelay: 1000, hideDelay: 300 }"
 
-TODO a táblázat számlálónál tudja megmondani hogy packos járműnek a gold értékét ne vegye figyelembe
 TODO nation alapján is kapjon pici zászlót a táblázatba a sub-totalba
 
 TODO backupd db arra az esetre ha az api halott
 
-TODO Rossz a sorrendje a nemzeteknek xd ->, jpn, chn, ita, rossz
-    usa ger, ussr, gbr, jpn, chn, ita, fra, swd isr
 Extra dolgok:
 Táblázat vastagabb sorokkal nagyobb képekkel
 Rankok öszecsukása ?

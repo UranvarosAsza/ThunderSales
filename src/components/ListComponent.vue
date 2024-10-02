@@ -36,6 +36,7 @@
               <button
                 label="Change to vehicle cost only"
                 class="allToVehiclePriceButton"
+                v-tooltip.top="'Sets all vechicle options to vehiclePrice'"
                 @click="setAllVehicleOptionToVehiclepirce"
               >
                 Change to vehicle cost only
@@ -43,6 +44,9 @@
               <button
                 label="Remove vehicles without discount"
                 class="removeButton"
+                v-tooltip.top="
+                  'Removes all vehicles that won\'t get discounted (Squadron and Past 2 update\'s additions)'
+                "
                 @click="removeRemovableVehicles"
               >
                 Remove vehicles without discount
@@ -56,29 +60,39 @@
                 display="chip"
                 placeholder="Add more columns"
               />
+              <label>Show vehicletypes</label>
+              <ToggleSwitch v-model="showVehicleTypes" />
             </div>
           </div>
         </template>
         <Column field="vehicle" header="Vehicle">
           <template #body="slotProps">
             {{ slotProps.data.longName }}
-            <span
-              :class="[
-                'vehicle-type-label',
-                slotProps.data.vehicleType === 'TT' ? 'vehicle-tt' : '',
-                slotProps.data.vehicleType === 'SQ' ? 'vehicle-sq' : '',
-                slotProps.data.vehicleType === 'PR' ? 'vehicle-pr' : ''
-              ]"
-            >
-              {{ slotProps.data.vehicleType }}
+            <span v-if="showVehicleTypes">
+              <div
+                :class="[
+                  'vehicle-type-label',
+
+                  slotProps.data.vehicleType === 'TT' ? 'vehicle-tt' : '',
+                  slotProps.data.vehicleType === 'SQ' ? 'vehicle-sq' : '',
+                  slotProps.data.vehicleType === 'PR' ? 'vehicle-pr' : ''
+                ]"
+              >
+                {{ slotProps.data.vehicleType }}
+              </div>
             </span>
-            <div class="my-tooltip explanationMark" v-if="slotProps.data.isRemovable">
-              !<span class="my-tooltiptext_long"> {{ slotProps.data.saleText }}</span>
-            </div>
+
+            <i
+              class="pi pi-info-circle red"
+              v-if="slotProps.data.isRemovable"
+              v-tooltip.top="slotProps.data.saleText"
+              style="margin-left: 5px"
+            >
+            </i>
           </template>
         </Column>
         <Column field="nation" header="Nation"></Column>
-        <Column field="totalPrice" header="Total">
+        <Column field="totalPrice" header="Total" sortable>
           <template #body="slotProps">
             {{ slotProps.data.totalPrice.toLocaleString('hu-HU') }}
           </template>
@@ -134,6 +148,12 @@
             {{ calculateNationTotal(slotProps.data.nation).toLocaleString('hu-HU') }}
           </div>
         </template>
+        <template #footer>
+          <h2>Your total costs for all nations are: {{ grandTotal.toLocaleString('hu-HU') }} .</h2>
+          <div class="discount">
+            <button></button>
+          </div>
+        </template>
       </DataTable>
       <button @click="clearList">Clear list</button>
     </div>
@@ -146,16 +166,17 @@ import { toast } from 'vue3-toastify'
 import 'vue3-toastify/dist/index.css'
 import DataTable from 'primevue/datatable'
 import Column from 'primevue/column'
-import Papa from 'papaparse'
 import InputNumber from 'primevue/inputnumber'
 import Select from 'primevue/select'
 import MultiSelect from 'primevue/multiselect'
+import ToggleSwitch from 'primevue/toggleswitch'
 
 export default {
   components: {
     DataTable,
     Column,
     MultiSelect,
+    ToggleSwitch,
     Select,
     InputNumber
   },
@@ -182,7 +203,8 @@ export default {
         { label: 'Vehicle Cost', value: 'vehicleCost' },
         { label: 'Basic Crew', value: 'basicCrew' },
         { label: 'Expert Crew', value: 'expertCrew' }
-      ]
+      ],
+      showVehicleTypes: false
     }
   },
   watch: {
@@ -456,6 +478,18 @@ export default {
 </script>
 
 <style scoped>
+.hidden {
+  display: none;
+}
+.red {
+  color: red;
+  font-size: 1.5em;
+  vertical-align: sub;
+}
+.pi-info-circle {
+  display: inline !important; /* vagy inline */
+  margin-left: 5px; /* kis távolság a név és az ikon között */
+}
 .vehicle-type-label {
   display: inline-block;
   padding: 4px 8px;
