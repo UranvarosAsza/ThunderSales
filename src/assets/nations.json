@@ -43,6 +43,17 @@
       "ship": true
     }
   },
+  "japan": {
+    "flag_url": "/nationFlags/japanflag.png",
+    "displayed_name_EN": "Japan",
+    "branches": {
+      "air": true,
+      "ground": true,
+      "heli": true,
+      "boat": true,
+      "ship": true
+    }
+  },
   "china": {
     "flag_url": "/nationFlags/china_flag.png",
     "displayed_name_EN": "China",
@@ -65,17 +76,6 @@
       "ship": true
     }
   },
-  "japan": {
-    "flag_url": "/nationFlags/japanflag.png",
-    "displayed_name_EN": "Japan",
-    "branches": {
-      "air": true,
-      "ground": true,
-      "heli": true,
-      "boat": true,
-      "ship": true
-    }
-  },
   "france": {
     "flag_url": "/nationFlags/france_flag.png",
     "displayed_name_EN": "France",
@@ -87,9 +87,9 @@
       "ship": true
     }
   },
-  "israel": {
-    "flag_url": "/nationFlags/israel_flag.png",
-    "displayed_name_EN": "Israel",
+  "sweden": {
+    "flag_url": "/nationFlags/sweden_flag.png",
+    "displayed_name_EN": "Sweden",
     "branches": {
       "air": true,
       "ground": true,
@@ -98,9 +98,9 @@
       "ship": false
     }
   },
-  "sweden": {
-    "flag_url": "/nationFlags/sweden_flag.png",
-    "displayed_name_EN": "Sweden",
+  "israel": {
+    "flag_url": "/nationFlags/israel_flag.png",
+    "displayed_name_EN": "Israel",
     "branches": {
       "air": true,
       "ground": true,
