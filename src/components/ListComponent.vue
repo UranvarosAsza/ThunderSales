@@ -165,6 +165,7 @@
 //import ListElement from './ListElement.vue'
 import { toast } from 'vue3-toastify'
 import 'vue3-toastify/dist/index.css'
+import updates from '@/assets/updates.json'
 import DataTable from 'primevue/datatable'
 import Column from 'primevue/column'
 import InputNumber from 'primevue/inputnumber'
@@ -223,6 +224,7 @@ export default {
   mounted() {
     this.loadVehicles()
     this.calculateGrandTotal() // Ensure total is correct on load
+    this.setSaleText()
     this.vehiclesPrices.forEach((vehicle) => {
       this.computeSelectedPrice(vehicle)
     })
@@ -265,27 +267,46 @@ export default {
       this.calculateGrandTotal()
     },
     parseCSV(fileContent) {
-      const rows = fileContent.split('\n').map((row) => row.split(','))
+      const rows = fileContent.split('\n').map((row) => row.split(';'))
       const headers = rows[0]
 
       if (headers.includes('Vehicle') && headers.includes('Nation')) {
         const importedData = rows.slice(1).map((row) => ({
+          id: row[headers.indexOf('id')],
           longName: row[headers.indexOf('Vehicle')],
           nation: row[headers.indexOf('Nation')],
-          totalPrice: parseInt(row[headers.indexOf('Total')]) || 0,
-          slCost: parseInt(row[headers.indexOf('Vehicle cost')]) || 0,
-          basicCrewTrainingCost: parseInt(row[headers.indexOf('Basic Crew')]),
-          expertCrewTrainingCost: parseInt(row[headers.indexOf('Expert Crew')]),
-          listOption: row[headers.indexOf('List Option')],
+          isMarket: row[headers.indexOf('Market')] === 'true',
+          isEvent: row[headers.indexOf('Event')] === 'true',
+          isPrem: row[headers.indexOf('Premium')] === 'true',
+          geCost: parseInt(row[headers.indexOf('GE Cost')]) || 0,
+          slCost: parseInt(row[headers.indexOf('SL cost')]) || 0,
+          basicCrewTrainingCost: parseInt(row[headers.indexOf('Basic Crew')]) || 0,
+          expertCrewTrainingCost: parseInt(row[headers.indexOf('Expert Crew')]) || 0,
           rpCost: parseInt(row[headers.indexOf('Rp Cost')]) || 0,
+          listOption: row[headers.indexOf('List Option')],
           vehicleType: row[headers.indexOf('Vehicle Type')],
-          saleText: row[headers.indexOf('Sale Text')] || ''
-          //totalPrice: parseInt(row[headers.indexOf('Cost')], 10) || 0
+          saleText: row[headers.indexOf('Sale Text')] || '',
+          release_date: row[headers.indexOf('Release Date')] || 0,
+          totalPrice: parseInt(row[headers.indexOf('Total')]) || 0,
+          isRemovable: row[headers.indexOf('Removable')] === 'true'
         }))
 
         // Tedd a feldolgozott adatokat a sessionStorage-ba
         const vehicleData = JSON.parse(sessionStorage.getItem('vehicleData')) || []
-        const updatedData = [...vehicleData, ...importedData]
+        const updatedData = [...vehicleData]
+        importedData.forEach((vehicle) => {
+          const exists = vehicleData.some((v) => v.id === vehicle.id)
+          if (!exists) {
+            updatedData.push(vehicle)
+          }
+        })
+        updatedData.sort((a, b) => {
+          if (a.nation < b.nation) return -1
+          if (a.nation > b.nation) return 1
+          if (a.longName < b.longName) return -1
+          if (a.longName > b.longName) return 1
+          return 0
+        })
         sessionStorage.setItem('vehicleData', JSON.stringify(updatedData))
       } else {
         toast.error('CSV header does not match the expected format.')
@@ -303,32 +324,46 @@ export default {
       const vehicleData = JSON.parse(sessionStorage.getItem('vehicleData')) || []
       console.log(vehicleData)
       const csvHeaders = [
+        'id',
         'Vehicle',
         'Nation',
-        'Total',
-        'Vehicle cost',
+        'Market',
+        'Event',
+        'Premium',
+        'GE Cost',
+        'SL cost',
         'Basic Crew',
         'Expert Crew',
-        'List Option',
         'Rp Cost',
+        'List Option',
         'Vehicle Type',
-        'Sale Text'
+        'Sale Text',
+        'Release Date',
+        'Total',
+        'Removable'
       ]
 
       const csvRows = vehicleData.map((vehicle) => [
+        vehicle.id,
         vehicle.longName,
         vehicle.nation,
-        vehicle.totalPrice,
+        vehicle.isMarket || false,
+        vehicle.isEvent || false,
+        vehicle.isPrem || false,
+        vehicle.geCost,
         vehicle.slCost,
         vehicle.basicCrewTrainingCost,
         vehicle.expertCrewTrainingCost,
-        vehicle.listOption,
         vehicle.rpCost,
+        vehicle.listOption,
         vehicle.vehicleType,
-        vehicle.saleText || ''
+        vehicle.saleText || '',
+        vehicle.release_date || 0,
+        vehicle.totalPrice,
+        vehicle.isRemovable
       ])
 
-      const csvContent = [csvHeaders.join(','), ...csvRows.map((row) => row.join(','))].join('\n')
+      const csvContent = [csvHeaders.join(';'), ...csvRows.map((row) => row.join(';'))].join('\n')
 
       // Létrehozza és letölti a CSV fájlt
       const blob = new Blob([csvContent], { type: 'text/csv;charset=utf-8;' })
@@ -338,15 +373,6 @@ export default {
       document.body.appendChild(link)
       link.click()
       document.body.removeChild(link)
-    },
-    calculateNationTotal(nation) {
-      let total = 0
-      this.vehiclesPrices.forEach((vehicle) => {
-        if (vehicle.nation === nation) {
-          total += parseInt(vehicle.totalPrice, 10) || 0 // Ensure it's a number
-        }
-      })
-      return total
     },
     onRowEditSave(event) {
       const editedVehicle = event.data
@@ -358,7 +384,15 @@ export default {
       sessionStorage.setItem('vehicleData', JSON.stringify(this.vehiclesPrices))
       this.calculateGrandTotal() // Frissítjük az összértéket
     },
-
+    calculateNationTotal(nation) {
+      let total = 0
+      this.vehiclesPrices.forEach((vehicle) => {
+        if (vehicle.nation === nation) {
+          total += parseInt(vehicle.totalPrice, 10) || 0 // Ensure it's a number
+        }
+      })
+      return total
+    },
     removeFromList(vehicle) {
       // A megadott járművet töröljük
       this.vehiclesPrices = this.vehiclesPrices.filter((v) => v.id !== vehicle.id)
@@ -464,6 +498,23 @@ export default {
     updateList() {
       this.loadVehicles()
       this.calculateGrandTotal()
+      this.setSaleText()
+    },
+    //Végigmegy minegyiken, mountoláskor és update-kor
+    setSaleText() {
+      this.vehiclesPrices.forEach((vehicle) => {
+        if (vehicle.vehicleType == 'SQ') {
+          vehicle.saleText = ' This is a squadron vehicle, the discount does not apply'
+          vehicle.isRemovable = true
+        } else if (vehicle.release_date > updates.updates[2].start_date) {
+          vehicle.saleText =
+            ' This is a new vehicle, only vehicles introduced after ' +
+            updates.updates[2].name +
+            ' are discounted'
+          vehicle.isRemovable = true
+        }
+      })
+      //ha squadronjármű vagy a dátuma az utolsó 2 patch dátumánál korábbi akkor nem lesz leárazva
     },
     calculateDiscountedPrice() {
       if (this.discount === null) {

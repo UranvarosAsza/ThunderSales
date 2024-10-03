@@ -7,24 +7,21 @@ TODO Css overhaul -ongoing
         modifier gombok a tetejére a számoláshoz:  esetleg az xp-t összegezni
         TODO listában az event-vehicle-ök jármű költsége ne legyen felszámolva
         TODO prém/pack járművek ge költségének számolása áthozni a listElementből
-            TODO a táblázat számlálónál tudja megmondani hogy packos járműnek a gold értékét ne vegye figyelembe
-        edit rows -> rp cost
-
-        inportnál ne hozzáadja a listhez mindet hanem id-alapján csekkoljon
-        TODO import után az isremovable nem frissül -> dátumot még bele kell adni és inport után lefuttatni
-
+            a táblázat számlálónál tudja megmondani hogy packos járműnek a gold értékét ne vegye figyelembe
+        TODO edit rows -> rp cost
+        TODO lehet kéne egy TotalGE meg egy TotalSL exportba
         ListElementet törölni
         tooltip idő paramétereivel játszani kicsit pl: v-tooltip="{ value: 'Confirm to proceed', showDelay: 1000, hideDelay: 300 }"
 
 TODO nation alapján is kapjon pici zászlót a táblázatba a sub-totalba
-
+TODO kereső ? 
 TODO listElement code refactor
 TODO backupd db arra az esetre ha az api halott
 
 Extra dolgok:
 Táblázat vastagabb sorokkal nagyobb képekkel
 Rankok öszecsukása ?
-
+light / dark mode
 Vegyes, nemzet nélküli TT,
 rejtett jármvek külön
 Speciális járművek külön

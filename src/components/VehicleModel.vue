@@ -25,7 +25,6 @@
 import { toast } from 'vue3-toastify'
 import 'vue3-toastify/dist/index.css'
 import apiParams from '@/assets/apiParams.json'
-import updates from '@/assets/updates.json'
 
 export default {
   props: {
@@ -88,26 +87,25 @@ export default {
         this.type = 'PR'
       } else this.type = 'TT'
 
-      this.setSaleText()
-
       const vehicle = {
-        vehicleAddDate: this.data.release_date || 0,
         id: this.data.identifier,
-        shortName: this.shortVersionTranslatedName,
+        //shortName: this.shortVersionTranslatedName,
         longName: this.translatedName,
         nation: this.data.country,
-        geCost: this.data.ge_cost, //lehet nem is kell mivel a részletes lekérésben van benne a crew sl adat
-        slCost: this.data.value, // same
+        isMarket: this.vehiclesData.on_marketplace,
+        isEvent: this.vehiclesData.event,
+        isPrem: this.vehiclesData.is_premium,
+        geCost: this.vehiclesData.ge_cost,
+        slCost: this.vehiclesData.value,
         basicCrewTrainingCost: this.vehiclesData.train1_cost,
         expertCrewTrainingCost: this.vehiclesData.train2_cost,
-        aceCrewTrainingCost: this.vehiclesData.train3_cost_gold,
-        isEvent: this.vehiclesData.event,
-        isRemovable: this.isRemovable,
-        saleText: this.saleText,
+        rpCost: this.vehiclesData.req_exp,
         listOption: listOption,
         vehicleType: this.type,
-        rpCost: this.vehiclesData.req_exp,
-        totalPrice: 0
+        saleText: this.saleText,
+        release_date: this.data.release_date || 0,
+        totalPrice: 0,
+        isRemovable: false
       }
 
       let vehiclesPrices = JSON.parse(sessionStorage.getItem('vehicleData') || '[]')
@@ -117,7 +115,7 @@ export default {
         toast.error('Vehicle is already in the list.')
       } else {
         vehiclesPrices.push(vehicle)
-        vehiclesPrices.sort((a, b) => {
+        /*vehiclesPrices.sort((a, b) => {
           // Először a nation szerint rendezünk
           if (a.nation < b.nation) return -1
           if (a.nation > b.nation) return 1
@@ -127,26 +125,13 @@ export default {
           if (a.longName > b.longName) return 1
 
           return 0
-        })
+        }) */
         sessionStorage.setItem('vehicleData', JSON.stringify(vehiclesPrices))
         toast.success('Vehicle added successfully!')
       }
     },
     openCloseListOptions() {
       this.showPopupList = !this.showPopupList
-    },
-    setSaleText() {
-      //ha squadronjármű vagy a dátuma az utolsó 2 patch dátumánál korábbi akkor nem lesz leárazva
-      if (this.type == 'SQ') {
-        this.saleText = ' This is a squadron vehicle, the discount does not apply'
-        this.isRemovable = true
-      } else if (this.data.release_date > updates.updates[2].start_date) {
-        this.saleText =
-          ' This is a new vehicle, only vehicles introduced after ' +
-          updates.updates[2].name +
-          ' are discounted'
-        this.isRemovable = true
-      }
     },
     /**
      * Lekér két különböző fordítást: egy rövid (_1) és egy hosszú (_shop) verziót
