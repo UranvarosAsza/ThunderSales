@@ -1,3 +1,6 @@
+TODO listElement code refactorTODO 
+
+
 TODO Css overhaul -ongoing
     -vehicleModel 
         kis méretben csak text
@@ -10,12 +13,14 @@ TODO Css overhaul -ongoing
             a táblázat számlálónál tudja megmondani hogy packos járműnek a gold értékét ne vegye figyelembe
         TODO edit rows -> rp cost
         TODO lehet kéne egy TotalGE meg egy TotalSL exportba
-        ListElementet törölni
-        tooltip idő paramétereivel játszani kicsit pl: v-tooltip="{ value: 'Confirm to proceed', showDelay: 1000, hideDelay: 300 }"
+    -ListElementet törölni
+        
+FIXME tooltip idő paramétereivel játszani kicsit pl: v-tooltip="{ value: 'Confirm to proceed', showDelay: 1000, hideDelay: 300 }"
 
 TODO nation alapján is kapjon pici zászlót a táblázatba a sub-totalba
 TODO kereső ? 
-TODO listElement code refactor
+TODO Toggleswitch hogy milyen formátumú kijelzést akar en-hu , 1 000 vagy 1.000
+
 TODO backupd db arra az esetre ha az api halott
 
 Extra dolgok:

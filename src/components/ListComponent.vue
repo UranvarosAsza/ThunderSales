@@ -33,6 +33,8 @@
               </div>
             </span>
             <div class="reduceButtons" style="text-align: right">
+              <button @click="logVehicleData">Log</button>
+
               <button
                 label="Change to vehicle cost only"
                 class="allToVehiclePriceButton"
@@ -185,7 +187,6 @@ export default {
   data() {
     return {
       vehiclesPrices: [],
-      inportedVehicleprices: [],
       grandTotal: 0,
       goldTotal: 0,
       discount: null,
@@ -228,10 +229,26 @@ export default {
     this.vehiclesPrices.forEach((vehicle) => {
       this.computeSelectedPrice(vehicle)
     })
-
-    //console.log(this.vehiclesPrices)
   },
   methods: {
+    logVehicleData() {
+      console.log('vehiclePrices: ')
+      console.log(this.vehiclesPrices)
+
+      const sessStorageVehiclePrices = JSON.parse(sessionStorage.getItem('vehicleData')) || []
+      console.log('sessStorageVehiclePrices: ')
+      console.log(sessStorageVehiclePrices)
+    },
+    //TODO ezeket code refactorhoz
+    getVehicleData() {
+      return JSON.parse(sessionStorage.getItem('vehicleData')) || []
+    },
+
+    setVehicleData(data) {
+      sessionStorage.setItem('vehicleData', JSON.stringify(data))
+      this.vehiclesPrices = data // Frissítjük a lokális változót is
+    },
+
     onToggle(value) {
       this.selectedColumns = value
     },
@@ -322,7 +339,7 @@ export default {
     },
     exportCSV() {
       const vehicleData = JSON.parse(sessionStorage.getItem('vehicleData')) || []
-      console.log(vehicleData)
+
       const csvHeaders = [
         'id',
         'Vehicle',
@@ -400,40 +417,41 @@ export default {
       this.updateList() // Frissítjük a listát
     },
     computeSelectedPrice(vehicle) {
-      const vehicleCostSL = vehicle.slCost
-      const basicCrewTrainingCost = vehicle.basicCrewTrainingCost
-      const expertCrewTrainingCost = vehicle.expertCrewTrainingCost
+      let vehicleData = JSON.parse(sessionStorage.getItem('vehicleData')) || []
 
-      switch (vehicle.listOption) {
-        case 'expertCrew':
-          vehicle.totalPrice = basicCrewTrainingCost + expertCrewTrainingCost + vehicleCostSL
-          vehicle.infoText =
-            'Calculated as: vehicle cost: ${vehicleCostSL}, basic crew cost: ${basicCrewTrainingCost}, expert crew cost: ${expertCrewTrainingCost}'
-          break
-        case 'basicCrew':
-          vehicle.totalPrice = basicCrewTrainingCost + vehicleCostSL
-          vehicle.infoText =
-            'Calculated as: vehicle cost: ${vehicleCostSL}, basic crew cost: ${basicCrewTrainingCost}'
-          break
-        case 'vehicleCost':
-          vehicle.infoText = 'Calculated as: vehicle cost: ${vehicleCostSL}'
-          vehicle.totalPrice = vehicleCostSL
-          break
-        default:
-          vehicle.totalPrice = vehicleCostSL // Always ensure a default value
-          vehicle.infoText = `Calculated as: vehicle cost: ${vehicleCostSL}`
-        // console.log('No valid list option selected for', vehicle.id)
+      const index = vehicleData.findIndex((v) => v.id === vehicle.id)
+      if (index !== -1) {
+        const vehicleCostSL = vehicle.slCost
+        const basicCrewTrainingCost = vehicle.basicCrewTrainingCost
+        const expertCrewTrainingCost = vehicle.expertCrewTrainingCost
+
+        switch (vehicle.listOption) {
+          case 'expertCrew':
+            vehicleData[index].totalPrice =
+              basicCrewTrainingCost + expertCrewTrainingCost + vehicleCostSL
+            break
+          case 'basicCrew':
+            vehicleData[index].totalPrice = basicCrewTrainingCost + vehicleCostSL
+            break
+          case 'vehicleCost':
+            vehicleData[index].totalPrice = vehicleCostSL
+            break
+          default:
+            vehicleData[index].totalPrice = vehicleCostSL // Default érték
+        }
+
+        // Update sessionStorage with the modified data
+        sessionStorage.setItem('vehicleData', JSON.stringify(vehicleData))
+        this.vehiclesPrices = vehicleData
       }
     },
     // kiszámolja az összesített jármű-crew összegeket discount előtt
     calculateGrandTotal() {
-      //console.log(this.vehiclesPrices)
       this.techTreeVehicleTotal = 0
       this.crewsAndSquadronVehiclePrices = 0
       this.goldTotal = 0
-
+      //ezt lehet őgy kéne hogy copy a sess store-ból majd editmajd vissza és updoot
       this.vehiclesPrices.forEach((vehicle) => {
-        //console.log(vehicle)
         switch (vehicle.vehicleType) {
           case 'TT':
             this.techTreeVehicleTotal += vehicle.slCost
@@ -501,8 +519,11 @@ export default {
       this.setSaleText()
     },
     //Végigmegy minegyiken, mountoláskor és update-kor
+    //ha squadronjármű vagy a dátuma az utolsó 2 patch dátumánál korábbi akkor nem lesz leárazva
     setSaleText() {
-      this.vehiclesPrices.forEach((vehicle) => {
+      let vehicleData = JSON.parse(sessionStorage.getItem('vehicleData')) || []
+
+      vehicleData.forEach((vehicle) => {
         if (vehicle.vehicleType == 'SQ') {
           vehicle.saleText = ' This is a squadron vehicle, the discount does not apply'
           vehicle.isRemovable = true
@@ -514,7 +535,9 @@ export default {
           vehicle.isRemovable = true
         }
       })
-      //ha squadronjármű vagy a dátuma az utolsó 2 patch dátumánál korábbi akkor nem lesz leárazva
+      // Update sessionStorage with the modified data
+      sessionStorage.setItem('vehicleData', JSON.stringify(vehicleData))
+      this.vehiclesPrices = vehicleData // Frissítjük a lokális vehiclesPrices tömböt is
     },
     calculateDiscountedPrice() {
       if (this.discount === null) {
