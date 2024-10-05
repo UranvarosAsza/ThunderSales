@@ -235,7 +235,7 @@ export default {
       console.log('vehiclePrices: ')
       console.log(this.vehiclesPrices)
 
-      const sessStorageVehiclePrices = JSON.parse(sessionStorage.getItem('vehicleData')) || []
+      const sessStorageVehiclePrices = this.getVehicleData() 
       console.log('sessStorageVehiclePrices: ')
       console.log(sessStorageVehiclePrices)
     },
@@ -248,7 +248,9 @@ export default {
       sessionStorage.setItem('vehicleData', JSON.stringify(data))
       this.vehiclesPrices = data // Frissítjük a lokális változót is
     },
-
+    loadVehicles() {
+      this.vehiclesPrices =this.getVehicleData()
+    },
     onToggle(value) {
       this.selectedColumns = value
     },
@@ -267,21 +269,6 @@ export default {
         }
         reader.readAsText(file) // Fájl beolvasása szövegként
       }
-    },
-    handleListOptionChange(vehicle) {
-      // Find the vehicle in the sessionStorage and update its listOption
-      const vehicleData = JSON.parse(sessionStorage.getItem('vehicleData')) || []
-
-      // Find the specific vehicle by its ID or another unique identifier
-      const index = vehicleData.findIndex((v) => v.id === vehicle.id)
-      if (index !== -1) {
-        // Update the listOption for the vehicle
-        vehicleData[index].listOption = vehicle.listOption
-        // Update sessionStorage with the modified vehicleData array
-        sessionStorage.setItem('vehicleData', JSON.stringify(vehicleData))
-      }
-      this.computeSelectedPrice(vehicle)
-      this.calculateGrandTotal()
     },
     parseCSV(fileContent) {
       const rows = fileContent.split('\n').map((row) => row.split(';'))
@@ -309,7 +296,7 @@ export default {
         }))
 
         // Tedd a feldolgozott adatokat a sessionStorage-ba
-        const vehicleData = JSON.parse(sessionStorage.getItem('vehicleData')) || []
+        const vehicleData = this.getVehicleData()
         const updatedData = [...vehicleData]
         importedData.forEach((vehicle) => {
           const exists = vehicleData.some((v) => v.id === vehicle.id)
@@ -324,7 +311,7 @@ export default {
           if (a.longName > b.longName) return 1
           return 0
         })
-        sessionStorage.setItem('vehicleData', JSON.stringify(updatedData))
+        this.setVehicleData(updatedData)
       } else {
         toast.error('CSV header does not match the expected format.')
         console.error('CSV header does not match the expected format.')
@@ -334,12 +321,8 @@ export default {
         this.computeSelectedPrice(vehicle)
       })
     },
-    loadVehicles() {
-      this.vehiclesPrices = JSON.parse(sessionStorage.getItem('vehicleData') || '[]')
-    },
     exportCSV() {
-      const vehicleData = JSON.parse(sessionStorage.getItem('vehicleData')) || []
-
+      const vehicleData =this.getVehicleData()
       const csvHeaders = [
         'id',
         'Vehicle',
@@ -398,27 +381,64 @@ export default {
         this.vehiclesPrices.splice(index, 1, { ...this.vehiclesPrices[index], ...editedVehicle })
         // Frissítjük a megfelelő elemet
       }
-      sessionStorage.setItem('vehicleData', JSON.stringify(this.vehiclesPrices))
+      this.setVehicleData(this.vehiclesPrices)
       this.calculateGrandTotal() // Frissítjük az összértéket
     },
-    calculateNationTotal(nation) {
-      let total = 0
-      this.vehiclesPrices.forEach((vehicle) => {
-        if (vehicle.nation === nation) {
-          total += parseInt(vehicle.totalPrice, 10) || 0 // Ensure it's a number
-        }
+    removeRemovableVehicles()
+      //ha a jármű removable akkor mehet ki a listából
+    {
+      let vehiclesPrices = this.getVehicleData()
+      vehiclesPrices = vehiclesPrices.filter((vehicle) => !vehicle.isRemovable)
+      this.calculateGrandTotal()
+      this.setVehicleData(vehiclesPrices)
+    },
+    setAllVehicleOptionToVehiclepirce()
+    //mindegyik list option-t vehiclePrice-ra teszi
+     {
+      let vehiclesPrices = this.getVehicleData()
+      for (let i = 0; i < vehiclesPrices.length; i++) {
+        vehiclesPrices[i].listOption = 'vehicleCost'
+      }
+      vehiclesPrices.forEach((vehicle) => {
+        this.computeSelectedPrice(vehicle)
       })
-      return total
+      this.calculateGrandTotal()
+      this.setVehicleData(vehiclesPrices)
+    },
+    handleListOptionChange(vehicle) {
+      // Find the vehicle in the sessionStorage and update its listOption
+      let vehicleData =this.getVehicleData()
+      // Find the specific vehicle by its ID or another unique identifier
+      let index = vehicleData.findIndex((v) => v.id === vehicle.id)
+      if (index !== -1) {
+        // Update the listOption for the vehicle
+        vehicleData[index].listOption = vehicle.listOption
+        // Update sessionStorage with the modified vehicleData array
+        this.setVehicleData(vehicleData)
+      }
+      this.computeSelectedPrice(vehicle)
+      this.calculateGrandTotal()
     },
     removeFromList(vehicle) {
       // A megadott járművet töröljük
-      this.vehiclesPrices = this.vehiclesPrices.filter((v) => v.id !== vehicle.id)
-      sessionStorage.setItem('vehicleData', JSON.stringify(this.vehiclesPrices))
+      vehiclesPrices = this.getVehicleData()
+      vehiclesPrices = vehiclesPrices.filter((v) => v.id !== vehicle.id)
+      this.setVehicleData(vehiclesPrices)
       this.updateList() // Frissítjük a listát
     },
+    clearList() {
+      this.vehiclesPrices = [] //
+      this.setVehicleData(sessionStorage) 
+      this.grandTotal = 0 // Reset grand total when list is cleared
+      this.goldTotal = 0
+    },
+    updateList() {
+      this.loadVehicles()
+      this.calculateGrandTotal()
+      this.setSaleText()
+    },
     computeSelectedPrice(vehicle) {
-      let vehicleData = JSON.parse(sessionStorage.getItem('vehicleData')) || []
-
+      let vehicleData =this.getVehicleData()
       const index = vehicleData.findIndex((v) => v.id === vehicle.id)
       if (index !== -1) {
         const vehicleCostSL = vehicle.slCost
@@ -441,17 +461,30 @@ export default {
         }
 
         // Update sessionStorage with the modified data
-        sessionStorage.setItem('vehicleData', JSON.stringify(vehicleData))
+        this.setVehicleData(vehicleData)
         this.vehiclesPrices = vehicleData
       }
     },
+    calculateNationTotal(nation) {
+      let total = 0
+      let vehiclesPrices = this.getVehicleData()
+      vehiclesPrices.forEach((vehicle) => {
+        if (vehicle.nation === nation) {
+          total += parseInt(vehicle.totalPrice, 10) || 0 // Ensure it's a number
+        }
+      })
+      return total
+    },
+    
+    calculateGrandTotal() 
     // kiszámolja az összesített jármű-crew összegeket discount előtt
-    calculateGrandTotal() {
+    {
       this.techTreeVehicleTotal = 0
       this.crewsAndSquadronVehiclePrices = 0
       this.goldTotal = 0
-      //ezt lehet őgy kéne hogy copy a sess store-ból majd editmajd vissza és updoot
-      this.vehiclesPrices.forEach((vehicle) => {
+       
+      let vehiclesPrices = this.getVehicleData()
+      vehiclesPrices.forEach((vehicle) => {
         switch (vehicle.vehicleType) {
           case 'TT':
             this.techTreeVehicleTotal += vehicle.slCost
@@ -491,6 +524,7 @@ export default {
       })
 
       this.grandTotal = this.techTreeVehicleTotal + this.crewsAndSquadronVehiclePrices
+      this.setVehicleData(vehiclesPrices)
     },
     updateTotalPrice(vehicleData) {
       const vehicle = this.vehiclesPrices.find((v) => v.vehicle_id === vehicleData.vehicleId)
@@ -507,22 +541,12 @@ export default {
         this.calculateGrandTotal()
       }
     },
-    clearList() {
-      this.vehiclesPrices = [] //
-      sessionStorage.setItem('vehicleData', JSON.stringify([]))
-      this.grandTotal = 0 // Reset grand total when list is cleared
-      this.goldTotal = 0
-    },
-    updateList() {
-      this.loadVehicles()
-      this.calculateGrandTotal()
-      this.setSaleText()
-    },
+    
+    setSaleText() 
     //Végigmegy minegyiken, mountoláskor és update-kor
     //ha squadronjármű vagy a dátuma az utolsó 2 patch dátumánál korábbi akkor nem lesz leárazva
-    setSaleText() {
-      let vehicleData = JSON.parse(sessionStorage.getItem('vehicleData')) || []
-
+    {
+      let vehicleData =this.getVehicleData()
       vehicleData.forEach((vehicle) => {
         if (vehicle.vehicleType == 'SQ') {
           vehicle.saleText = ' This is a squadron vehicle, the discount does not apply'
@@ -536,10 +560,10 @@ export default {
         }
       })
       // Update sessionStorage with the modified data
-      sessionStorage.setItem('vehicleData', JSON.stringify(vehicleData))
-      this.vehiclesPrices = vehicleData // Frissítjük a lokális vehiclesPrices tömböt is
-    },
+      this.setVehicleData(vehicleData)
+      },
     calculateDiscountedPrice() {
+      //FIXME wtf is this ? 
       if (this.discount === null) {
         toast.error('Please select a discount percentage!')
         return
@@ -549,24 +573,7 @@ export default {
         this.techTreeVehicleTotal * (1 - this.discount) + this.crewsAndSquadronVehiclePrices
       this.grandTotalGeDiscount = this.goldTotal * (1 - this.discount)
     },
-    removeRemovableVehicles() {
-      //ha a jármű removable akkor mehet ki a listából
-      this.vehiclesPrices = this.vehiclesPrices.filter((vehicle) => !vehicle.isRemovable)
-      this.calculateGrandTotal()
-      // Frissítjük a sessionStorage-t is
-      sessionStorage.setItem('vehicleData', JSON.stringify(this.vehiclesPrices))
-    },
-    setAllVehicleOptionToVehiclepirce() {
-      //mindegyik list option-t vehiclePrice-ra tenni
-      for (let i = 0; i < this.vehiclesPrices.length; i++) {
-        this.vehiclesPrices[i].listOption = 'vehicleCost'
-      }
-      this.vehiclesPrices.forEach((vehicle) => {
-        this.computeSelectedPrice(vehicle)
-      })
-      this.calculateGrandTotal()
-      sessionStorage.setItem('vehicleData', JSON.stringify(this.vehiclesPrices))
-    }
+   
   }
 }
 </script>
