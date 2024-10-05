@@ -12,12 +12,6 @@
     <div v-else-if="data.is_pack" class="type">Pack</div>
     <div v-else-if="data.ge_cost" class="type">{{ data.ge_cost }} GE</div>
     <div v-else class="type hidden"><br /></div>
-    <!--<div v-if="!data.release_date" class="red">aaaaaaa</div>-->
-
-    <!-- <div v-else>Price: {{ data.value }} Sl</div>
-    <div class="lowerPart">
-      <button @click="addToListAs(picked)">Add</button>
-    </div> -->
   </div>
 </template>
 
@@ -49,7 +43,9 @@ export default {
       picked: 'vehicleCost',
       type: '',
       saleText: '',
-      isRemovable: false
+      isRemovable: false,
+      slPrice: 0,
+      gePrice: 0
     }
   },
   computed: {
@@ -87,6 +83,19 @@ export default {
         this.type = 'PR'
       } else this.type = 'TT'
 
+      //előre meg kell nézni hogy event-e -> slCost =0
+      //                        Market/pack -> geCost=0
+      if(this.vehiclesData.isEvent){
+        this.slPrice = 0
+        console.log(this.vehiclesData.isEvent);
+        
+      }
+      if(this.vehiclesData.isMarket || this.vehiclesData.is_pack){
+        this.gePrice=0
+        console.log(this.vehiclesData.isMarket, this.vehiclesPrices.is_pack);
+        
+      }
+
       const vehicle = {
         id: this.data.identifier,
         //shortName: this.shortVersionTranslatedName,
@@ -110,25 +119,20 @@ export default {
 
       let vehiclesPrices = JSON.parse(sessionStorage.getItem('vehicleData') || '[]')
 
-      // Ellenőrizzük, hogy a jármű már benne van-e
-      if (vehiclesPrices.some((v) => v.id === vehicle.id)) {
-        toast.error('Vehicle is already in the list.')
-      } else {
-        vehiclesPrices.push(vehicle)
-        /*vehiclesPrices.sort((a, b) => {
-          // Először a nation szerint rendezünk
-          if (a.nation < b.nation) return -1
-          if (a.nation > b.nation) return 1
+    // Ellenőrizzük, hogy a vehiclesPrices egy tömb-e
+    if (!Array.isArray(vehiclesPrices)) {
+      vehiclesPrices = [] // Ha nem tömb, inicializáljuk üres tömbként
+    }
 
-          // Ha a nation megegyezik, akkor a longName szerint rendezünk
-          if (a.longName < b.longName) return -1
-          if (a.longName > b.longName) return 1
+    // Ellenőrizzük, hogy a jármű már benne van-e
+    if (vehiclesPrices.some((v) => v.id === vehicle.id)) {
+      toast.error('Vehicle is already in the list.')
+    } else {
+      vehiclesPrices.push(vehicle)
+      sessionStorage.setItem('vehicleData', JSON.stringify(vehiclesPrices))
+      toast.success('Vehicle added successfully!')
+    }
 
-          return 0
-        }) */
-        sessionStorage.setItem('vehicleData', JSON.stringify(vehiclesPrices))
-        toast.success('Vehicle added successfully!')
-      }
     },
     openCloseListOptions() {
       this.showPopupList = !this.showPopupList
