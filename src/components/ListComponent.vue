@@ -33,8 +33,9 @@
               </div>
             </span>
             <div class="reduceButtons" style="text-align: right">
-              <button @click="logVehicleData">Log</button>
+              <!-- <button @click="logVehicleData">Log</button>
 
+              -->
               <button
                 label="Change to vehicle cost only"
                 class="allToVehiclePriceButton"
@@ -96,7 +97,12 @@
         <Column field="nation" header="Nation"></Column>
         <Column field="totalPrice" header="Total" sortable>
           <template #body="slotProps">
-            {{ slotProps.data.totalPrice.toLocaleString('hu-HU') }}
+            <span v-if="slotProps.data.totalGE > 0">
+              {{ slotProps.data.totalGE.toLocaleString('hu-HU') }} Ge
+            </span>
+            <span v-if="slotProps.data.totalSL > 0">
+              {{ slotProps.data.totalSL.toLocaleString('hu-HU') }} Sl
+            </span>
           </template>
         </Column>
         <Column
@@ -147,14 +153,16 @@
         <template #groupfooter="slotProps">
           <div class="flex justify-end font-bold w-full">
             Total Cost in Nation:
-            {{ calculateNationTotal(slotProps.data.nation).toLocaleString('hu-HU') }}
+            {{ calculateNationTotal(slotProps.data.nation) }}
           </div>
         </template>
         <template #footer>
           <div v-if="vehiclesPrices.length" class="discount">
             <button @click="clearList">Clear list</button>
             <h2>
-              Your total costs for all nations are: {{ grandTotal.toLocaleString('hu-HU') }} .
+              Your total costs for all nations are:
+              <span v-if="goldTotal != 0"> {{ goldTotal.toLocaleString('hu-HU') }} GE </span>
+              <span v-if="grandTotal != 0"> {{ grandTotal.toLocaleString('hu-HU') }} SL </span>
             </h2>
           </div>
         </template>
@@ -232,14 +240,10 @@ export default {
   },
   methods: {
     logVehicleData() {
-      console.log('vehiclePrices: ')
-      console.log(this.vehiclesPrices)
-
-      const sessStorageVehiclePrices = this.getVehicleData() 
+      const sessStorageVehiclePrices = this.getVehicleData()
       console.log('sessStorageVehiclePrices: ')
       console.log(sessStorageVehiclePrices)
     },
-    //TODO ezeket code refactorhoz
     getVehicleData() {
       return JSON.parse(sessionStorage.getItem('vehicleData')) || []
     },
@@ -249,7 +253,7 @@ export default {
       this.vehiclesPrices = data // Frissítjük a lokális változót is
     },
     loadVehicles() {
-      this.vehiclesPrices =this.getVehicleData()
+      this.vehiclesPrices = this.getVehicleData()
     },
     onToggle(value) {
       this.selectedColumns = value
@@ -322,7 +326,7 @@ export default {
       })
     },
     exportCSV() {
-      const vehicleData =this.getVehicleData()
+      const vehicleData = this.getVehicleData()
       const csvHeaders = [
         'id',
         'Vehicle',
@@ -384,17 +388,15 @@ export default {
       this.setVehicleData(this.vehiclesPrices)
       this.calculateGrandTotal() // Frissítjük az összértéket
     },
-    removeRemovableVehicles()
+    removeRemovableVehicles() {
       //ha a jármű removable akkor mehet ki a listából
-    {
       let vehiclesPrices = this.getVehicleData()
       vehiclesPrices = vehiclesPrices.filter((vehicle) => !vehicle.isRemovable)
       this.calculateGrandTotal()
       this.setVehicleData(vehiclesPrices)
     },
-    setAllVehicleOptionToVehiclepirce()
-    //mindegyik list option-t vehiclePrice-ra teszi
-     {
+    setAllVehicleOptionToVehiclepirce() {
+      //mindegyik list option-t vehiclePrice-ra teszi
       let vehiclesPrices = this.getVehicleData()
       for (let i = 0; i < vehiclesPrices.length; i++) {
         vehiclesPrices[i].listOption = 'vehicleCost'
@@ -407,7 +409,7 @@ export default {
     },
     handleListOptionChange(vehicle) {
       // Find the vehicle in the sessionStorage and update its listOption
-      let vehicleData =this.getVehicleData()
+      let vehicleData = this.getVehicleData()
       // Find the specific vehicle by its ID or another unique identifier
       let index = vehicleData.findIndex((v) => v.id === vehicle.id)
       if (index !== -1) {
@@ -421,14 +423,14 @@ export default {
     },
     removeFromList(vehicle) {
       // A megadott járművet töröljük
-      vehiclesPrices = this.getVehicleData()
+      let vehiclesPrices = this.getVehicleData()
       vehiclesPrices = vehiclesPrices.filter((v) => v.id !== vehicle.id)
       this.setVehicleData(vehiclesPrices)
       this.updateList() // Frissítjük a listát
     },
     clearList() {
       this.vehiclesPrices = [] //
-      this.setVehicleData(sessionStorage) 
+      this.setVehicleData(this.vehiclesPrices)
       this.grandTotal = 0 // Reset grand total when list is cleared
       this.goldTotal = 0
     },
@@ -438,26 +440,31 @@ export default {
       this.setSaleText()
     },
     computeSelectedPrice(vehicle) {
-      let vehicleData =this.getVehicleData()
+      let vehicleData = this.getVehicleData()
       const index = vehicleData.findIndex((v) => v.id === vehicle.id)
       if (index !== -1) {
         const vehicleCostSL = vehicle.slCost
+        const vehicleCostGE = vehicle.geCost
         const basicCrewTrainingCost = vehicle.basicCrewTrainingCost
         const expertCrewTrainingCost = vehicle.expertCrewTrainingCost
 
         switch (vehicle.listOption) {
           case 'expertCrew':
-            vehicleData[index].totalPrice =
+            vehicleData[index].totalSL =
               basicCrewTrainingCost + expertCrewTrainingCost + vehicleCostSL
+            vehicleData[index].totalGE = vehicleCostGE
             break
           case 'basicCrew':
-            vehicleData[index].totalPrice = basicCrewTrainingCost + vehicleCostSL
+            vehicleData[index].totalSL = basicCrewTrainingCost + vehicleCostSL
+            vehicleData[index].totalGE = vehicleCostGE
             break
           case 'vehicleCost':
-            vehicleData[index].totalPrice = vehicleCostSL
+            vehicleData[index].totalSL = vehicleCostSL
+            vehicleData[index].totalGE = vehicleCostGE
             break
           default:
-            vehicleData[index].totalPrice = vehicleCostSL // Default érték
+            vehicleData[index].totalSL = vehicleCostSL // Default érték
+            vehicleData[index].totalGE = vehicleCostGE
         }
 
         // Update sessionStorage with the modified data
@@ -466,62 +473,68 @@ export default {
       }
     },
     calculateNationTotal(nation) {
-      let total = 0
+      let nationTotalGe = 0
+      let nationTotalSl = 0
       let vehiclesPrices = this.getVehicleData()
       vehiclesPrices.forEach((vehicle) => {
         if (vehicle.nation === nation) {
-          total += parseInt(vehicle.totalPrice, 10) || 0 // Ensure it's a number
+          nationTotalSl += parseInt(vehicle.totalSL, 10) || 0 // Ensure it's a number
+          nationTotalGe += parseInt(vehicle.totalGE, 10)
         }
       })
-      return total
+      return (
+        nationTotalGe.toLocaleString('hu-HU') +
+        ' GE ' +
+        nationTotalSl.toLocaleString('hu-HU') +
+        ' SL '
+      )
     },
-    
-    calculateGrandTotal() 
-    // kiszámolja az összesített jármű-crew összegeket discount előtt
-    {
+
+    calculateGrandTotal() {
+      // kiszámolja az összesített jármű-crew összegeket discount előtt
       this.techTreeVehicleTotal = 0
       this.crewsAndSquadronVehiclePrices = 0
       this.goldTotal = 0
-       
-      let vehiclesPrices = this.getVehicleData()
-      vehiclesPrices.forEach((vehicle) => {
-        switch (vehicle.vehicleType) {
-          case 'TT':
-            this.techTreeVehicleTotal += vehicle.slCost
-            break
-          case 'SQ':
-            this.crewsAndSquadronVehiclePrices += vehicle.slCost
-            break
-          case 'PR':
-            this.goldTotal += vehicle.geCost
-            break
-          default:
-            toast.error('OOF! (vehicletype)')
-            break
-        }
 
-        //listoption alapján a crew árak:
-        switch (vehicle.listOption) {
-          case 'expertCrew':
-            this.crewsAndSquadronVehiclePrices +=
-              vehicle.basicCrewTrainingCost + vehicle.expertCrewTrainingCost
-            // this.crewsAndSquadronVehiclePrices += vehicle.basicCrewPrice + vehicle.expertCrewPrice
-            //this.infoText = Calculated as: vehicle cost: ${this.vehicle.vehicleCostSL || 0}, basic crew cost: ${this.vehicle.basicCrewTrainingCost}, expert crew cost: ${this.vehicle.exptertCrewTrtainigCost}
-            break
-          case 'basicCrew':
-            this.crewsAndSquadronVehiclePrices += vehicle.basicCrewTrainingCost
-            //this.crewsAndSquadronVehiclePrices += vehicle.basicCrewPrice
-            //this.infoText = Calculated as: vehicle cost: ${this.vehicle.vehicleCostSL || 0}, basic crew cost: ${this.vehicle.basicCrewTrainingCost}
-            break
-          case 'vehicleCost':
-            //vehiclecost már kezelve van fent
-            // this.infoText = Calculated as: vehicle cost: ${this.vehicle.vehicleCostSL || '(vehicle cost is in Ge or free (reserve))'}
-            break
-          default:
-            console.log('list option error')
-            console.log(vehicle.listOption)
-        }
-      })
+      let vehiclesPrices = this.getVehicleData()
+      if (vehiclesPrices.length != 0) {
+        vehiclesPrices.forEach((vehicle) => {
+          switch (vehicle.vehicleType) {
+            case 'TT':
+              this.techTreeVehicleTotal += vehicle.slCost
+              break
+            case 'SQ':
+              this.crewsAndSquadronVehiclePrices += vehicle.slCost
+              break
+            case 'PR':
+              this.goldTotal += vehicle.totalGE
+              break
+            default:
+              toast.error('OOF! (vehicletype)')
+              break
+          }
+
+          //listoption alapján a crew árak:
+          switch (vehicle.listOption) {
+            case 'expertCrew':
+              this.crewsAndSquadronVehiclePrices +=
+                vehicle.basicCrewTrainingCost + vehicle.expertCrewTrainingCost
+              //this.infoText = Calculated as: vehicle cost: ${this.vehicle.vehicleCostSL || 0}, basic crew cost: ${this.vehicle.basicCrewTrainingCost}, expert crew cost: ${this.vehicle.exptertCrewTrtainigCost}
+              break
+            case 'basicCrew':
+              this.crewsAndSquadronVehiclePrices += vehicle.basicCrewTrainingCost
+              //this.infoText = Calculated as: vehicle cost: ${this.vehicle.vehicleCostSL || 0}, basic crew cost: ${this.vehicle.basicCrewTrainingCost}
+              break
+            case 'vehicleCost':
+              //vehiclecost már kezelve van fent
+              // this.infoText = Calculated as: vehicle cost: ${this.vehicle.vehicleCostSL || '(vehicle cost is in Ge or free (reserve))'}
+              break
+            default:
+              console.log('list option error')
+              console.log(vehicle.listOption)
+          }
+        })
+      }
 
       this.grandTotal = this.techTreeVehicleTotal + this.crewsAndSquadronVehiclePrices
       this.setVehicleData(vehiclesPrices)
@@ -541,12 +554,11 @@ export default {
         this.calculateGrandTotal()
       }
     },
-    
-    setSaleText() 
-    //Végigmegy minegyiken, mountoláskor és update-kor
-    //ha squadronjármű vagy a dátuma az utolsó 2 patch dátumánál korábbi akkor nem lesz leárazva
-    {
-      let vehicleData =this.getVehicleData()
+
+    setSaleText() {
+      //Végigmegy minegyiken, mountoláskor és update-kor
+      //ha squadronjármű vagy a dátuma az utolsó 2 patch dátumánál korábbi akkor nem lesz leárazva
+      let vehicleData = this.getVehicleData()
       vehicleData.forEach((vehicle) => {
         if (vehicle.vehicleType == 'SQ') {
           vehicle.saleText = ' This is a squadron vehicle, the discount does not apply'
@@ -561,9 +573,9 @@ export default {
       })
       // Update sessionStorage with the modified data
       this.setVehicleData(vehicleData)
-      },
+    },
     calculateDiscountedPrice() {
-      //FIXME wtf is this ? 
+      //FIXME wtf is this ?
       if (this.discount === null) {
         toast.error('Please select a discount percentage!')
         return
@@ -572,8 +584,7 @@ export default {
       this.grandTotalDiscount =
         this.techTreeVehicleTotal * (1 - this.discount) + this.crewsAndSquadronVehiclePrices
       this.grandTotalGeDiscount = this.goldTotal * (1 - this.discount)
-    },
-   
+    }
   }
 }
 </script>

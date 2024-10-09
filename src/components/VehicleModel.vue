@@ -83,17 +83,16 @@ export default {
         this.type = 'PR'
       } else this.type = 'TT'
 
-      //előre meg kell nézni hogy event-e -> slCost =0
-      //                        Market/pack -> geCost=0
-      if(this.vehiclesData.isEvent){
-        this.slPrice = 0
-        console.log(this.vehiclesData.isEvent);
-        
+      //eventes járműnek az sl költsége maradjon 0 (mivel vagy kupon vagy fix beaktiválódik)
+      if (this.vehiclesData.event == null) {
+        this.slPrice = this.vehiclesData.value
       }
-      if(this.vehiclesData.isMarket || this.vehiclesData.is_pack){
-        this.gePrice=0
-        console.log(this.vehiclesData.isMarket, this.vehiclesPrices.is_pack);
-        
+
+      //Market/pack -> geCost=0
+      //on_market == true || ispack==true
+      if (!(this.vehiclesData.on_marketplace == true || this.vehiclesData.is_pack == true)) {
+        this.gePrice = this.vehiclesData.ge_cost
+        // console.log(this.vehiclesData.isMarket, this.vehiclesData.is_pack);
       }
 
       const vehicle = {
@@ -101,11 +100,11 @@ export default {
         //shortName: this.shortVersionTranslatedName,
         longName: this.translatedName,
         nation: this.data.country,
-        isMarket: this.vehiclesData.on_marketplace,
-        isEvent: this.vehiclesData.event,
+        isMarket: this.vehiclesData.on_marketplace, //lehet nem is kell
+        isEvent: this.vehiclesData.event, //lehet nem is kell
         isPrem: this.vehiclesData.is_premium,
-        geCost: this.vehiclesData.ge_cost,
-        slCost: this.vehiclesData.value,
+        geCost: this.gePrice,
+        slCost: this.slPrice,
         basicCrewTrainingCost: this.vehiclesData.train1_cost,
         expertCrewTrainingCost: this.vehiclesData.train2_cost,
         rpCost: this.vehiclesData.req_exp,
@@ -113,26 +112,26 @@ export default {
         vehicleType: this.type,
         saleText: this.saleText,
         release_date: this.data.release_date || 0,
-        totalPrice: 0,
+        totalSL: 0,
+        totalGe: 0,
         isRemovable: false
       }
 
       let vehiclesPrices = JSON.parse(sessionStorage.getItem('vehicleData') || '[]')
 
-    // Ellenőrizzük, hogy a vehiclesPrices egy tömb-e
-    if (!Array.isArray(vehiclesPrices)) {
-      vehiclesPrices = [] // Ha nem tömb, inicializáljuk üres tömbként
-    }
+      // Ellenőrizzük, hogy a vehiclesPrices egy tömb-e
+      if (!Array.isArray(vehiclesPrices)) {
+        vehiclesPrices = [] // Ha nem tömb, inicializáljuk üres tömbként
+      }
 
-    // Ellenőrizzük, hogy a jármű már benne van-e
-    if (vehiclesPrices.some((v) => v.id === vehicle.id)) {
-      toast.error('Vehicle is already in the list.')
-    } else {
-      vehiclesPrices.push(vehicle)
-      sessionStorage.setItem('vehicleData', JSON.stringify(vehiclesPrices))
-      toast.success('Vehicle added successfully!')
-    }
-
+      // Ellenőrizzük, hogy a jármű már benne van-e
+      if (vehiclesPrices.some((v) => v.id === vehicle.id)) {
+        toast.error('Vehicle is already in the list.')
+      } else {
+        vehiclesPrices.push(vehicle)
+        sessionStorage.setItem('vehicleData', JSON.stringify(vehiclesPrices))
+        toast.success('Vehicle added successfully!')
+      }
     },
     openCloseListOptions() {
       this.showPopupList = !this.showPopupList
