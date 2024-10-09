@@ -458,6 +458,14 @@
         "rank": 3,
         "nation": "japan",
         "branch": "ship"
+      },
+      {
+        "vehicle_id": "sw_strv_m39_td",
+        "place": "PT",
+        "shown": true,
+        "rank": 1,
+        "nation": "sweden",
+        "branch": "ground"
       }
     ]
   }
