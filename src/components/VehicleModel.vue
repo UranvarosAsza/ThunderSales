@@ -1,6 +1,7 @@
 <template>
   <!--egy darab jármű kártya -->
-  <div class="vehicleCard">
+  <div class="vehicleCard" @click="addToListAs(picked)" v-tooltip.top="'Add to the list'">
+    <!--<div class="hoverTip">Add to the list</div>-->
     <img v-if="data.images" :src="data.images.techtree" alt="Vehicle Image" />
     <!--<div class="name">{{ data.identifier }}</div>-->
     <!--<div class="name">{{ shortVersionTranslatedName }}</div>-->
@@ -10,20 +11,7 @@
     <div v-if="data.on_marketplace" class="type">Market</div>
     <div v-else-if="data.is_pack" class="type">Pack</div>
     <div v-else-if="data.ge_cost" class="type">{{ data.ge_cost }} GE</div>
-    <div v-else class="type"><br /></div>
-    <!--<div v-if="!data.release_date" class="red">aaaaaaa</div>-->
-
-    <!-- <div v-else>Price: {{ data.value }} Sl</div> -->
-    <div class="lowerPart">
-      <button @click="addToListAs(picked)">Add</button>
-
-      <!-- <select v-model="picked">
-        <option value="basicCrew">Basic crew</option>
-        <option value="expertCrew">Expert crew</option>
-        <option value="vehicleCost">Just the vehicle</option>
-      </select>
-      <button @click="getVehicleData">Add</button>-->
-    </div>
+    <div v-else class="type hidden"><br /></div>
   </div>
 </template>
 
@@ -31,7 +19,6 @@
 import { toast } from 'vue3-toastify'
 import 'vue3-toastify/dist/index.css'
 import apiParams from '@/assets/apiParams.json'
-import updates from '@/assets/updates.json'
 
 export default {
   props: {
@@ -42,6 +29,7 @@ export default {
       default: 'en' // Alapértelmezett nyelv
     }
   },
+  components: {},
   data() {
     return {
       vehiclesData: {},
@@ -55,7 +43,9 @@ export default {
       picked: 'vehicleCost',
       type: '',
       saleText: '',
-      isRemovable: false
+      isRemovable: false,
+      slPrice: 0,
+      gePrice: 0
     }
   },
   computed: {
@@ -93,64 +83,59 @@ export default {
         this.type = 'PR'
       } else this.type = 'TT'
 
-      this.setSaleText()
+      //eventes járműnek az sl költsége maradjon 0 (mivel vagy kupon vagy fix beaktiválódik)
+      if (this.vehiclesData.event == null) {
+        this.slPrice = this.vehiclesData.value
+      }
+
+      //Market/pack -> geCost=0
+      //on_market == true || ispack==true
+      if (!(this.vehiclesData.on_marketplace == true || this.vehiclesData.is_pack == true)) {
+        this.gePrice = this.vehiclesData.ge_cost
+        // console.log(this.vehiclesData.isMarket, this.vehiclesData.is_pack);
+      }
 
       const vehicle = {
-        vehicleAddDate: this.data.release_date || 0,
-        vehicle_id: this.data.identifier,
-        shortName: this.shortVersionTranslatedName,
+        id: this.data.identifier,
+        //shortName: this.shortVersionTranslatedName,
         longName: this.translatedName,
         nation: this.data.country,
-        vehicleCostGe: this.data.ge_cost, //lehet nem is kell mivel a részletes lekérésben van benne a crew sl adat
-        vehicleCostSL: this.data.value, // same
+        isMarket: this.vehiclesData.on_marketplace, //lehet nem is kell
+        isEvent: this.vehiclesData.event, //lehet nem is kell
+        isPrem: this.vehiclesData.is_premium,
+        geCost: this.gePrice,
+        slCost: this.slPrice,
         basicCrewTrainingCost: this.vehiclesData.train1_cost,
-        exptertCrewTrtainigCost: this.vehiclesData.train2_cost,
-        aceCrewTrainingCost: this.vehiclesData.train3_cost_gold,
-        isEvent: this.vehiclesData.event,
-        isRemovable: this.isRemovable,
-        saleText: this.saleText,
+        expertCrewTrainingCost: this.vehiclesData.train2_cost,
+        rpCost: this.vehiclesData.req_exp,
+        originalRpCost: this.vehiclesData.req_exp,
         listOption: listOption,
         vehicleType: this.type,
-        totalPrice: 0
+        saleText: this.saleText,
+        release_date: this.data.release_date || 0,
+        totalSL: 0,
+        totalGe: 0,
+        isRemovable: false
       }
 
       let vehiclesPrices = JSON.parse(sessionStorage.getItem('vehicleData') || '[]')
 
+      // Ellenőrizzük, hogy a vehiclesPrices egy tömb-e
+      if (!Array.isArray(vehiclesPrices)) {
+        vehiclesPrices = [] // Ha nem tömb, inicializáljuk üres tömbként
+      }
+
       // Ellenőrizzük, hogy a jármű már benne van-e
-      if (vehiclesPrices.some((v) => v.vehicle_id === vehicle.vehicle_id)) {
+      if (vehiclesPrices.some((v) => v.id === vehicle.id)) {
         toast.error('Vehicle is already in the list.')
       } else {
         vehiclesPrices.push(vehicle)
-        vehiclesPrices.sort((a, b) => {
-          // Először a nation szerint rendezünk
-          if (a.nation < b.nation) return -1
-          if (a.nation > b.nation) return 1
-
-          // Ha a nation megegyezik, akkor a longName szerint rendezünk
-          if (a.longName < b.longName) return -1
-          if (a.longName > b.longName) return 1
-
-          return 0
-        })
         sessionStorage.setItem('vehicleData', JSON.stringify(vehiclesPrices))
         toast.success('Vehicle added successfully!')
       }
     },
     openCloseListOptions() {
       this.showPopupList = !this.showPopupList
-    },
-    setSaleText() {
-      //ha squdronjármű vagy a dátuma az utolsó 2 patch dátumánál korábbi akkor nem lesz leárazva
-      if (this.type == 'SQ') {
-        this.saleText = ' This is a squdron vehicle, the discount does not apply'
-        this.isRemovable = true
-      } else if (this.data.release_date > updates.updates[2].start_date) {
-        this.saleText =
-          ' This is a new vehicle, only vehicles introduced after ' +
-          updates.updates[2].name +
-          ' are discounted'
-        this.isRemovable = true
-      }
     },
     /**
      * Lekér két különböző fordítást: egy rövid (_1) és egy hosszú (_shop) verziót
@@ -204,8 +189,9 @@ export default {
   font-size: smaller;
 }
 .vehicleCard {
-  min-height: 150px;
-  padding-top: 5px;
+  cursor: pointer;
+  min-height: 210px;
+  padding-top: 10px;
   padding-bottom: 5px;
 }
 button {

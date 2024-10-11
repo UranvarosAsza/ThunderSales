@@ -1,0 +1,54 @@
+Vehicle,Nation,Total,Vehicle cost,Basic Crew,Expert Crew,List Option,Rp Cost,Vehicle Type,Sale Text
+SARC MkIVa,britain,0,700,200,1000,vehicleCost,2900,TT,
+Sea Harrier FRS.1,britain,0,710000,200000,710000,vehicleCost,520000,SQ, This is a squadron vehicle, the discount does not apply
+▄M109A1,britain,0,185000,52000,185000,vehicleCost,54000,TT,
+J-8B,china,0,950000,270000,950000,vehicleCost,350000,TT,
+MBT-2000,china,0,830000,240000,830000,vehicleCost,300000,TT,
+Object 211,china,0,105000,30000,105000,vehicleCost,33000,TT,
+ZBD04A,china,0,710000,200000,710000,vehicleCost,260000,TT,
+ZSL92,china,0,240000,68000,240000,vehicleCost,82000,TT, This is a new vehicle, only vehicles introduced after Alpha Strike are discounted
+AMX-10P,france,0,155000,45000,155000,vehicleCost,46000,TT,
+Super Etendard,france,0,710000,200000,710000,vehicleCost,260000,TT,
+TPK 6.41,france,0,105000,30000,105000,vehicleCost,33000,TT,
+▄Gladiator Mk I,france,0,700,200,1000,vehicleCost,2900,TT, This is a new vehicle, only vehicles introduced after Alpha Strike are discounted
+▄M26,france,0,200000,57000,200000,vehicleCost,63000,TT,
+◗Fokker G.IA,france,0,10000,3000,10000,vehicleCost,7900,TT, This is a new vehicle, only vehicles introduced after Alpha Strike are discounted
+◘Firefly F.Mk.IV,france,0,76000,22000,76000,vehicleCost,26000,TT, This is a new vehicle, only vehicles introduced after Alpha Strike are discounted
+Bf 109 C-1,germany,0,2100,600,2100,vehicleCost,4000,TT,
+M109G,germany,0,155000,45000,155000,vehicleCost,46000,TT,
+Raketenautomat,germany,0,300000,86000,300000,vehicleCost,105000,TT,
+Z43,germany,0,22000,6300,22000,vehicleCost,11000,TT,
+Zerstörer 45,germany,0,200000,57000,200000,vehicleCost,63000,TT,
+◊MiG-23MLA,germany,0,950000,270000,950000,vehicleCost,350000,TT,
+◊MiG-29,germany,0,1080000,310000,1080000,vehicleCost,400000,TT,
+Hovet,israel,0,240000,68000,240000,vehicleCost,82000,TT,
+M109,israel,0,155000,45000,155000,vehicleCost,46000,TT,
+▄M109G,italy,0,200000,57000,200000,vehicleCost,63000,TT,
+◔IL-10,italy,0,200000,57000,200000,vehicleCost,63000,TT,
+◔Tu-2S-59,italy,0,210000,61000,210000,vehicleCost,71000,TT,
+IJN Hatsuharu,japan,0,22000,6300,22000,vehicleCost,11000,TT,
+Type 74 (F),japan,0,620000,175000,620000,vehicleCost,110000,TT,
+Type 87,japan,0,380000,110000,380000,vehicleCost,135000,TT,
+Type 87 RCV,japan,0,450000,130000,450000,vehicleCost,160000,TT,
+Type 89,japan,0,520000,150000,520000,vehicleCost,94000,TT,
+U-SH 204 GK,sweden,0,185000,52000,185000,vehicleCost,54000,TT, This is a new vehicle, only vehicles introduced after Alpha Strike are discounted
+AH-1W,usa,1000000,1000000,290000,1000000,vehicleCost,380000,TT,
+F-111A,usa,830000,830000,240000,830000,vehicleCost,300000,TT,
+F-15A,usa,1100000,1100000,310000,1100000,vehicleCost,410000,TT,
+F-15C MSIP II,usa,1120000,1120000,320000,1120000,vehicleCost,420000,TT, This is a new vehicle, only vehicles introduced after Alpha Strike are discounted
+Imp.Chaparral,usa,620000,620000,175000,620000,vehicleCost,220000,TT,
+M109A1,usa,155000,155000,45000,155000,vehicleCost,46000,TT,
+M1A1 AIM,usa,1000000,1000000,270000,950000,vehicleCost,550000,SQ, This is a squadron vehicle, the discount does not apply
+M1A2 SEP V2,usa,1100000,1100000,310000,1100000,vehicleCost,410000,TT,
+USS Northampton,usa,230000,230000,65000,230000,vehicleCost,61000,TT,
+2S1,ussr,200000,200000,57000,200000,vehicleCost,63000,TT,
+2S25M,ussr,710000,710000,200000,710000,vehicleCost,260000,TT,
+BTR-152D,ussr,76000,76000,22000,76000,vehicleCost,26000,TT,
+Ka-29,ussr,1000000,1000000,290000,1000000,vehicleCost,380000,TT,
+Ka-52,ussr,1030000,1030000,300000,1030000,vehicleCost,400000,TT,
+Mi-24P,ussr,990000,990000,280000,990000,vehicleCost,370000,TT,
+Mi-8TV,ussr,490000,490000,140000,490000,vehicleCost,150000,TT,
+Object 775,ussr,520000,520000,150000,520000,vehicleCost,190000,TT,
+Su-17M4,ussr,830000,830000,240000,830000,vehicleCost,300000,TT,
+Su-22M3,ussr,710000,710000,200000,710000,vehicleCost,520000,SQ, This is a squadron vehicle, the discount does not apply
+ZSU-23-4M4,ussr,520000,520000,150000,520000,vehicleCost,190000,TT,

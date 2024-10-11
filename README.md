@@ -18,3 +18,7 @@ https://www.papaparse.com/
 
 Turteł's awesome doc:
 https://docs.google.com/document/d/18UJMjgREFIVBG0HqPckBpTzq2MvOXnN6LOsp94G1wF8/edit
+
+## Datatable, icons and other components from PrimeVue
+
+https://primevue.org/
