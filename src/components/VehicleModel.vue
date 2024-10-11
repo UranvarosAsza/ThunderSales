@@ -7,7 +7,6 @@
     <!--<div class="name">{{ shortVersionTranslatedName }}</div>-->
     <div class="name">{{ translatedName }}</div>
     <div class="type">Rank {{ data.era }}</div>
-    <!--TODO ez a sorrend kell majd az öszzeadásba is-->
     <div v-if="data.on_marketplace" class="type">Market</div>
     <div v-else-if="data.is_pack" class="type">Pack</div>
     <div v-else-if="data.ge_cost" class="type">{{ data.ge_cost }} GE</div>

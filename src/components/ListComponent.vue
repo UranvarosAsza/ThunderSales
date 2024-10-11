@@ -22,7 +22,7 @@
           }
         }"
       >
-        <template #header>
+        <template #header v-if="vehiclesPrices.length">
           <div class="headerButtons">
             <div style="text-align: left">
               <MultiSelect
@@ -158,13 +158,13 @@
         </template>
         <template #footer>
           <div style="text-align: left">
-            <button @click="clearList">Clear list</button>
-            <h2>
-              Your total costs for all nations are:
-              <span v-if="goldTotal > 0"> {{ goldTotal.toLocaleString('hu-HU') }} GE </span>
-              <span v-if="grandTotal > 0"> {{ grandTotal.toLocaleString('hu-HU') }} SL </span>
-            </h2>
             <div v-if="vehiclesPrices.length" class="discount">
+              <button @click="clearList">Clear list</button>
+              <h2>
+                Your total costs for all nations are:
+                <span v-if="goldTotal > 0"> {{ goldTotal.toLocaleString('hu-HU') }} GE </span>
+                <span v-if="grandTotal > 0"> {{ grandTotal.toLocaleString('hu-HU') }} SL </span>
+              </h2>
               <div>
                 Select the discount percentage:
                 <button @click="calculateDiscountedPrice(discount)">Calculate</button>
@@ -198,12 +198,12 @@
                   >
                     Export
                   </button>
-                  <div class="fileUpload">
-                    Allready have a list? add it here:
-                    <input type="file" @change="handleFileUpload" class="form-label" />
-                  </div>
                 </div>
               </div>
+            </div>
+            <div class="fileUpload">
+              Allready have a list? add it here:
+              <input type="file" @change="handleFileUpload" class="form-label" />
             </div>
           </div>
         </template>
