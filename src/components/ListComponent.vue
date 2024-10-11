@@ -5,36 +5,40 @@
 
       <DataTable
         :value="vehiclesPrices"
-        ref="dt"
         rowGroupMode="subheader"
         groupRowsBy="nation"
         stripedRows
         class="vehicle-table"
-        editMode="row"
+        editMode="cell"
+        @cell-edit-complete="onCellEditComplete"
         showGridlines
-        @row-edit-save="onRowEditSave"
+        removableSort
         :pt="{
           table: { style: 'min-width: 50rem' },
           column: {
             bodycell: ({ state }) => ({
-              style: state['d_editing']
+              class: [{ '!py-0': state['d_editing'] }]
             })
           }
         }"
       >
         <template #header>
-          <div style="text-align: left">
-            <span>
-              <button icon="pi pi-external-link" label="Export" @click="exportCSV($event)">
-                Export
-              </button>
-              <div>
-                Allready have a list? add it here: <input type="file" @change="handleFileUpload" />
-              </div>
-            </span>
+          <div class="headerButtons">
+            <div style="text-align: left">
+              <MultiSelect
+                v-model="selectedColumns"
+                :options="columns"
+                optionLabel="header"
+                placeholder="Add more columns"
+              />
+              <span class="vehicleTypeSwitch">
+                Show vehicle's types
+                <ToggleSwitch class="toggleSwitch" v-model="showVehicleTypes" />
+              </span>
+            </div>
             <div class="reduceButtons" style="text-align: right">
-              <!-- <button @click="logVehicleData">Log</button>
-
+              <!-- 
+                  <button @click="logVehicleData">Log</button>
               -->
               <button
                 label="Change to vehicle cost only"
@@ -54,17 +58,6 @@
               >
                 Remove vehicles without discount
               </button>
-            </div>
-            <div style="text-align: left">
-              <MultiSelect
-                v-model="selectedColumns"
-                :options="columns"
-                optionLabel="header"
-                display="chip"
-                placeholder="Add more columns"
-              />
-              <label>Show vehicletypes</label>
-              <ToggleSwitch v-model="showVehicleTypes" />
             </div>
           </div>
         </template>
@@ -95,7 +88,7 @@
           </template>
         </Column>
         <Column field="nation" header="Nation"></Column>
-        <Column field="totalPrice" header="Total" sortable>
+        <Column field="totalSL" header="Total" sortable :sortFunction="sortByTotalSL">
           <template #body="slotProps">
             <span v-if="slotProps.data.totalGE > 0">
               {{ slotProps.data.totalGE.toLocaleString('hu-HU') }} Ge
@@ -106,12 +99,25 @@
           </template>
         </Column>
         <Column
-          v-for="(col, index) of selectedColumns"
+          v-for="(col, index) in selectedColumns"
           :field="col.field"
           :header="col.header"
           :key="col.field + '_' + index"
-        />
-
+          :sortable="col.sortable"
+        >
+          <template #body="slotProps">
+            {{ slotProps.data[col.field] }}
+          </template>
+          <template v-if="col.field === 'rpCost'" #editor="slotProps">
+            <InputNumber
+              v-model="slotProps.data.rpCost"
+              :min="0"
+              :max="slotProps.data.originalRpCost"
+              @change="validateRPValue(slotProps.data)"
+              :showButtons="false"
+            />
+          </template>
+        </Column>
         <Column field="listOption" header="List Option">
           <template #body="slotProps">
             <Select
@@ -139,17 +145,11 @@
             </button>
           </template>
         </Column>
-        <Column
-          :rowEditor="true"
-          style="width: 10%; min-width: 8rem"
-          bodyStyle="text-align:center { width: '150px' }"
-        ></Column>
         <template #groupheader="slotProps">
           <div class="flex items-center gap-2">
-            <span>{{ slotProps.data.nation }}</span>
+            <span>{{ setNationName(slotProps.data.nation) }} </span>
           </div>
         </template>
-
         <template #groupfooter="slotProps">
           <div class="flex justify-end font-bold w-full">
             Total Cost in Nation:
@@ -157,13 +157,54 @@
           </div>
         </template>
         <template #footer>
-          <div v-if="vehiclesPrices.length" class="discount">
+          <div style="text-align: left">
             <button @click="clearList">Clear list</button>
             <h2>
               Your total costs for all nations are:
-              <span v-if="goldTotal != 0"> {{ goldTotal.toLocaleString('hu-HU') }} GE </span>
-              <span v-if="grandTotal != 0"> {{ grandTotal.toLocaleString('hu-HU') }} SL </span>
+              <span v-if="goldTotal > 0"> {{ goldTotal.toLocaleString('hu-HU') }} GE </span>
+              <span v-if="grandTotal > 0"> {{ grandTotal.toLocaleString('hu-HU') }} SL </span>
             </h2>
+            <div v-if="vehiclesPrices.length" class="discount">
+              <div>
+                Select the discount percentage:
+                <button @click="calculateDiscountedPrice(discount)">Calculate</button>
+                <label>
+                  <input type="radio" v-model="discount" value="0.3" />
+                  30%
+                </label>
+                <label>
+                  <input type="radio" v-model="discount" value="0.5" />
+                  50%
+                </label>
+                <div v-if="grandTotalDiscount">
+                  <h2>
+                    You need to save
+                    {{ grandTotalGeDiscount.toLocaleString('hu-HU') }} GE
+                    <span v-if="grandTotalDiscount">
+                      and {{ grandTotalDiscount.toLocaleString('hu-HU') }} Sl
+                    </span>
+                    for a {{ discount * 100 }}% sale
+                  </h2>
+                </div>
+              </div>
+
+              <div style="text-align: left">
+                <div>
+                  You want to save the list for later?
+                  <button
+                    class="btn btn-secondary saveBtn"
+                    label="Export"
+                    @click="exportCSV($event)"
+                  >
+                    Export
+                  </button>
+                  <div class="fileUpload">
+                    Allready have a list? add it here:
+                    <input type="file" @change="handleFileUpload" class="form-label" />
+                  </div>
+                </div>
+              </div>
+            </div>
           </div>
         </template>
       </DataTable>
@@ -172,7 +213,6 @@
 </template>
 
 <script>
-//import ListElement from './ListElement.vue'
 import { toast } from 'vue3-toastify'
 import 'vue3-toastify/dist/index.css'
 import updates from '@/assets/updates.json'
@@ -204,10 +244,10 @@ export default {
       crewsAndSquadronVehiclePrices: 0,
       selectedColumns: [],
       columns: [
-        { field: 'slCost', header: 'Vehicle cost' },
-        { field: 'basicCrewTrainingCost', header: 'Basic Crew' },
-        { field: 'expertCrewTrainingCost', header: 'Expert Crew' },
-        { field: 'rpCost', header: 'Rp Cost' }
+        { field: 'slCost', header: 'Vehicle cost', sortable: true },
+        { field: 'basicCrewTrainingCost', header: 'Basic Crew', sortable: true },
+        { field: 'expertCrewTrainingCost', header: 'Expert Crew', sortable: true },
+        { field: 'rpCost', header: 'RP Cost', sortable: true }
       ],
       selectedListOption: '',
       listOptions: [
@@ -232,11 +272,12 @@ export default {
   },
   mounted() {
     this.loadVehicles()
-    this.calculateGrandTotal() // Ensure total is correct on load
+
     this.setSaleText()
     this.vehiclesPrices.forEach((vehicle) => {
       this.computeSelectedPrice(vehicle)
     })
+    this.calculateGrandTotal() // Ensure total is correct on load
   },
   methods: {
     logVehicleData() {
@@ -247,7 +288,6 @@ export default {
     getVehicleData() {
       return JSON.parse(sessionStorage.getItem('vehicleData')) || []
     },
-
     setVehicleData(data) {
       sessionStorage.setItem('vehicleData', JSON.stringify(data))
       this.vehiclesPrices = data // Frissítjük a lokális változót is
@@ -257,6 +297,21 @@ export default {
     },
     onToggle(value) {
       this.selectedColumns = value
+    },
+    isColumnSelected(field) {
+      return this.selectedColumns.some((col) => col.field === field)
+    },
+    sortByTotalSL(event) {
+      event.data.sort((a, b) => {
+        const value1 = a.totalSL || 0 // Ha nincs érték, akkor 0
+        const value2 = b.totalSL || 0 // Ha nincs érték, akkor 0
+
+        let result = 0
+        if (value1 < value2) result = -1
+        else if (value1 > value2) result = 1
+
+        return event.order * result
+      })
     },
     handleFileUpload(event) {
       const file = event.target.files[0] // Feltöltött fájl kiválasztása
@@ -378,16 +433,55 @@ export default {
       link.click()
       document.body.removeChild(link)
     },
-    onRowEditSave(event) {
-      const editedVehicle = event.data
-      const index = this.vehiclesPrices.findIndex((vehicle) => vehicle.id === editedVehicle.id)
-      if (index !== -1) {
-        this.vehiclesPrices.splice(index, 1, { ...this.vehiclesPrices[index], ...editedVehicle })
-        // Frissítjük a megfelelő elemet
+    onCellEditComplete(event) {
+      let { originalEvent, data, newValue, field } = event
+
+      if (field === 'rpCost') {
+        if (this.isPositiveInteger(newValue) && newValue <= data.originalRpCost) {
+          data[field] = newValue
+
+          // Save the updated value to sessionStorage
+          const vehicleData = this.getVehicleData()
+          const vehicleIndex = vehicleData.findIndex((v) => v.id === data.id)
+          if (vehicleIndex !== -1) {
+            vehicleData[vehicleIndex].rpCost = newValue
+            this.setVehicleData(vehicleData)
+            console.log('RP cost updated successfully.')
+          }
+
+          // Esemény fókusz elvételhez
+          if (originalEvent && originalEvent.target) {
+            originalEvent.target.blur()
+          }
+        } else {
+          event.preventDefault()
+          console.log('RP cost must be between 0 and the original RP cost.')
+        }
+      } else {
+        if (newValue.trim().length > 0) {
+          data[field] = newValue
+        } else {
+          event.preventDefault()
+        }
       }
-      this.setVehicleData(this.vehiclesPrices)
-      this.calculateGrandTotal() // Frissítjük az összértéket
     },
+    isPositiveInteger(val) {
+      let str = String(val).trim()
+      if (!str) return false
+      str = str.replace(/^0+/, '') || '0'
+      let n = Math.floor(Number(str))
+      return n !== Infinity && String(n) === str && n >= 0
+    },
+    validateRPValue(vehicle) {
+      console.log(vehicle)
+
+      if (vehicle.rpCost < 0 || vehicle.rpCost > vehicle.originalRpCost) {
+        // Show validation message or revert to the original value
+        console.log('RP cost must be between 0 and the original RP cost.')
+        vehicle.rpCost = vehicle.originalRpCost
+      }
+    },
+
     removeRemovableVehicles() {
       //ha a jármű removable akkor mehet ki a listából
       let vehiclesPrices = this.getVehicleData()
@@ -482,14 +576,19 @@ export default {
           nationTotalGe += parseInt(vehicle.totalGE, 10)
         }
       })
-      return (
-        nationTotalGe.toLocaleString('hu-HU') +
-        ' GE ' +
-        nationTotalSl.toLocaleString('hu-HU') +
-        ' SL '
-      )
-    },
 
+      let result = ''
+
+      if (nationTotalGe !== 0) {
+        result += nationTotalGe.toLocaleString('hu-HU') + ' GE '
+      }
+
+      if (nationTotalSl !== 0) {
+        result += nationTotalSl.toLocaleString('hu-HU') + ' SL '
+      }
+
+      return result.trim()
+    },
     calculateGrandTotal() {
       // kiszámolja az összesített jármű-crew összegeket discount előtt
       this.techTreeVehicleTotal = 0
@@ -554,7 +653,9 @@ export default {
         this.calculateGrandTotal()
       }
     },
-
+    setNationName(nation) {
+      return nation.charAt(0).toUpperCase() + nation.slice(1)
+    },
     setSaleText() {
       //Végigmegy minegyiken, mountoláskor és update-kor
       //ha squadronjármű vagy a dátuma az utolsó 2 patch dátumánál korábbi akkor nem lesz leárazva
@@ -590,8 +691,15 @@ export default {
 </script>
 
 <style scoped>
-.p-datatable-column-sorted {
-  background: inherit !important;
+.saveBtn,
+fileUpload {
+  margin-left: 5px;
+}
+.vehicleTypeSwitch {
+  margin-left: 20px;
+}
+.vehicleTypeSwitch .toggleSwitch {
+  vertical-align: middle !important;
 }
 
 .hidden {

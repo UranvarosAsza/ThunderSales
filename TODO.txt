@@ -1,35 +1,20 @@
-TODO listElement code refactorTODO 
-
-Strv m/39 TD -> filter vehicles-be betenni 
-      {
-        "vehicle_id": "sw_strv_m39_td",
-        "place" : "PT",
-        "shown" : true,
-        "rank" : 1,
-        "nation" : "sweden",
-        "branc": "ground"
-      }
-TODO Css overhaul -ongoing
     -vehicleModel 
         kis méretben csak text
         fix kártya magasság méretek 210px talán jó is ? -> középre kell igazítani a dlgokat flex?
 
     -egész listView
-        modifier gombok a tetejére a számoláshoz:  esetleg az xp-t összegezni
-        TEST-IT listában az event-vehicle-ök jármű költsége ne legyen felszámolva
-        TEST-IT prém/pack járművek ge költségének számolása áthozni a listElementből
-            a táblázat számlálónál tudja megmondani hogy packos járműnek a gold értékét ne vegye figyelembe
-        TODO edit rows -> rp cost
-        FIXME lehet kéne egy TotalGE meg egy TotalSL exportba
-        a total az a listában kell összeállítani pl: "250 GE + 10.000 SL"
+        modifier gombok a tetejére a számoláshoz:  esetleg az xp-t összegezni vagy nemzetenként
+        FIXME edit rows kis info box hogy tudja szerkeszteni, és esetleg eredeti rp cost visszaállítás-gomb
+
     -ListElementet törölni
-        
+
+TODO Css overhaul  -> ui ux desing?       
 FIXME tooltip idő paramétereivel játszani kicsit pl: v-tooltip="{ value: 'Confirm to proceed', showDelay: 1000, hideDelay: 300 }"
 
 TODO nation alapján is kapjon pici zászlót a táblázatba a sub-totalba
 TODO kereső ? 
 TODO Toggleswitch hogy milyen formátumú kijelzést akar en-hu , 1 000 vagy 1.000
-
+TODO sorting ne duplikáljon nemzeteket, hanem csak nemzetenként állítsa sorrendbe
 TODO backupd db arra az esetre ha az api halott
 
 Extra dolgok:
@@ -40,8 +25,3 @@ Vegyes, nemzet nélküli TT,
 rejtett jármvek külön
 Speciális járművek külön
 saját jármű-adatos oldal ??
-
-
-//npm run dev
-//npm run build
-//npm run lint

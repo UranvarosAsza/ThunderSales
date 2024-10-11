@@ -108,6 +108,7 @@ export default {
         basicCrewTrainingCost: this.vehiclesData.train1_cost,
         expertCrewTrainingCost: this.vehiclesData.train2_cost,
         rpCost: this.vehiclesData.req_exp,
+        originalRpCost: this.vehiclesData.req_exp,
         listOption: listOption,
         vehicleType: this.type,
         saleText: this.saleText,
