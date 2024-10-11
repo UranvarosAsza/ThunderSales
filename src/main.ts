@@ -85,6 +85,11 @@ app.use(Papa)
 //app.use(PrimeVue, { unstyled: true });
 app.use(PrimeVue, {
   theme: {
-    preset: Aura
+    preset: Aura,
+    options: {
+      prefix: 'p',
+      darkModeSelector: 'light',
+      cssLayer: false
+    }
   }
 })
