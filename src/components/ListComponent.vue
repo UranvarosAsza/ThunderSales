@@ -116,6 +116,7 @@
               @change="validateRPValue(slotProps.data)"
               :showButtons="false"
             />
+            <button @click="reloadRpCost(slotProps.data)">Reload</button>
           </template>
         </Column>
         <Column field="listOption" header="List Option">
@@ -147,12 +148,45 @@
         </Column>
         <template #groupheader="slotProps">
           <div class="flex items-center gap-2">
-            <span>{{ setNationName(slotProps.data.nation) }} </span>
+            <span
+              >{{ setNationName(slotProps.data.nation) }}
+              <span v-if="slotProps.data.nation == 'usa'" class="nationFlagSmall">
+                <img src="../../public/nationFlags/usa_flag.png" />
+              </span>
+              <span v-if="slotProps.data.nation == 'germany'" class="nationFlagSmall">
+                <img src="../../public/nationFlags/germany_flag.png" />
+              </span>
+              <span v-if="slotProps.data.nation == 'ussr'" class="nationFlagSmall">
+                <img src="../../public/nationFlags/ussr_flag.png" />
+              </span>
+              <span v-if="slotProps.data.nation == 'britain'" class="nationFlagSmall">
+                <img src="../../public/nationFlags/britain_flag.png" />
+              </span>
+              <span v-if="slotProps.data.nation == 'japan'" class="nationFlagSmall">
+                <img src="../../public/nationFlags/japanflag.png" />
+              </span>
+              <span v-if="slotProps.data.nation == 'china'" class="nationFlagSmall">
+                <img src="../../public/nationFlags/china_flag.png" />
+              </span>
+              <span v-if="slotProps.data.nation == 'italy'" class="nationFlagSmall">
+                <img src="../../public/nationFlags/italy_flag.png" />
+              </span>
+              <span v-if="slotProps.data.nation == 'france'" class="nationFlagSmall">
+                <img src="../../public/nationFlags/france_flag.png" />
+              </span>
+              <span v-if="slotProps.data.nation == 'sweden'" class="nationFlagSmall">
+                <img src="../../public/nationFlags/sweden_flag.png" />
+              </span>
+              <span v-if="slotProps.data.nation == 'israel'" class="nationFlagSmall">
+                <img src="../../public/nationFlags/israel_flag.png" />
+              </span>
+              <span v-else></span>
+            </span>
           </div>
         </template>
         <template #groupfooter="slotProps">
           <div class="flex justify-end font-bold w-full">
-            Total Cost in Nation:
+            Total Cost in {{ setNationName(slotProps.data.nation) }}:
             {{ calculateNationTotal(slotProps.data.nation) }}
           </div>
         </template>
@@ -169,11 +203,11 @@
                 Select the discount percentage:
                 <button @click="calculateDiscountedPrice(discount)">Calculate</button>
                 <label>
-                  <input type="radio" v-model="discount" value="0.3" />
+                  <input type="radio" v-model="discount" value="0.3" class="radioBtn" />
                   30%
                 </label>
                 <label>
-                  <input type="radio" v-model="discount" value="0.5" />
+                  <input type="radio" v-model="discount" value="0.5" class="radioBtn" />
                   50%
                 </label>
                 <div v-if="grandTotalDiscount">
@@ -202,7 +236,7 @@
               </div>
             </div>
             <div class="fileUpload">
-              Allready have a list? add it here:
+              Already have a list? add it here:
               <input type="file" @change="handleFileUpload" class="form-label" />
             </div>
           </div>
@@ -465,6 +499,23 @@ export default {
         }
       }
     },
+    reloadRpCost(vehicle) {
+      if (vehicle) {
+        vehicle.rpCost = vehicle.originalRpCost
+
+        // Mentés sessionStorage-ba
+        const vehicleData = this.getVehicleData()
+        const vehicleIndex = vehicleData.findIndex((v) => v.id === vehicle.id)
+        if (vehicleIndex !== -1) {
+          vehicleData[vehicleIndex].rpCost = vehicle.originalRpCost
+          this.setVehicleData(vehicleData)
+          //console.log('RP cost reset successfully.')
+        }
+      } else {
+        //lehetne ide toast
+        //console.log('No vehicle data found to reset.')
+      }
+    },
     isPositiveInteger(val) {
       let str = String(val).trim()
       if (!str) return false
@@ -691,6 +742,15 @@ export default {
 </script>
 
 <style scoped>
+.nationFlagSmall img {
+  height: 20px;
+  vertical-align: middle;
+}
+
+.radioBtn {
+  margin-left: 10px;
+}
+
 .saveBtn,
 fileUpload {
   margin-left: 5px;

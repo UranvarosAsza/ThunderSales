@@ -1,27 +1,44 @@
-FIXME - ge total nem számolódik export után -> valszeg rossz a sorrendje a lefutásnak   
-    -vehicleModel 
+Version 1.0.1 - 1.4.99
+    FIXME - ge total nem számolódik export után -> valszeg rossz a sorrendje a lefutásnak 
+
+    Járművek amiket fixelni kell (van ge értékük de nem kéne):
+        PBM-3 "Mariner"
+        P-51A (thunderleague)
+    vehicleModel 
         kis méretben csak text
         fix kártya magasság méretek 210px talán jó is ? -> középre kell igazítani a dlgokat flex?
 
-    -egész listView
-        modifier gombok a tetejére a számoláshoz:  esetleg az xp-t összegezni vagy nemzetenként
-        FIXME edit rows kis info box hogy tudja szerkeszteni, és esetleg eredeti rp cost visszaállítás-gomb
+    listView   
+        FIXME edit rows kis info box hogy tudja szerkeszteni
+        FIXME Százalékszámítás vagy ne legyen azonnali vagy a Calculate gomb nem kell
+    TODO Rankok öszecsukása 
 
-TODO Css overhaul  -> ui ux desing?       
-FIXME tooltip idő paramétereivel játszani kicsit pl: v-tooltip="{ value: 'Confirm to proceed', showDelay: 1000, hideDelay: 300 }"
+    FIXME tooltip idő paramétereivel játszani kicsit pl: v-tooltip="{ value: 'Confirm to proceed', showDelay: 1000, hideDelay: 300 }"
+    TODO kereső a rankok  felett
+    TODO sorting ne duplikáljon nemzeteket, hanem csak nemzetenként állítsa sorrendbe
+    Icons mappa valszeg törölhető -> dupla check
+    feedback googlesheets és link is oda -> ha nyelvet vált akkor cserélje ki a linket magyarra
+    verziókezelés -> (?) beta-ra hoverelve adjon verziószámot -> env file? - az nem sync-elődik..
+    lehet egy settings ablak lehetne ami locStorage-et használ vagy cookie-t ? és benne lehet állítani:
+            navbar stickyness
+            nation/ number format
+            hints / tutorial
+            Nyelvválasztó
+            new additions x-e
+            sum xp-t by nation / sum all xp / not at all 
 
-TODO nation alapján is kapjon pici zászlót a táblázatba a sub-totalba
-TODO kereső ? 
-TODO Toggleswitch hogy milyen formátumú kijelzést akar en-hu , 1 000 vagy 1.000
-TODO sorting ne duplikáljon nemzeteket, hanem csak nemzetenként állítsa sorrendbe
-Nyelvválasztó
-TODO backupd db arra az esetre ha az api halott
-Icons mappa valszeg törölhető
-Extra dolgok:
-Táblázat vastagabb sorokkal nagyobb képekkel
-Rankok öszecsukása ?
-light / dark mode
-Vegyes, nemzet nélküli TT,
-rejtett jármvek külön
-Speciális járművek külön
-saját jármű-adatos oldal ??
+
+Version 1.5.0 - 1.9.99
+    backend a db-vel/backupd db 
+    Css overhaul  -> ui ux desing?
+        Táblázat vastagabb sorokkal nagyobb képekkel
+        light / dark mode
+        elcsúszott járműképek
+
+Version 2.0.1:
+    
+    Vegyes, nemzet nélküli TT,
+    rejtett jármvek külön
+    Speciális járművek külön
+    saját jármű-adatos oldal ??
+    + bármi 
