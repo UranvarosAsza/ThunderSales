@@ -460,6 +460,14 @@
         "branch": "ship"
       },
       {
+        "vehicle_id": "jp_type_97_kai_td",
+        "place": "PT",
+        "shown": true,
+        "rank": 2,
+        "nation": "japan",
+        "branch": "ground"
+      },
+      {
         "vehicle_id": "sw_strv_m39_td",
         "place": "PT",
         "shown": true,
