@@ -116,7 +116,7 @@
               @change="validateRPValue(slotProps.data)"
               :showButtons="false"
             />
-            <button @click="reloadRpCost(slotProps.data)">Reload</button>
+            <button @click="reloadRpCost(slotProps.data)">Restore</button>
           </template>
         </Column>
         <Column field="listOption" header="List Option">
@@ -151,34 +151,34 @@
             <span
               >{{ setNationName(slotProps.data.nation) }}
               <span v-if="slotProps.data.nation == 'usa'" class="nationFlagSmall">
-                <img src="../../public/nationFlags/usa_flag.png" />
+                <img src="/nationFlags/usa_flag.png" />
               </span>
               <span v-if="slotProps.data.nation == 'germany'" class="nationFlagSmall">
-                <img src="../../public/nationFlags/germany_flag.png" />
+                <img src="/nationFlags/germany_flag.png" />
               </span>
               <span v-if="slotProps.data.nation == 'ussr'" class="nationFlagSmall">
-                <img src="../../public/nationFlags/ussr_flag.png" />
+                <img src="/nationFlags/ussr_flag.png" />
               </span>
               <span v-if="slotProps.data.nation == 'britain'" class="nationFlagSmall">
-                <img src="../../public/nationFlags/britain_flag.png" />
+                <img src="/nationFlags/britain_flag.png" />
               </span>
               <span v-if="slotProps.data.nation == 'japan'" class="nationFlagSmall">
-                <img src="../../public/nationFlags/japanflag.png" />
+                <img src="/nationFlags/japanflag.png" />
               </span>
               <span v-if="slotProps.data.nation == 'china'" class="nationFlagSmall">
-                <img src="../../public/nationFlags/china_flag.png" />
+                <img src="/nationFlags/china_flag.png" />
               </span>
               <span v-if="slotProps.data.nation == 'italy'" class="nationFlagSmall">
-                <img src="../../public/nationFlags/italy_flag.png" />
+                <img src="/nationFlags/italy_flag.png" />
               </span>
               <span v-if="slotProps.data.nation == 'france'" class="nationFlagSmall">
-                <img src="../../public/nationFlags/france_flag.png" />
+                <img src="/nationFlags/france_flag.png" />
               </span>
               <span v-if="slotProps.data.nation == 'sweden'" class="nationFlagSmall">
-                <img src="../../public/nationFlags/sweden_flag.png" />
+                <img src="/nationFlags/sweden_flag.png" />
               </span>
               <span v-if="slotProps.data.nation == 'israel'" class="nationFlagSmall">
-                <img src="../../public/nationFlags/israel_flag.png" />
+                <img src="/nationFlags/israel_flag.png" />
               </span>
               <span v-else></span>
             </span>
@@ -263,6 +263,7 @@ export default {
     Column,
     MultiSelect,
     ToggleSwitch,
+    // eslint-disable-next-line vue/no-reserved-component-names
     Select,
     InputNumber
   },

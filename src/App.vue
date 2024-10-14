@@ -14,7 +14,9 @@
           <span class="navbar-toggler-icon"></span>
         </button>
         <div class="collapse navbar-collapse" id="navbarTogglerDemo01">
-          <p>ThunderSales<span class="version"> beta</span></p>
+          <p>
+            ThunderSales<span class="version" v-tooltip.top="patchnotes[0].version"> beta</span>
+          </p>
 
           <ul class="navbar-nav me-auto mb-2 mb-lg-0">
             <li class="nav-item">
@@ -44,6 +46,7 @@
 
 <script setup lang="ts">
 import { RouterLink, RouterView } from 'vue-router'
+import patchnotes from '@/assets/patchnotes.json'
 </script>
 
 <style scoped>

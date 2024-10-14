@@ -31,7 +31,9 @@
         </div>
       </div>
     </nav>
-
+    <div class="news">
+      <NewAdditions />
+    </div>
     <div v-if="vehicleEras.length">
       <div v-for="vehicleEra in vehicleEras" :key="vehicleEra">
         <div>
@@ -49,12 +51,16 @@
 //FIXME
 // @ts-ignore
 import VehicleRanks from '@/components/VehicleRanks.vue'
+//FIXME
+// @ts-ignore
+import NewAdditions from '@/components/NewAdditions.vue'
 import apiParams from '@/assets/apiParams.json'
 import nationJson from '@/assets/nations.json'
 
 export default {
   components: {
-    VehicleRanks
+    VehicleRanks,
+    NewAdditions
   },
   data() {
     return {

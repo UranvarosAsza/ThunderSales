@@ -1,0 +1,30 @@
+[
+  {
+    "version": "1.0.1",
+    "date": "2024-10-14",
+    "notes": {
+      "en": [
+        "Discount percents borders fixed on the list screen",
+        "Nation's flags added next to their name on the list-group-header",
+        "New feature: restore RP cost after editing it",
+        "New feature: release notes element",
+        "Chi-ha-kai TD moved to prem tree"
+      ],
+      "hu": [
+        "Leárazás százalékok kinézete javítva a lista oldaon",
+        "Nemzetek zászlói a nevük mellé kerültek a lista csoport-fejlécben",
+        "Új funkció: RP költség visszaállítható szerkesztés után",
+        "Új funkció: frissítési leírások ablak",
+        "Chi-ha-kai TD áthelyezve a prémium fába"
+      ]
+    }
+  },
+  {
+    "version": "1.0.0",
+    "date": "2024-10-11",
+    "notes": {
+      "en": ["First release", "Introducing basic functionalities"],
+      "hu": ["Első kiadás", "Alap funkcionalitások bevezetése"]
+    }
+  }
+]
