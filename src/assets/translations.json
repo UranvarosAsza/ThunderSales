@@ -1,0 +1,167 @@
+[
+  {
+    "key": "home",
+    "en": "Home",
+    "hu": "Főoldal"
+  },
+  {
+    "key": "list",
+    "en": "List",
+    "hu": "Lista"
+  },
+  {
+    "key": "help",
+    "en": "Help",
+    "hu": "Súgó"
+  },
+  {
+    "key": "options",
+    "en": "Options",
+    "hu": "Beállítások"
+  },
+  {
+    "key": "navbar_stickness",
+    "en": "Navbar stickiness",
+    "hu": "Fejléc kitúzése"
+  },
+  {
+    "key": "number_format",
+    "en": "Number format",
+    "hu": "Számok formázása"
+  },
+  {
+    "key": "show_hits",
+    "en": "Show hints again",
+    "hu": "Súgó megjelenítése újra"
+  },
+  {
+    "key": "show_patchnotes",
+    "en": "Shown patchnotes again",
+    "hu": "Frissítések megjelenítése újra"
+  },
+  {
+    "key": "cookie_info",
+    "en": "Show cookie info",
+    "hu": "Süti információ megjelenítése"
+  },
+  {
+    "key": "select_nation",
+    "en": "Select a nation",
+    "hu": "Válassz nemzetet"
+  },
+  {
+    "key": "select_branch",
+    "en": "Select a branch",
+    "hu": "Válassz ágat (?)"
+  },
+  {
+    "key": "market",
+    "en": "Market",
+    "hu": "Piac"
+  },
+  {
+    "key": "pack",
+    "en": "Pack",
+    "hu": "Csomag"
+  },
+  {
+    "key": "your_list",
+    "en": "Here is your list:",
+    "hu": "A listád:"
+  },
+  {
+    "key": "vehicle",
+    "en": "Vehicle",
+    "hu": "Jármű"
+  },
+  {
+    "key": "add_columns",
+    "en": "Add more columns",
+    "hu": "További oszlopok hozzáadása"
+  },
+  {
+    "key": "total",
+    "en": "Total",
+    "hu": "Összesen"
+  },
+  {
+    "key": "listOption",
+    "en": "List Option",
+    "hu": "Lista lehetőség (?)"
+  },
+  {
+    "key": "vehicleCost",
+    "en": "Vehicle Cost",
+    "hu": "Jármű költség"
+  },
+  {
+    "key": "basicCrew",
+    "en": "Basic Crew",
+    "hu": "yx legénységi költség"
+  },
+  {
+    "key": "expertCrew",
+    "en": "Export Crew",
+    "hu": "Tapasztalt legénységi költség"
+  },
+  {
+    "key": "rpCost",
+    "en": "RP Cost",
+    "hu": "Fejelsztési pont költség (?)"
+  },
+  {
+    "key": "btnRemove",
+    "en": "Remove",
+    "hu": "Eltávolítás"
+  },
+  {
+    "key": "btnRestore",
+    "en": "Restore",
+    "hu": "Visszállít"
+  },
+  {
+    "key": "totalCostIn",
+    "en": "Total Cost in",
+    "hu": "Összesen ebben a nemzetben: "
+  },
+  {
+    "key": "btnClearList",
+    "en": "Clear list",
+    "hu": "Lista törlése"
+  },
+  {
+    "key": "totalCostAll",
+    "en": "Your total costs for all nations are:",
+    "hu": "Összesen minden nemzetben:"
+  },
+  {
+    "key": "btnCalc",
+    "en": "Calculate",
+    "hu": "Számol"
+  },
+  {
+    "key": "saveit_str",
+    "en": "You want to save the list for later?",
+    "hu": "Szeretnéd elmenteni a listád későbbre?"
+  },
+  {
+    "key": "btnExport",
+    "en": "Export",
+    "hu": "Export"
+  },
+  {
+    "key": "already_str",
+    "en": "Already have a list? add it here:",
+    "hu": "Van már egy listád? Itt be tudod illeszteni:"
+  },
+  {
+    "key": "btnChooseFile",
+    "en": "btnChooseFile",
+    "hu": "File tallózása"
+  },
+  {
+    "key": "hintAddToList",
+    "en": "Add to the list",
+    "hu": "Listához adás"
+  }
+]
