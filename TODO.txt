@@ -1,40 +1,54 @@
 Version 1.0.1 - 1.4.99
     FIXME - ge total nem számolódik export után -> valszeg rossz a sorrendje a lefutásnak 
+    FIXME - lista megalkotása- export- lista mókolás - x jármű kivétel és x jármű betétele új nemzetet generál
 
     Járművek amiket fixelni kell (van ge értékük de nem kéne):
-        PBM-3 "Mariner"
-        P-51A (thunderleague)
+        PBM-3 "Mariner" | pbm_3
+        P-51A (thunderleague) | p-51a_tl
     vehicleModel 
         kis méretben csak text
         fix kártya magasság méretek 210px talán jó is ? -> középre kell igazítani a dlgokat flex?
 
     listView   
-        FIXME edit rows kis info box hogy tudja szerkeszteni
+        FIXME edit rows kis info box + ikon hogy tudja szerkeszteni pi-refresh 
         FIXME Százalékszámítás vagy ne legyen azonnali vagy a Calculate gomb nem kell
     TODO Rankok öszecsukása 
 
     FIXME tooltip idő paramétereivel játszani kicsit pl: v-tooltip="{ value: 'Confirm to proceed', showDelay: 1000, hideDelay: 300 }"
     TODO kereső a rankok  felett
     TODO sorting ne duplikáljon nemzeteket, hanem csak nemzetenként állítsa sorrendbe
-    Icons mappa valszeg törölhető -> dupla check
-    feedback googlesheets és link is oda -> ha nyelvet vált akkor cserélje ki a linket magyarra
-    verziókezelés -> (?) beta-ra hoverelve adjon verziószámot -> env file? - az nem sync-elődik..
+            Icons mappa valszeg törölhető -> dupla check
+    feedback googlesheets és link is oda -> ha nyelvet vált akkor cserélje ki a linket
+        angol feedback link: https://docs.google.com/spreadsheets/d/1Fyl093Y_uZMBLGB83BRiVk7z5qnaJ6x-N8hQy0n0joM/edit?usp=sharing
+        magyar feedback link: https://docs.google.com/spreadsheets/d/1BvY4t-WRbWKnIHGEqdEp2V1uO1A_a5u4QFT_i-dyxMY/edit?usp=sharing
+    verziókezelés -> env file? - az nem sync-elődik..
     lehet egy settings ablak lehetne ami locStorage-et használ vagy cookie-t ? és benne lehet állítani:
             navbar stickyness
             nation/ number format
             hints / tutorial
             Nyelvválasztó
-            new additions x-e
+            TODO new additions x-e -> cookie
             sum xp-t by nation / sum all xp / not at all 
-
+    TODO This site uses cookies popup -ezt is eltárolni cookie-ba
+    https://fonts.google.com/icons
+    Footer:
+        Feedback pollok. pi-external-link
+        Cookie infok ujra 
+        Buymeacoffe esetleg (?)  https://buymeacoffee.com/uran
+        tetejére ugró nyíl pi-caret-up
 
 Version 1.5.0 - 1.9.99
     backend a db-vel/backupd db 
     Css overhaul  -> ui ux desing?
         Táblázat vastagabb sorokkal nagyobb képekkel
         light / dark mode
-        elcsúszott járműképek
-
+        elcsúszott járműképek:
+            J29A
+            J29F
+            J6K1
+            TIS MA
+            A29B
+            B18A
 Version 2.0.1:
     
     Vegyes, nemzet nélküli TT,

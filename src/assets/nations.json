@@ -2,111 +2,137 @@
   "usa": {
     "flag_url": "/nationFlags/usa_flag.png",
     "displayed_name_EN": "USA",
+    "displayed_name_HU": "USA",
     "branches": {
       "air": true,
       "ground": true,
       "heli": true,
-      "boat": true,
-      "ship": true
+      "ship": true,
+      "boat": true
     }
   },
   "germany": {
     "flag_url": "/nationFlags/germany_flag.png",
     "displayed_name_EN": "Germany",
+    "displayed_name_HU": "Németország",
     "branches": {
       "air": true,
       "ground": true,
       "heli": true,
-      "boat": true,
-      "ship": true
+      "ship": true,
+      "boat": true
     }
   },
   "ussr": {
     "flag_url": "/nationFlags/ussr_flag.png",
     "displayed_name_EN": "USSR",
+    "displayed_name_HU": "Szovjetunió",
     "branches": {
       "air": true,
       "ground": true,
       "heli": true,
-      "boat": true,
-      "ship": true
+      "ship": true,
+      "boat": true
     }
   },
   "britain": {
     "flag_url": "/nationFlags/britain_flag.png",
     "displayed_name_EN": "Britain",
+    "displayed_name_HU": "Nagy-Britannia",
     "branches": {
       "air": true,
       "ground": true,
       "heli": true,
-      "boat": true,
-      "ship": true
+      "ship": true,
+      "boat": true
     }
   },
   "japan": {
     "flag_url": "/nationFlags/japanflag.png",
     "displayed_name_EN": "Japan",
+    "displayed_name_HU": "Japán",
     "branches": {
       "air": true,
       "ground": true,
       "heli": true,
-      "boat": true,
-      "ship": true
+      "ship": true,
+      "boat": true
     }
   },
   "china": {
     "flag_url": "/nationFlags/china_flag.png",
     "displayed_name_EN": "China",
+    "displayed_name_HU": "Kína",
     "branches": {
       "air": true,
       "ground": true,
       "heli": true,
-      "boat": false,
-      "ship": false
+      "ship": true,
+      "boat": true
     }
   },
   "italy": {
     "flag_url": "/nationFlags/italy_flag.png",
     "displayed_name_EN": "Italy",
+    "displayed_name_HU": "Olaszország",
     "branches": {
       "air": true,
       "ground": true,
       "heli": true,
-      "boat": true,
-      "ship": true
+      "ship": true,
+      "boat": true
     }
   },
   "france": {
     "flag_url": "/nationFlags/france_flag.png",
     "displayed_name_EN": "France",
+    "displayed_name_HU": "Franciaország",
     "branches": {
       "air": true,
       "ground": true,
       "heli": true,
-      "boat": true,
-      "ship": true
+      "ship": true,
+      "boat": true
     }
   },
   "sweden": {
     "flag_url": "/nationFlags/sweden_flag.png",
     "displayed_name_EN": "Sweden",
+    "displayed_name_HU": "Svédország",
     "branches": {
       "air": true,
       "ground": true,
       "heli": true,
-      "boat": false,
-      "ship": false
+      "ship": false,
+      "boat": false
     }
   },
   "israel": {
     "flag_url": "/nationFlags/israel_flag.png",
     "displayed_name_EN": "Israel",
+    "displayed_name_HU": "Izrael",
     "branches": {
       "air": true,
       "ground": true,
       "heli": true,
-      "boat": false,
-      "ship": false
+      "ship": false,
+      "boat": false
+    }
+  },
+  "branchnames": {
+    "branchNamesEN": {
+      "air": "Aviation",
+      "ground": "Army",
+      "heli": "Helicopters",
+      "boat": "Costal fleet",
+      "ship": "Bluewater fleet"
+    },
+    "branchNamesHU": {
+      "air": "Légierő",
+      "ground": "Hadsereg",
+      "heli": "Helikopterek",
+      "boat": "Partmenti flotta",
+      "ship": "Kékvízi flotta"
     }
   }
 }

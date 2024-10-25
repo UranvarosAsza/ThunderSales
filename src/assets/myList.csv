@@ -1,54 +1,50 @@
-Vehicle,Nation,Total,Vehicle cost,Basic Crew,Expert Crew,List Option,Rp Cost,Vehicle Type,Sale Text
-SARC MkIVa,britain,0,700,200,1000,vehicleCost,2900,TT,
-Sea Harrier FRS.1,britain,0,710000,200000,710000,vehicleCost,520000,SQ, This is a squadron vehicle, the discount does not apply
-▄M109A1,britain,0,185000,52000,185000,vehicleCost,54000,TT,
-J-8B,china,0,950000,270000,950000,vehicleCost,350000,TT,
-MBT-2000,china,0,830000,240000,830000,vehicleCost,300000,TT,
-Object 211,china,0,105000,30000,105000,vehicleCost,33000,TT,
-ZBD04A,china,0,710000,200000,710000,vehicleCost,260000,TT,
-ZSL92,china,0,240000,68000,240000,vehicleCost,82000,TT, This is a new vehicle, only vehicles introduced after Alpha Strike are discounted
-AMX-10P,france,0,155000,45000,155000,vehicleCost,46000,TT,
-Super Etendard,france,0,710000,200000,710000,vehicleCost,260000,TT,
-TPK 6.41,france,0,105000,30000,105000,vehicleCost,33000,TT,
-▄Gladiator Mk I,france,0,700,200,1000,vehicleCost,2900,TT, This is a new vehicle, only vehicles introduced after Alpha Strike are discounted
-▄M26,france,0,200000,57000,200000,vehicleCost,63000,TT,
-◗Fokker G.IA,france,0,10000,3000,10000,vehicleCost,7900,TT, This is a new vehicle, only vehicles introduced after Alpha Strike are discounted
-◘Firefly F.Mk.IV,france,0,76000,22000,76000,vehicleCost,26000,TT, This is a new vehicle, only vehicles introduced after Alpha Strike are discounted
-Bf 109 C-1,germany,0,2100,600,2100,vehicleCost,4000,TT,
-M109G,germany,0,155000,45000,155000,vehicleCost,46000,TT,
-Raketenautomat,germany,0,300000,86000,300000,vehicleCost,105000,TT,
-Z43,germany,0,22000,6300,22000,vehicleCost,11000,TT,
-Zerstörer 45,germany,0,200000,57000,200000,vehicleCost,63000,TT,
-◊MiG-23MLA,germany,0,950000,270000,950000,vehicleCost,350000,TT,
-◊MiG-29,germany,0,1080000,310000,1080000,vehicleCost,400000,TT,
-Hovet,israel,0,240000,68000,240000,vehicleCost,82000,TT,
-M109,israel,0,155000,45000,155000,vehicleCost,46000,TT,
-▄M109G,italy,0,200000,57000,200000,vehicleCost,63000,TT,
-◔IL-10,italy,0,200000,57000,200000,vehicleCost,63000,TT,
-◔Tu-2S-59,italy,0,210000,61000,210000,vehicleCost,71000,TT,
-IJN Hatsuharu,japan,0,22000,6300,22000,vehicleCost,11000,TT,
-Type 74 (F),japan,0,620000,175000,620000,vehicleCost,110000,TT,
-Type 87,japan,0,380000,110000,380000,vehicleCost,135000,TT,
-Type 87 RCV,japan,0,450000,130000,450000,vehicleCost,160000,TT,
-Type 89,japan,0,520000,150000,520000,vehicleCost,94000,TT,
-U-SH 204 GK,sweden,0,185000,52000,185000,vehicleCost,54000,TT, This is a new vehicle, only vehicles introduced after Alpha Strike are discounted
-AH-1W,usa,1000000,1000000,290000,1000000,vehicleCost,380000,TT,
-F-111A,usa,830000,830000,240000,830000,vehicleCost,300000,TT,
-F-15A,usa,1100000,1100000,310000,1100000,vehicleCost,410000,TT,
-F-15C MSIP II,usa,1120000,1120000,320000,1120000,vehicleCost,420000,TT, This is a new vehicle, only vehicles introduced after Alpha Strike are discounted
-Imp.Chaparral,usa,620000,620000,175000,620000,vehicleCost,220000,TT,
-M109A1,usa,155000,155000,45000,155000,vehicleCost,46000,TT,
-M1A1 AIM,usa,1000000,1000000,270000,950000,vehicleCost,550000,SQ, This is a squadron vehicle, the discount does not apply
-M1A2 SEP V2,usa,1100000,1100000,310000,1100000,vehicleCost,410000,TT,
-USS Northampton,usa,230000,230000,65000,230000,vehicleCost,61000,TT,
-2S1,ussr,200000,200000,57000,200000,vehicleCost,63000,TT,
-2S25M,ussr,710000,710000,200000,710000,vehicleCost,260000,TT,
-BTR-152D,ussr,76000,76000,22000,76000,vehicleCost,26000,TT,
-Ka-29,ussr,1000000,1000000,290000,1000000,vehicleCost,380000,TT,
-Ka-52,ussr,1030000,1030000,300000,1030000,vehicleCost,400000,TT,
-Mi-24P,ussr,990000,990000,280000,990000,vehicleCost,370000,TT,
-Mi-8TV,ussr,490000,490000,140000,490000,vehicleCost,150000,TT,
-Object 775,ussr,520000,520000,150000,520000,vehicleCost,190000,TT,
-Su-17M4,ussr,830000,830000,240000,830000,vehicleCost,300000,TT,
-Su-22M3,ussr,710000,710000,200000,710000,vehicleCost,520000,SQ, This is a squadron vehicle, the discount does not apply
-ZSU-23-4M4,ussr,520000,520000,150000,520000,vehicleCost,190000,TT,
+id;Vehicle;Nation;Market;Event;Premium;GE Cost;SL cost;Basic Crew;Expert Crew;Rp Cost;List Option;Vehicle Type;Sale Text;Release Date;Total;Removable
+f_15c_msip2;F-15C MSIP II;usa;false;false;false;0;1120000;320000;1120000;420000;vehicleCost;TT; This is a new vehicle, only vehicles introduced after Alpha Strike are discounted;2024-06-19;;true
+f_15a;F-15A;usa;false;false;false;0;1100000;310000;1100000;410000;vehicleCost;TT;;2023-12-14;;false
+f_111a;F-111A;usa;false;false;false;0;830000;240000;830000;300000;vehicleCost;TT;;2023-10-31;;false
+us_m109a1;M109A1;usa;false;false;false;0;155000;45000;155000;46000;vehicleCost;TT;;2023-10-31;;false
+us_mim_72_chaparral;Imp.Chaparral;usa;false;false;false;0;620000;175000;620000;220000;vehicleCost;TT;;2023-09-19;;false
+us_m1a2_sep2_abrams;M1A2 SEP V2;usa;false;false;false;0;1100000;310000;1100000;410000;vehicleCost;TT;;2023-12-14;;false
+us_m1a1_aim_abrams;M1A1 AIM;usa;false;false;false;0;1000000;270000;950000;550000;vehicleCost;SQ; This is a squadron vehicle, the discount does not apply;2022-06-15;;true
+ah_1w;AH-1W;usa;false;false;false;0;1000000;290000;1000000;380000;vehicleCost;TT;;2024-03-13;;false
+us_cruiser_northampton_class;USS Northampton;usa;false;false;false;0;230000;65000;230000;61000;vehicleCost;TT;;2020-09-08;;false
+germ_flakpanzer_zerstorer_45;Zerstörer 45;germany;false;false;false;0;200000;57000;200000;63000;vehicleCost;TT;;2024-03-13;;false
+germ_m109g;M109G;germany;false;false;false;0;155000;45000;155000;46000;vehicleCost;TT;;2023-10-31;;false
+germ_spz_oerlikon_raketenautomat;Raketenautomat;germany;false;false;false;0;300000;86000;300000;105000;vehicleCost;TT;;2023-06-14;;false
+germ_kpz_t72m1;◊T-72M1;germany;false;false;false;0;620000;175000;620000;220000;vehicleCost;TT;;2023-03-07;;false
+bf-109c_1;Bf 109 C-1;germany;false;false;false;0;2100;600;2100;4000;vehicleCost;TT;;2024-03-13;;false
+mig_23mla;◊MiG-23MLA;germany;false;false;false;0;950000;270000;950000;350000;vehicleCost;TT;;2022-03-22;;false
+mig_29_9_12_germany;◊MiG-29;germany;false;false;false;0;1080000;310000;1080000;400000;vehicleCost;TT;;2023-03-07;;false
+germ_destroyer_class1936b;Z43;germany;false;false;false;0;22000;6300;22000;11000;vehicleCost;TT;;2019-10-29;;false
+su_17m4;Su-17M4;ussr;false;false;false;0;830000;240000;830000;300000;vehicleCost;TT;;2022-06-15;;false
+su_22m3;Su-22M3;ussr;false;false;false;0;710000;200000;710000;520000;vehicleCost;SQ; This is a squadron vehicle, the discount does not apply;2021-12-17;;true
+mi_8tv;Mi-8TV;ussr;false;false;false;0;490000;140000;490000;150000;vehicleCost;TT;;2023-09-19;;false
+mi_24p;Mi-24P;ussr;false;false;false;0;990000;280000;990000;370000;vehicleCost;TT;;2018-09-11;;false
+ka_29;Ka-29;ussr;false;false;false;0;1000000;290000;1000000;380000;vehicleCost;TT;;2020-03-10;;false
+ka_52;Ka-52;ussr;false;false;false;0;1030000;300000;1030000;400000;vehicleCost;TT;;2020-03-10;;false
+ussr_btr_152d;BTR-152D;ussr;false;false;false;0;76000;22000;76000;26000;vehicleCost;TT;;2023-10-31;;false
+ussr_2s1;2S1;ussr;false;false;false;0;200000;57000;200000;63000;vehicleCost;TT;;2023-09-19;;false
+ussr_zsu_23_4m4;ZSU-23-4M4;ussr;false;false;false;0;520000;150000;520000;190000;vehicleCost;TT;;2024-03-13;;false
+ussr_object_775;Object 775;ussr;false;false;false;0;520000;150000;520000;190000;vehicleCost;TT;;2023-10-31;;false
+ussr_2s25m;2S25M;ussr;false;false;false;0;710000;200000;710000;260000;vehicleCost;TT;;2021-10-26;;false
+ussr_pr_191;Pr.191;ussr;false;false;false;0;76000;22000;76000;26000;vehicleCost;TT;;2018-10-23;;false
+harrier_frs1;Sea Harrier FRS.1;britain;false;false;false;0;710000;200000;710000;520000;vehicleCost;SQ; This is a squadron vehicle, the discount does not apply;2022-12-20;;true
+uk_churchill_na75;Churchill NA75;britain;false;false;false;0;76000;22000;76000;13000;vehicleCost;TT;;2023-03-07;;false
+uk_m109a1;▄M109A1;britain;false;false;false;0;185000;52000;185000;54000;vehicleCost;TT;;2023-10-31;;false
+jp_type_74_f;Type 74 (F);japan;false;false;false;0;620000;175000;620000;110000;vehicleCost;TT;;2020-11-15;;false
+jp_type_87_rcv;Type 87 RCV;japan;false;false;false;0;450000;130000;450000;160000;vehicleCost;TT;;2021-09-07;;false
+jp_type_89;Type 89;japan;false;false;false;0;520000;150000;520000;94000;vehicleCost;TT;;2018-12-18;;false
+cn_zsl_92;ZSL92;china;false;false;false;0;240000;68000;240000;82000;vehicleCost;TT; This is a new vehicle, only vehicles introduced after Alpha Strike are discounted;2024-06-19;;true
+cn_plz_83;PLZ83;china;false;false;false;0;210000;61000;210000;71000;vehicleCost;TT;;2023-10-31;;false
+cn_mbt2000;MBT-2000;china;false;false;false;0;830000;240000;830000;300000;vehicleCost;TT;;2023-09-19;;false
+cn_zbd_04a;ZBD04A;china;false;false;false;0;710000;200000;710000;260000;vehicleCost;TT;;2024-03-13;;false
+j_8b;J-8B;china;false;false;false;0;950000;270000;950000;350000;vehicleCost;TT;;2022-03-22;;false
+il-10_1946_hungary;◔IL-10;italy;false;false;false;0;200000;57000;200000;63000;vehicleCost;TT;;2024-03-13;;false
+tu-2_postwar_late_hungary;◔Tu-2S-59;italy;false;false;false;0;210000;61000;210000;71000;vehicleCost;TT;;2024-03-13;;false
+mig-17pf_hungary;◔MiG-17PF;italy;false;false;false;0;450000;130000;450000;160000;vehicleCost;TT;;2024-03-13;;false
+it_m109g;▄M109G;italy;false;false;false;0;200000;57000;200000;63000;vehicleCost;TT;;2023-10-31;;false
+super_etendard_97;Super Etendard;france;false;false;false;0;710000;200000;710000;260000;vehicleCost;TT;;2023-09-19;;false
+fr_tpk_641_vpc;TPK 6.41;france;false;false;false;0;105000;30000;105000;33000;vehicleCost;TT;;2023-12-14;;false
+fr_amx_10p;AMX-10P;france;false;false;false;0;155000;45000;155000;46000;vehicleCost;TT;;2023-10-31;;false
+fr_m26_pershing;▄M26;france;false;false;false;0;200000;57000;200000;63000;vehicleCost;TT;;2023-10-31;;false
+sw_landsverk_ush_204_gk;U-SH 204 GK;sweden;false;false;false;0;185000;52000;185000;54000;vehicleCost;TT; This is a new vehicle, only vehicles introduced after Alpha Strike are discounted;2024-06-19;;true

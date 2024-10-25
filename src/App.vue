@@ -25,9 +25,8 @@
             <li class="nav-item">
               <a class="nav-link"><RouterLink to="/list">List</RouterLink></a>
             </li>
-            <!--
             <li class="nav-item">
-              <a class="nav-link help"
+              <a class="nav-link icon"
                 ><i
                   class="pi pi-question-circle"
                   style="font-size: 1.2em"
@@ -35,22 +34,32 @@
                 ></i
               ></a>
             </li>
-            -->
+            <li class="nav-item">
+              <a class="nav-link">Nation</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link icon">
+                <i class="pi pi-cog" style="font-size: 1.2em" v-tooltip.bottom="'Settings'"> </i>
+              </a>
+            </li>
           </ul>
         </div>
       </div>
     </nav>
+    <Navbar></Navbar>
     <RouterView />
   </div>
 </template>
 
 <script setup lang="ts">
 import { RouterLink, RouterView } from 'vue-router'
+//@ts-ignore
+import Navbar from '@/components/NavbarComponent.vue'
 import patchnotes from '@/assets/patchnotes.json'
 </script>
 
 <style scoped>
-.help {
+.icon {
   margin-top: auto !important;
   vertical-align: sub;
 }

@@ -38,19 +38,19 @@ if (!sessionStorage.getItem('parsedCSVData')) {
       //FIXME nem a _1 kell hanem a _0 végü
       // Feldolgozott adatokat alakítsuk kulcs-érték párokká
       //const keyValuePairs: Record<string, string> = {}
-      const keyValuePairs: Record<string, { english: string; french: string }> = {}
+      const keyValuePairs: Record<string, { english: string; hungarian: string }> = {}
 
       //@ts-ignore
       parsedData.data.forEach((row: any) => {
         const id = row['<ID|readonly|noverify>']
         const englishValue = row['<English>']
-        const frenchValue = row['<French>']
+        const hunValue = row['<Hungarian>']
 
         // Csak a "_shop" vagy "_1" végződésű kulcsokat mentjük el
         if (id && (id.endsWith('_shop') || id.endsWith('_0'))) {
           keyValuePairs[id] = {
             english: englishValue,
-            french: frenchValue
+            hungarian: hunValue
           }
         }
       })

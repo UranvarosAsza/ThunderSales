@@ -7,8 +7,8 @@
     <!--<div class="name">{{ shortVersionTranslatedName }}</div>-->
     <div class="name">{{ translatedName }}</div>
     <div class="type">Rank {{ data.era }}</div>
-    <div v-if="data.on_marketplace" class="type">Market</div>
-    <div v-else-if="data.is_pack" class="type">Pack</div>
+    <div v-if="data.on_marketplace" class="type">{{ getTranslatedText('market') }}</div>
+    <div v-else-if="data.is_pack" class="type">{{ getTranslatedText('pack') }}</div>
     <div v-else-if="data.ge_cost" class="type">{{ data.ge_cost }} GE</div>
     <div v-else class="type hidden"><br /></div>
   </div>
@@ -18,6 +18,8 @@
 import { toast } from 'vue3-toastify'
 import 'vue3-toastify/dist/index.css'
 import apiParams from '@/assets/apiParams.json'
+import { getCookie, setCookie } from '../utlis/cookieUtils'
+import { translate } from '../utlis/translation'
 
 export default {
   props: {
@@ -31,6 +33,7 @@ export default {
   components: {},
   data() {
     return {
+      selectedLanguage: getCookie('language'),
       vehiclesData: {},
       showPopupList: false,
       //FIXME
@@ -51,7 +54,7 @@ export default {
     //showPopupListComputed
   },
   mounted() {
-    this.getTranslatedName(this.lang, this.identifier)
+    this.getTranslatedName(this.selectedLanguage, this.identifier)
   },
   methods: {
     /**
@@ -153,7 +156,7 @@ export default {
 
         // Hosszű név (_shop)
         if (csvData[shopKey]) {
-          this.translatedName = csvData[shopKey][lang === 'fr' ? 'french' : 'english']
+          this.translatedName = csvData[shopKey][lang === 'hu' ? 'hungarian' : 'english']
         } else {
           console.warn(`Nem található rövid fordítás a következőhöz: ${vehiclename}`)
           this.translatedName = vehiclename // Ha nincs fordítás, az eredeti név jelenik meg
@@ -162,7 +165,7 @@ export default {
         // Rövid név (_1)
         if (csvData[variantKey]) {
           this.shortVersionTranslatedName =
-            csvData[variantKey][lang === 'fr' ? 'french' : 'english']
+            csvData[variantKey][lang === 'hu' ? 'hungarian' : 'english']
         } else {
           console.warn(`Nem található hosszú fordítás a következőhöz: ${vehiclename}`)
           this.shortVersionTranslatedName = vehiclename // Ha nincs fordítás, az eredeti név jelenik meg
@@ -170,6 +173,9 @@ export default {
       } else {
         console.error('Nincs CSV adat a sessionStorage-ban!')
       }
+    },
+    getTranslatedText(key) {
+      return translate(key, this.selectedLanguage)
     }
   }
 }
