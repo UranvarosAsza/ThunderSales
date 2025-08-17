@@ -1,4 +1,27 @@
 {
+  "rules": {
+    "excludePatterns": [
+      {
+        "pattern": "_event$",
+        "description": "Exclude all vehicles ending with _event"
+      },
+      {
+        "pattern": "_tutorial$",
+        "description": "Exclude tutorial vehicles"
+      },
+      {
+        "pattern": "_test$",
+        "description": "Exclude test vehicles"
+      },
+      {
+        "pattern": "_dev$",
+        "description": "Exclude dev vehicles"
+      }
+    ],
+    "excludeKeywords": ["tutorial", "test", "dev", "placeholder"],
+    "excludePrefixes": ["temp_", "debug_"],
+    "excludeSuffixes": ["_old", "_backup", "_temp"]
+  },
   "unusedPremvehicles": {
     "description": "unused things, like drones and never-added premium vehicles",
     "vehicles": [
@@ -181,6 +204,27 @@
         "shown": false,
         "rank": 1,
         "nation": "france"
+      },
+      {
+        "vehicle_id": "fokker_d7",
+        "place": "TT",
+        "shown": false,
+        "rank": 1,
+        "nation": "germany"
+      },
+      {
+        "vehicle_id": "zeppelin",
+        "place": "TT",
+        "shown": false,
+        "rank": 1,
+        "nation": "germany"
+      },
+      {
+        "vehicle_id": "spad_13",
+        "place": "TT",
+        "shown": false,
+        "rank": 1,
+        "nation": "britain"
       }
     ]
   },
@@ -466,6 +510,14 @@
         "rank": 1,
         "nation": "sweden",
         "branch": "ground"
+      },
+      {
+        "vehicle_id": "bf-109c_1_promo",
+        "place": "PT",
+        "shown": true,
+        "rank": 1,
+        "nation": "germany",
+        "branch": "air"
       }
     ]
   }
