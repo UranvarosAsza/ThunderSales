@@ -229,6 +229,7 @@ export default {
     Column,
     MultiSelect,
     ToggleSwitch,
+    // eslint-disable-next-line vue/no-reserved-component-names
     Select,
     InputNumber
   },

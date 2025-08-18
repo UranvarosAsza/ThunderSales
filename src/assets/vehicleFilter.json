@@ -225,6 +225,27 @@
         "shown": false,
         "rank": 1,
         "nation": "britain"
+      },
+      {
+        "vehicle_id": "sc_1",
+        "place": "TT",
+        "shown": false,
+        "rank": 1,
+        "nation": "usa"
+      },
+      {
+        "vehicle_id": "destroyer_heavy_tank_h",
+        "place": "TT",
+        "shown": false,
+        "rank": 1,
+        "nation": "ussr"
+      },
+      {
+        "vehicle_id": "sdi_minotaur",
+        "place": "TT",
+        "shown": false,
+        "rank": 7,
+        "nation": "usa"
       }
     ]
   },
