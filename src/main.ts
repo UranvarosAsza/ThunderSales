@@ -2,6 +2,7 @@ import Vue3Toastify from 'vue3-toastify'
 import 'vue3-toastify/dist/index.css'
 
 import { createApp } from 'vue'
+//@ts-ignore
 import App from './App.vue'
 import router from './router'
 // @ts-ignore
@@ -15,6 +16,7 @@ import PrimeVue from 'primevue/config'
 import Aura from '@primevue/themes/aura'
 import Tooltip from 'primevue/tooltip'
 import 'primeicons/primeicons.css'
+import { t } from './language-selector'
 
 const app = createApp(App)
 
@@ -71,7 +73,8 @@ if (!sessionStorage.getItem('parsedCSVData')) {
     })
     .catch((err) => console.error('Error loading CSV:', err))
 }
-
+//translate fv
+app.config.globalProperties.$t = t
 app.use(router)
 app.use(Vue3Toastify, {
   autoClose: 3000, // az automatikus bezárási idő beállítása (példa: 3000 ms)
@@ -80,8 +83,7 @@ app.use(Vue3Toastify, {
 })
 app.directive('tooltip', Tooltip)
 app.mount('#app')
-//@ts-ignore
-app.use(Papa)
+
 //app.use(PrimeVue, { unstyled: true });
 app.use(PrimeVue, {
   theme: {

@@ -1,7 +1,7 @@
 <template>
   <div class="container-fluid nationSelector">
     <nav class="natieonSelectorBox">
-      <label>Select a nation:</label>
+      <label>{{ $t('UI_Home.select_nation') }}:</label>
       <div class="nation-boxes">
         <div
           v-for="(nationData, nationKey) in nations"
@@ -14,11 +14,11 @@
           }"
           @click="selectNation(nationKey)"
         >
-          <div class="nation-name">{{ nationData.displayed_name_EN }}</div>
+          <div class="nation-name">{{ $t(`nations.${nationKey}`) }}</div>
         </div>
       </div>
 
-      <label v-if="nation">Select branch:</label>
+      <label v-if="nation">{{ $t('UI_Home.select_branch') }}:</label>
       <div class="branch-boxes">
         <div
           v-for="branchName in filteredBranches"
@@ -27,7 +27,7 @@
           :class="{ active: branch === branchName }"
           @click="selectBranch(branchName)"
         >
-          {{ branchName.charAt(0).toUpperCase() + branchName.slice(1) }}
+          {{ $t(`branches.${branchName}`) }}
         </div>
       </div>
     </nav>
@@ -40,7 +40,7 @@
       </div>
     </div>
     <div v-else class="noVehicles">
-      <h2>Please select a nation and a branch to start</h2>
+      <h2>{{ $t('UI_Home.please_select') }}</h2>
     </div>
   </div>
 </template>
@@ -278,11 +278,10 @@ export default {
 .nation-name {
   position: absolute;
   top: -45px;
-  left: 50%;
-  transform: translateX(-50%);
   font-weight: bold;
   color: white;
-  font-size: 25px;
+  white-space: nowrap;
+  font-size: 22px;
 }
 .nationSelector {
   max-width: 1799px;

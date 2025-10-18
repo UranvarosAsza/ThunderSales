@@ -246,6 +246,13 @@
         "shown": false,
         "rank": 7,
         "nation": "usa"
+      },
+      {
+        "vehicle_id": "kor_2",
+        "place": "TT",
+        "shown": false,
+        "rank": 1,
+        "nation": "ussr"
       }
     ]
   },

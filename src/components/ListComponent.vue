@@ -1,7 +1,7 @@
 <template>
   <div class="container-fluid">
     <div class="list-container">
-      <h1>Here is your list:</h1>
+      <h1>{{ $t('UI_List.here_is_your_list') }}:</h1>
 
       <DataTable
         :value="vehiclesPrices"
@@ -27,12 +27,12 @@
             <div style="text-align: left">
               <MultiSelect
                 v-model="selectedColumns"
-                :options="columns"
+                :options="translatedColumns"
                 optionLabel="header"
-                placeholder="Add more columns"
+                :placeholder="$t('UI_List.add_more_columns')"
               />
               <span class="vehicleTypeSwitch">
-                Show vehicle's types
+                {{ $t('UI_List.show_vehicletypes') }}
                 <ToggleSwitch class="toggleSwitch" v-model="showVehicleTypes" />
               </span>
             </div>
@@ -43,25 +43,23 @@
               <button
                 label="Change to vehicle cost only"
                 class="allToVehiclePriceButton"
-                v-tooltip.top="'Sets all vechicle options to vehiclePrice'"
+                v-tooltip.top="$t('hints.change_to_vehicle_cost_hint')"
                 @click="setAllVehicleOptionToVehiclepirce"
               >
-                Change to vehicle cost only
+                {{ $t('UI_List.change_to_vehicle_cost') }}
               </button>
               <button
                 label="Remove vehicles without discount"
                 class="removeButton"
-                v-tooltip.top="
-                  'Removes all vehicles that won\'t get discounted (Squadron and Past 2 update\'s additions)'
-                "
+                v-tooltip.top="$t('hints.remove_without_discount_hint')"
                 @click="removeRemovableVehicles"
               >
-                Remove vehicles without discount
+                {{ $t('UI_List.remove_without_discount') }}
               </button>
             </div>
           </div>
         </template>
-        <Column field="vehicle" header="Vehicle">
+        <Column field="vehicle" :header="$t('UI_List.column_vehicle')">
           <template #body="slotProps">
             {{ slotProps.data.longName }}
             <span v-if="showVehicleTypes">
@@ -81,14 +79,14 @@
             <i
               class="pi pi-info-circle red"
               v-if="slotProps.data.isRemovable"
-              v-tooltip.top="slotProps.data.saleText"
+              v-tooltip.top="$t(slotProps.data.saleTextKey)"
               style="margin-left: 5px"
             >
             </i>
           </template>
         </Column>
-        <Column field="nation" header="Nation"></Column>
-        <Column field="totalSL" header="Total" sortable :sortFunction="sortByTotalSL">
+        <Column field="nation" :header="$t('UI_List.column_nation')"></Column>
+        <Column field="totalSL" :header="$t('UI_List.column_total')" sortable>
           <template #body="slotProps">
             <span v-if="slotProps.data.totalGE > 0">
               {{ slotProps.data.totalGE.toLocaleString('hu-HU') }} Ge
@@ -118,20 +116,16 @@
             />
           </template>
         </Column>
-        <Column field="listOption" header="List Option">
+        <Column field="listOption" :header="$t('UI_List.column_list_option')">
           <template #body="slotProps">
             <Select
               v-model="slotProps.data.listOption"
-              :options="listOptions"
+              :options="translatedListOptions"
               optionLabel="label"
               optionValue="value"
               class="w-full md:w-56"
               @change="handleListOptionChange(slotProps.data)"
-            >
-              <option value="vehicleCost">Vehicle Cost</option>
-              <option value="basicCrew">Basic Crew</option>
-              <option value="expertCrew">Expert Crew</option>
-            </Select>
+            />
           </template>
         </Column>
         <Column field="delButton" header="">
@@ -141,33 +135,36 @@
               class="removeButton"
               @click="removeFromList(slotProps.data)"
             >
-              Remove
+              {{ $t('UI_List.remove') }}
             </button>
           </template>
         </Column>
         <template #groupheader="slotProps">
           <div class="flex items-center gap-2">
-            <span>{{ setNationName(slotProps.data.nation) }} </span>
+            <span>{{ $t(`nations.${slotProps.data.nation}`) }}</span>
           </div>
         </template>
         <template #groupfooter="slotProps">
           <div class="flex justify-end font-bold w-full">
-            Total Cost in Nation:
+            {{ $t('UI_List.total_cost_in_nation') }}
+            :
             {{ calculateNationTotal(slotProps.data.nation) }}
           </div>
         </template>
         <template #footer>
           <div style="text-align: left">
             <div v-if="vehiclesPrices.length" class="discount">
-              <button @click="clearList">Clear list</button>
+              <button @click="clearList">
+                {{ $t('UI_List.clear_list') }}
+              </button>
               <h2>
-                Your total costs for all nations are:
+                {{ $t('UI_List.total_cost_in_all_nation') }}
+                :
                 <span v-if="goldTotal > 0"> {{ goldTotal.toLocaleString('hu-HU') }} GE </span>
                 <span v-if="grandTotal > 0"> {{ grandTotal.toLocaleString('hu-HU') }} SL </span>
               </h2>
               <div>
-                Select the discount percentage:
-                <button @click="calculateDiscountedPrice(discount)">Calculate</button>
+                {{ $t('UI_List.select_discount_percent') }}:
                 <label>
                   <input type="radio" v-model="discount" value="0.3" />
                   30%
@@ -176,33 +173,36 @@
                   <input type="radio" v-model="discount" value="0.5" />
                   50%
                 </label>
+                <button @click="calculateDiscountedPrice(discount)">
+                  {{ $t('UI_List.calculate') }}
+                </button>
                 <div v-if="grandTotalDiscount">
                   <h2>
-                    You need to save
-                    {{ grandTotalGeDiscount.toLocaleString('hu-HU') }} GE
-                    <span v-if="grandTotalDiscount">
-                      and {{ grandTotalDiscount.toLocaleString('hu-HU') }} Sl
-                    </span>
-                    for a {{ discount * 100 }}% sale
+                    {{ $t('UI_List.you_need_to_save') }}:
+
+                    {{ grandTotalGeDiscount.toLocaleString('hu-HU') }} GE ,
+
+                    {{ grandTotalDiscount.toLocaleString('hu-HU') }} Sl
                   </h2>
                 </div>
               </div>
 
               <div style="text-align: left">
                 <div>
-                  You want to save the list for later?
+                  {{ $t('UI_List.save_list_later') }}
                   <button
                     class="btn btn-secondary saveBtn"
                     label="Export"
                     @click="exportCSV($event)"
                   >
-                    Export
+                    {{ $t('UI_List.export') }}
                   </button>
                 </div>
               </div>
             </div>
             <div class="fileUpload">
-              Allready have a list? add it here:
+              {{ $t('UI_List.allready_have_a_list') }}
+              :
               <input type="file" @change="handleFileUpload" class="form-label" />
             </div>
           </div>
@@ -245,16 +245,16 @@ export default {
       crewsAndSquadronVehiclePrices: 0,
       selectedColumns: [],
       columns: [
-        { field: 'slCost', header: 'Vehicle cost', sortable: true },
-        { field: 'basicCrewTrainingCost', header: 'Basic Crew', sortable: true },
-        { field: 'expertCrewTrainingCost', header: 'Expert Crew', sortable: true },
-        { field: 'rpCost', header: 'RP Cost', sortable: true }
+        { field: 'slCost', key: 'column_vehicle_cost', sortable: true },
+        { field: 'basicCrewTrainingCost', key: 'column_basic_crew', sortable: true },
+        { field: 'expertCrewTrainingCost', key: 'column_expert_crew', sortable: true },
+        { field: 'rpCost', key: 'column_rp_cost', sortable: true }
       ],
       selectedListOption: '',
       listOptions: [
-        { label: 'Vehicle Cost', value: 'vehicleCost' },
-        { label: 'Basic Crew', value: 'basicCrew' },
-        { label: 'Expert Crew', value: 'expertCrew' }
+        { key: 'list_option_vehicle_cost', value: 'vehicleCost' },
+        { key: 'list_option_basic_crew', value: 'basicCrew' },
+        { key: 'list_option_expert_crew', value: 'expertCrew' }
       ],
       showVehicleTypes: false
     }
@@ -279,6 +279,20 @@ export default {
       this.computeSelectedPrice(vehicle)
     })
     this.calculateGrandTotal() // Ensure total is correct on load
+  },
+  computed: {
+    translatedColumns() {
+      return this.columns.map((col) => ({
+        ...col,
+        header: this.$t(`UI_List.${col.key}`)
+      }))
+    },
+    translatedListOptions() {
+      return this.listOptions.map((opt) => ({
+        label: this.$t(`UI_List.${opt.key}`),
+        value: opt.value
+      }))
+    }
   },
   methods: {
     logVehicleData() {
@@ -319,7 +333,7 @@ export default {
       if (file) {
         // Ellenőrzés, hogy a fájl CSV-e
         if (!file.name.endsWith('.csv')) {
-          toast.error('Invalid file format. Please upload a CSV file.')
+          toast.error(this.$t('UI_List.invalid_csv_format'))
           return
         }
         const reader = new FileReader()
@@ -373,7 +387,7 @@ export default {
         })
         this.setVehicleData(updatedData)
       } else {
-        toast.error('CSV header does not match the expected format.')
+        toast.error(this.$t('UI_List.csv_header_mismatch'))
         console.error('CSV header does not match the expected format.')
       }
       this.updateList()
@@ -654,32 +668,25 @@ export default {
         this.calculateGrandTotal()
       }
     },
-    setNationName(nation) {
-      return nation.charAt(0).toUpperCase() + nation.slice(1)
-    },
     setSaleText() {
       //Végigmegy minegyiken, mountoláskor és update-kor
       //ha squadronjármű vagy a dátuma az utolsó 2 patch dátumánál korábbi akkor nem lesz leárazva
       let vehicleData = this.getVehicleData()
       vehicleData.forEach((vehicle) => {
         if (vehicle.vehicleType == 'SQ') {
-          vehicle.saleText = ' This is a squadron vehicle, the discount does not apply'
+          vehicle.saleTextKey = 'UI_List.squadron_vehicle_no_discount'
           vehicle.isRemovable = true
         } else if (vehicle.release_date > updates.updates[2].start_date) {
-          vehicle.saleText =
-            ' This is a new vehicle, only vehicles introduced after ' +
-            updates.updates[2].name +
-            ' are discounted'
+          vehicle.saleTextKey = 'UI_List.new_vehicle_no_discount'
           vehicle.isRemovable = true
         }
       })
-      // Update sessionStorage with the modified data
       this.setVehicleData(vehicleData)
     },
     calculateDiscountedPrice() {
       //FIXME wtf is this ?
       if (this.discount === null) {
-        toast.error('Please select a discount percentage!')
+        toast.error(this.$t('UI_List.select_discount_first'))
         return
       }
 

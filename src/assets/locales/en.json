@@ -1,0 +1,77 @@
+{
+  "vehicle": {
+    "rank": "Rank",
+    "market": "Market",
+    "pack": "Pack"
+  },
+  "UI_Common": {
+    "home": "Home",
+    "list": "List",
+    "help": "Help"
+  },
+  "UI_Home": {
+    "select_nation": "Select nation",
+    "select_branch": "Select branch",
+    "please_select": "Please select a nation and a branch to start"
+  },
+  "UI_List": {
+    "here_is_your_list": "Here is your list",
+    "column_vehicle": "Vehicle",
+    "column_nation": "Nation",
+    "column_total": "Total",
+    "column_vehicle_cost": "Vehicle cost",
+    "column_basic_crew": "Basic Crew",
+    "column_expert_crew": "Expert Crew",
+    "column_rp_cost": "RP Cost",
+    "column_list_option": "List Option",
+    "list_option_vehicle_cost": "Vehicle Cost",
+    "list_option_basic_crew": "Basic Crew",
+    "list_option_expert_crew": "Expert Crew",
+    "remove": "Remove",
+    "remove_without_discount": "Remove vehicles without discount",
+    "change_to_vehicle_cost": "Change to vehicle cost only",
+    "add_more_columns": "Add more columns",
+    "show_vehicletypes": "Show vehicle types",
+    "total_cost_in_nation": "Total cost in nation",
+    "clear_list": "Clear list",
+    "total_cost_in_all_nation": "Your total costs for all nations are",
+    "select_discount_percent": "Select the discount percentage",
+    "calculate": "Calculate",
+    "you_need_to_save": "You need to save",
+    "for_sale": "for a",
+    "save_list_later": "You want to save the list for later?",
+    "export": "Export",
+    "allready_have_a_list": "Already have a list? add it here",
+    "squadron_vehicle_no_discount": "This is a squadron vehicle, the discount does not apply",
+    "new_vehicle_no_discount": "This is a new vehicle, only vehicles introduced after certain updates are discounted",
+    "invalid_csv_format": "Invalid file format. Please upload a CSV file.",
+    "csv_header_mismatch": "CSV header does not match the expected format.",
+    "select_discount_first": "Please select a discount percentage!"
+  },
+  "hints": {
+    "addToList": "Add to the list",
+    "addSuccesfull": "Vehicle successfully added",
+    "add_error": "This vehicle is already on the list",
+    "change_to_vehicle_cost_hint": "Sets all vehicle options to vehicle price only",
+    "remove_without_discount_hint": "Removes all vehicles that won't get discounted (Squadron and past 2 update's additions)"
+  },
+  "nations": {
+    "usa": "USA",
+    "germany": "Germany",
+    "ussr": "USSR",
+    "britain": "Great Britain",
+    "japan": "Japan",
+    "china": "China",
+    "italy": "Italy",
+    "france": "France",
+    "sweden": "Sweden",
+    "israel": "Israel"
+  },
+  "branches": {
+    "air": "Air",
+    "ground": "Ground",
+    "heli": "Helicopter",
+    "boat": "Boat",
+    "ship": "Ship"
+  }
+}

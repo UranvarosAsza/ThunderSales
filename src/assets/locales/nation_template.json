@@ -1,0 +1,64 @@
+{
+  "vehicle": {
+    "rank": "",
+    "market": "",
+    "pack": ""
+  },
+  "UI_Common": {
+    "home": "",
+    "list": "",
+    "help": ""
+  },
+  "UI_home": {
+    "select_nation": "",
+    "select_branch": ""
+  },
+  "UI_list": {
+    "vehicle": "",
+    "total": "",
+    "vehicle_cost": "",
+    "basic_crew": "",
+    "expert_crew": "",
+    "rp_cost": "",
+    "list_option": "",
+    "remove": "",
+    "remove_without_discount": "",
+    "change_to_vehicle_cost": "",
+    "show_vehicletypes": "",
+    "add_more_columns": "",
+    "total_cost_in_nation": "",
+    "clear_list": "",
+    "total_cost_in_all_nation": "",
+    "select_discount_percent": "",
+    "calculate": "",
+    "save_list_later": "",
+    "export": "",
+    "allready_have_a_list": ""
+  },
+  "hints": {
+    "addToList": "",
+    "addSuccesfull": "",
+    "add_error": "",
+    "change_to_vehicle_cost_hint": "",
+    "remove_without_discount_hint": ""
+  },
+  "nations": {
+    "usa": "",
+    "germany": "",
+    "ussr": "",
+    "britain": "",
+    "japan": "",
+    "china": "",
+    "italy": "",
+    "france": "",
+    "sweden": "",
+    "israel": ""
+  },
+  "braches": {
+    "air": "",
+    "ground": "",
+    "heli": "",
+    "boat": "",
+    "ship": ""
+  }
+}

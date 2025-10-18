@@ -18,10 +18,14 @@
 
           <ul class="navbar-nav me-auto mb-2 mb-lg-0">
             <li class="nav-item">
-              <a class="nav-link"><RouterLink to="/">Home</RouterLink></a>
+              <a class="nav-link"
+                ><RouterLink to="/">{{ $t('UI_Common.home') }}</RouterLink></a
+              >
             </li>
             <li class="nav-item">
-              <a class="nav-link"><RouterLink to="/list">List</RouterLink></a>
+              <a class="nav-link"
+                ><RouterLink to="/list">{{ $t('UI_Common.list') }}</RouterLink></a
+              >
             </li>
             <!--
             <li class="nav-item">
@@ -33,8 +37,23 @@
                 ></i
               ></a>
             </li>
-            -->
-          </ul>
+          --></ul>
+          <div class="language-switcher">
+            <button
+              @click="switchLanguage('en')"
+              :class="{ active: currentLocale === 'en' }"
+              class="lang-btn"
+            >
+              EN
+            </button>
+            <button
+              @click="switchLanguage('hu')"
+              :class="{ active: currentLocale === 'hu' }"
+              class="lang-btn"
+            >
+              HU
+            </button>
+          </div>
         </div>
       </div>
     </nav>
@@ -44,9 +63,31 @@
 
 <script setup lang="ts">
 import { RouterLink, RouterView } from 'vue-router'
+import { ref, onMounted } from 'vue'
+import { getLocale, setLocale, t, type Locale } from './language-selector'
+
+const currentLocale = ref<Locale>(getLocale())
+
+onMounted(() => {
+  currentLocale.value = getLocale()
+})
+
+function switchLanguage(lang: Locale) {
+  setLocale(lang)
+  currentLocale.value = lang
+  location.reload()
+}
 </script>
 
 <style scoped>
+.language-switcher {
+  margin: 0px;
+  gap: 0;
+}
+.lang-btn {
+  font-size: 12px;
+  padding: 4px;
+}
 .help {
   margin-top: auto !important;
   vertical-align: sub;

@@ -1,7 +1,7 @@
 {
   "usa": {
     "flag_url": "/nationFlags/usa_flag.png",
-    "displayed_name_EN": "USA",
+    "key": "usa",
     "branches": {
       "air": true,
       "ground": true,
@@ -12,7 +12,7 @@
   },
   "germany": {
     "flag_url": "/nationFlags/germany_flag.png",
-    "displayed_name_EN": "Germany",
+    "key": "germany",
     "branches": {
       "air": true,
       "ground": true,
@@ -23,7 +23,7 @@
   },
   "ussr": {
     "flag_url": "/nationFlags/ussr_flag.png",
-    "displayed_name_EN": "USSR",
+    "key": "ussr",
     "branches": {
       "air": true,
       "ground": true,
@@ -34,7 +34,7 @@
   },
   "britain": {
     "flag_url": "/nationFlags/britain_flag.png",
-    "displayed_name_EN": "Britain",
+    "key": "britain",
     "branches": {
       "air": true,
       "ground": true,
@@ -45,7 +45,7 @@
   },
   "japan": {
     "flag_url": "/nationFlags/japanflag.png",
-    "displayed_name_EN": "Japan",
+    "key": "japan",
     "branches": {
       "air": true,
       "ground": true,
@@ -56,7 +56,7 @@
   },
   "china": {
     "flag_url": "/nationFlags/china_flag.png",
-    "displayed_name_EN": "China",
+    "key": "china",
     "branches": {
       "air": true,
       "ground": true,
@@ -67,7 +67,7 @@
   },
   "italy": {
     "flag_url": "/nationFlags/italy_flag.png",
-    "displayed_name_EN": "Italy",
+    "key": "italy",
     "branches": {
       "air": true,
       "ground": true,
@@ -78,7 +78,7 @@
   },
   "france": {
     "flag_url": "/nationFlags/france_flag.png",
-    "displayed_name_EN": "France",
+    "key": "france",
     "branches": {
       "air": true,
       "ground": true,
@@ -89,7 +89,7 @@
   },
   "sweden": {
     "flag_url": "/nationFlags/sweden_flag.png",
-    "displayed_name_EN": "Sweden",
+    "key": "sweden",
     "branches": {
       "air": true,
       "ground": true,
@@ -100,7 +100,7 @@
   },
   "israel": {
     "flag_url": "/nationFlags/israel_flag.png",
-    "displayed_name_EN": "Israel",
+    "key": "israel",
     "branches": {
       "air": true,
       "ground": true,

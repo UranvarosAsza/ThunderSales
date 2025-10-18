@@ -1,0 +1,77 @@
+{
+  "vehicle": {
+    "rank": "Rang",
+    "market": "Piac",
+    "pack": "Csomag"
+  },
+  "UI_Common": {
+    "home": "Kezdőlap",
+    "list": "Lista",
+    "help": "Súgó"
+  },
+  "UI_Home": {
+    "select_nation": "Válassz nemzetet",
+    "select_branch": "Válassz fegyvernemet",
+    "please_select": "Kérlek válassz nemzetett és ágat a kezdéshez"
+  },
+  "UI_List": {
+    "here_is_your_list": "Itt található a listád",
+    "column_vehicle": "Jármű",
+    "column_nation": "Nemzet",
+    "column_total": "Összesen",
+    "column_vehicle_cost": "Járműár",
+    "column_basic_crew": "Alap legénység",
+    "column_expert_crew": "Szakértő legénység",
+    "column_rp_cost": "RP költség",
+    "column_list_option": "Lista opció",
+    "list_option_vehicle_cost": "Járműár",
+    "list_option_basic_crew": "Alap legénység",
+    "list_option_expert_crew": "Szakértő legénység",
+    "remove": "Eltávolítás",
+    "remove_without_discount": "Kedvezmény nélküliek eltávolítása",
+    "change_to_vehicle_cost": "Váltás csak járműárakra",
+    "add_more_columns": "Oszlopok hozzáadása",
+    "show_vehicletypes": "Járműtípusok mutatása",
+    "total_cost_in_nation": "Összes költség ebben a nemzetben",
+    "clear_list": "Lista törlése",
+    "total_cost_in_all_nation": "Összes költség minden nemzetben",
+    "select_discount_percent": "Leárazás százaléka",
+    "calculate": "Kiszámol",
+    "you_need_to_save": "Ennyit kell félretenned",
+    "for_sale": "egy",
+    "save_list_later": "Lista mentése későbbre:",
+    "export": "Exportálás",
+    "allready_have_a_list": "Ha már rendelkezel listával korábból, itt betöltheted",
+    "squadron_vehicle_no_discount": "Ez egy osztagjármű, a kedvezmény nem vonatkozik rá",
+    "new_vehicle_no_discount": "Ez egy új jármű, csak bizonyos frissítések után bevezetett járművek kapnak kedvezményt",
+    "invalid_csv_format": "Érvénytelen fájlformátum. Kérlek tölts fel egy CSV fájlt.",
+    "csv_header_mismatch": "A CSV fejléc nem egyezik a várt formátummal.",
+    "select_discount_first": "Kérlek válassz kedvezményt!"
+  },
+  "hints": {
+    "addToList": "Hozzáadás a listához",
+    "addSuccesfull": "Jármű sikeresen hozzáadva",
+    "add_error": "A jármű már szerepel a listán",
+    "change_to_vehicle_cost_hint": "Minden járműopciót járműárra állít",
+    "remove_without_discount_hint": "Eltávolítja az összes járművet, ami nem kap kedvezményt (Osztagjárművek és az utolsó 2 frissítés járművei)"
+  },
+  "nations": {
+    "usa": "USA",
+    "germany": "Németország",
+    "ussr": "Szovjetúnió",
+    "britain": "Nagy Britannia",
+    "japan": "Japán",
+    "china": "Kína",
+    "italy": "Olaszország",
+    "france": "Franciaország",
+    "sweden": "Svédország",
+    "israel": "Izrael"
+  },
+  "branches": {
+    "air": "Légierő",
+    "ground": "Szárazföld",
+    "heli": "Helikopterek",
+    "boat": "Partmenti flotta",
+    "ship": "Kékvizi flotta"
+  }
+}

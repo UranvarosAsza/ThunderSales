@@ -180,6 +180,7 @@ export default {
   display: none;
 }
 .name {
+  margin: 2px;
   font-weight: bold;
   text-wrap: balance;
 }
