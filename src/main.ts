@@ -17,8 +17,11 @@ import Aura from '@primevue/themes/aura'
 import Tooltip from 'primevue/tooltip'
 import 'primeicons/primeicons.css'
 import { t } from './language-selector'
+import { getLocale } from './language-selector'
 
 const app = createApp(App)
+
+getLocale() //amint betölt azapp, inicializálunk egy nyelvet cookie-ból vagy default angol
 
 if (!sessionStorage.getItem('parsedCSVData')) {
   // Betöltjük és feldolgozzuk a CSV-t

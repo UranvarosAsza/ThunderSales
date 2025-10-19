@@ -10,7 +10,13 @@ export type Locale = 'en' | 'hu'
 
 export function getLocale(): Locale {
   const saved = document.cookie.match(/locale=([^;]+)/)?.[1]
-  return saved === 'hu' || saved === 'en' ? saved : 'en'
+  if (saved === 'hu' || saved === 'en') {
+    return saved
+  }
+
+  const defaultLocale: Locale = 'en'
+  setLocale(defaultLocale)
+  return defaultLocale
 }
 
 export function setLocale(lang: Locale): void {

@@ -18,7 +18,7 @@
         "description": "Exclude dev vehicles"
       }
     ],
-    "excludeKeywords": ["tutorial", "test", "dev", "placeholder"],
+    "excludeKeywords": ["tutorial", "test", "dev", "placeholder", "yt_cup_2019"],
     "excludePrefixes": ["temp_", "debug_"],
     "excludeSuffixes": ["_old", "_backup", "_temp"]
   },

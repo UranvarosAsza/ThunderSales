@@ -1,9 +1,9 @@
 <template>
   <!--egy darab jármű kártya -->
-  <div class="vehicleCard" @click="addToListAs(picked)" v-tooltip.top="'Add to the list'">
+  <div class="vehicleCard" @click="addToListAs(picked)" v-tooltip.top="$t('hints.addToList')">
     <!--<div class="hoverTip">Add to the list</div>-->
     <img v-if="data.images" :src="data.images.techtree" alt="Vehicle Image" />
-    <!--<div class="name">{{ data.identifier }}</div>-->
+    <!--<div class="name">{{ data.identifier }}</div> -->
     <!--<div class="name">{{ shortVersionTranslatedName }}</div>-->
     <div class="name">{{ translatedName }}</div>
     <div class="type">Rank {{ data.era }}</div>
@@ -71,7 +71,7 @@ export default {
       await this.getVehicleData()
       //ellenőrzés hogy a járműdata nem üres-e
       if (!this.vehiclesData || Object.keys(this.vehiclesData).length === 0) {
-        toast.error('Failed to fetch vehicle data!') // Hibaüzenet toast
+        toast.error('Failed to fetch vehicle data!') // Hibaüzenet toast $t('hints.add_error')
         return
       }
 
@@ -126,11 +126,11 @@ export default {
 
       // Ellenőrizzük, hogy a jármű már benne van-e
       if (vehiclesPrices.some((v) => v.id === vehicle.id)) {
-        toast.error('Vehicle is already in the list.')
+        toast.error(this.$t('hints.add_error'))
       } else {
         vehiclesPrices.push(vehicle)
         sessionStorage.setItem('vehicleData', JSON.stringify(vehiclesPrices))
-        toast.success('Vehicle added successfully!')
+        toast.success(this.$t('hints.addSuccesfull'))
       }
     },
     openCloseListOptions() {

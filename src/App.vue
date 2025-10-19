@@ -38,6 +38,14 @@
               ></a>
             </li>
           --></ul>
+          <button
+            v-if="isDev"
+            @click="clearCookies"
+            class="dev-btn"
+            title="Clear cookies (dev only)"
+          >
+            🍪❌
+          </button>
           <div class="language-switcher">
             <button
               @click="switchLanguage('en')"
@@ -67,6 +75,7 @@ import { ref, onMounted } from 'vue'
 import { getLocale, setLocale, t, type Locale } from './language-selector'
 
 const currentLocale = ref<Locale>(getLocale())
+const isDev = import.meta.env.DEV
 
 onMounted(() => {
   currentLocale.value = getLocale()
@@ -75,6 +84,17 @@ onMounted(() => {
 function switchLanguage(lang: Locale) {
   setLocale(lang)
   currentLocale.value = lang
+  location.reload()
+}
+
+function clearCookies() {
+  // Töröljük az összes cookie-t ezen az oldalon
+  document.cookie.split(';').forEach((c) => {
+    document.cookie = c
+      .replace(/^ +/, '')
+      .replace(/=.*/, '=;expires=' + new Date().toUTCString() + ';path=/')
+  })
+  console.log('🍪 Cookies cleared!')
   location.reload()
 }
 </script>
