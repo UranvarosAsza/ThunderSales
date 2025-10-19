@@ -697,10 +697,9 @@ export default {
   }
 }
 </script>
-
 <style scoped>
 .saveBtn,
-fileUpload {
+.fileUpload {
   margin-left: 5px;
 }
 .vehicleTypeSwitch {
@@ -709,7 +708,6 @@ fileUpload {
 .vehicleTypeSwitch .toggleSwitch {
   vertical-align: middle !important;
 }
-
 .hidden {
   display: none;
 }
@@ -719,8 +717,8 @@ fileUpload {
   vertical-align: sub;
 }
 .pi-info-circle {
-  display: inline !important; /* vagy inline */
-  margin-left: 5px; /* kis távolság a név és az ikon között */
+  display: inline !important;
+  margin-left: 5px;
 }
 .vehicle-type-label {
   display: inline-block;
@@ -732,7 +730,6 @@ fileUpload {
 .container-fluid {
   margin: 0 auto;
 }
-
 .list-container {
   margin: 0 auto;
   padding: 20px;
@@ -740,33 +737,27 @@ fileUpload {
   border-radius: 8px;
   text-align: center;
 }
-
 h1 {
   color: #2e4451;
 }
-
 .vehicle-table {
   width: 100%;
   border: 2px solid #2e4451;
   margin-bottom: 20px;
 }
-
 .vehicle-table > th,
 .vehicle-table > td {
   border: 2px solid #2e4451;
   padding: 10px;
   text-align: left;
 }
-
 .vehicle-table th {
   background-color: #2e4451;
   color: white;
 }
-
 .vehicle-table td {
   background-color: #dbe4ff;
 }
-
 button {
   padding: 10px 20px;
   margin: 10px 0;
@@ -776,50 +767,80 @@ button {
   border-radius: 5px;
   cursor: pointer;
 }
-
 button:hover {
   background-color: #22323b;
 }
-
 .clear-list-btn {
   margin-bottom: 20px;
 }
-
 .reduceButtons {
   display: flex;
   justify-content: flex-end;
   margin-bottom: 20px;
 }
 
+/* Javított discount szekció */
 .discount {
-  display: inline-block;
+  display: block;
   margin-top: 20px;
+  padding: 20px;
+  background-color: #ffffff;
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
 
-.discount h4 {
-  display: inline;
+.discount > * {
+  margin-bottom: 15px;
 }
 
-.discount input {
-  margin-right: 10px;
+.discount h2 {
+  margin: 10px 0;
+  color: #2e4451;
 }
+
+/* Javított radio gomb layout */
+.discount > div {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+  flex-wrap: wrap;
+}
+
+.discount label {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  cursor: pointer;
+  white-space: nowrap;
+}
+
+.discount input[type='radio'] {
+  margin: 0;
+  cursor: pointer;
+}
+
+.discount button {
+  margin: 0;
+}
+
 .reduceButtons {
   display: flex;
   flex-direction: row;
   justify-content: flex-end;
+  gap: 10px;
 }
 .removeButton {
   flex: end;
   background-color: rgba(255, 0, 0, 0.72);
-  margin-left: 20px;
-  margin-bottom: 20px;
+  margin-left: 0;
+  margin-bottom: 0;
 }
 .removeButton:hover {
   background-color: red;
 }
 .allToVehiclePriceButton {
   background-color: rgba(0, 128, 0, 0.72);
-  margin-bottom: 20px;
+  margin-bottom: 0;
 }
 .allToVehiclePriceButton:hover {
   background-color: green;
@@ -836,53 +857,45 @@ button:hover {
   background-color: #f5f5f5;
   border-radius: 8px;
 }
-
 .vehicle-table {
   width: 100%;
   border-collapse: collapse;
   margin-bottom: 20px;
 }
-
 .vehicle-table th,
 .vehicle-table td {
   border: 2px solid #2e4451;
   padding: 10px;
   text-align: left;
 }
-
 .vehicle-table th {
   background-color: #2e4451;
   color: #ffffff;
 }
-
 .vehicle-table td {
   background-color: #dbe4ff;
 }
 
-button {
-  padding: 10px 20px;
-  background-color: #2e4451;
-  color: #fff;
-  border: none;
-  border-radius: 5px;
-  cursor: pointer;
-}
-
-button:hover {
-  background-color: #22323b;
-}
-.discount {
-  display: inline;
-}
 .vehicle-tt {
-  background-color: #416173; /* Kék háttér */
+  background-color: #416173;
 }
-
 .vehicle-sq {
-  background-color: #5c8655; /* Zöld háttér */
+  background-color: #5c8655;
+}
+.vehicle-pr {
+  background-color: #7f6c38;
 }
 
-.vehicle-pr {
-  background-color: #7f6c38; /* Arany háttér */
+/* File upload szekció */
+.fileUpload {
+  margin-top: 20px;
+  padding: 15px;
+  background-color: #ffffff;
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.fileUpload input[type='file'] {
+  margin-left: 10px;
 }
 </style>

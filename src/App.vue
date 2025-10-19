@@ -116,4 +116,20 @@ function clearCookies() {
   font-size: small;
   font-variant: small-caps;
 }
+.dev-btn {
+  padding: 0.375rem 0.75rem;
+  border: 1px solid #dc3545;
+  background: #dc3545;
+  color: white;
+  border-radius: 0.25rem;
+  cursor: pointer;
+  margin-right: 0.5rem;
+  font-size: 1rem;
+  transition: all 0.2s;
+}
+
+.dev-btn:hover {
+  background: #c82333;
+  border-color: #c82333;
+}
 </style>
