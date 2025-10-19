@@ -27,6 +27,35 @@
                 ><RouterLink to="/list">{{ $t('UI_Common.list') }}</RouterLink></a
               >
             </li>
+            <li class="nav-item dropdown">
+              <a
+                class="nav-link dropdown-toggle"
+                href="#"
+                role="button"
+                data-bs-toggle="dropdown"
+                aria-expanded="false"
+              >
+                {{ $t('UI_Common.help') }}
+              </a>
+              <ul class="dropdown-menu">
+                <li class="dropdown-item">
+                  <RouterLink to="/faq">
+                    <i class="pi pi-question-circle"></i> {{ $t('UI_Help.faq') }}
+                  </RouterLink>
+                </li>
+                <li class="dropdown-item">
+                  <a :href="feedbackUrl" target="_blank">
+                    <i class="pi pi-comment"></i> {{ $t('UI_Help.feedback') }}
+                  </a>
+                </li>
+                <li class="dropdown-item">
+                  <a @click.prevent="startTour" href="#">
+                    <i class="pi pi-refresh"></i> {{ $t('UI_Help.restart_tour') }}
+                  </a>
+                </li>
+              </ul>
+            </li>
+
             <!--
             <li class="nav-item">
               <a class="nav-link help"
@@ -71,11 +100,17 @@
 
 <script setup lang="ts">
 import { RouterLink, RouterView } from 'vue-router'
-import { ref, onMounted } from 'vue'
+import { ref, onMounted, computed } from 'vue'
 import { getLocale, setLocale, t, type Locale } from './language-selector'
 
 const currentLocale = ref<Locale>(getLocale())
 const isDev = import.meta.env.DEV
+
+const feedbackUrl = computed(() => {
+  return currentLocale.value === 'hu'
+    ? 'https://forms.gle/YOUR_HUNGARIAN_FORM_ID' // Magyar form
+    : 'https://forms.gle/YOUR_ENGLISH_FORM_ID' // Angol form
+})
 
 onMounted(() => {
   currentLocale.value = getLocale()
@@ -97,25 +132,80 @@ function clearCookies() {
   console.log('🍪 Cookies cleared!')
   location.reload()
 }
+
+function startTour() {
+  // Később itt indítjuk a tour-t
+  console.log('Tour starting...')
+  alert('Tour funkció hamarosan!')
+}
 </script>
 
 <style scoped>
-.language-switcher {
-  margin: 0px;
-  gap: 0;
+.dropdown-menu {
+  border: 1px solid #3a4a54;
+  min-width: fit-content;
 }
-.lang-btn {
-  font-size: 12px;
-  padding: 4px;
+.dropdown-item a {
+  max-width: fit-content;
+  color: black;
+  font-size: medium;
 }
+.nav-link {
+  color: white !important;
+  transition: background-color 0.2s;
+}
+
+/* Nav-link hover - EGYSÉGES minden nav elemre */
+.nav-link:hover {
+  background-color: transparent !important;
+  color: white !important;
+  text-decoration: underline;
+}
+
+/* Dropdown toggle specifikus */
+.dropdown-toggle:hover {
+  background-color: transparent !important;
+}
+
 .help {
   margin-top: auto !important;
   vertical-align: sub;
 }
+
 .version {
   font-size: small;
   font-variant: small-caps;
 }
+
+.language-switcher {
+  margin: 0px;
+  gap: 5px;
+  display: flex;
+}
+
+.lang-btn {
+  font-size: 14px;
+  padding: 6px 12px;
+  border: 1px solid #dee2e6;
+  background: transparent;
+  border-radius: 0.25rem;
+  cursor: pointer;
+  font-weight: 500;
+  transition: all 0.2s;
+  color: white;
+}
+
+.lang-btn:hover {
+  background: #3a4a54;
+  border-color: #3a4a54;
+}
+
+.lang-btn.active {
+  background: #0d6efd;
+  color: white;
+  border-color: #0d6efd;
+}
+
 .dev-btn {
   padding: 0.375rem 0.75rem;
   border: 1px solid #dc3545;

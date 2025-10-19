@@ -9,6 +9,11 @@
     "list": "List",
     "help": "Help"
   },
+  "UI_Help": {
+    "faq": "FAQ",
+    "feedback": "Feedback",
+    "restart_tour": "Restart Tutorial (soon tm)"
+  },
   "UI_Home": {
     "select_nation": "Select nation",
     "select_branch": "Select branch",
@@ -73,5 +78,18 @@
     "heli": "Helicopter",
     "boat": "Boat",
     "ship": "Ship"
+  },
+  "UI_FAQ": {
+    "title": "Frequently Asked Questions",
+    "q1": "How do I add a vehicle to the list?",
+    "a1": "Select a nation and branch, then click on a vehicle.",
+    "q2": "What is the discount calculation for?",
+    "a2": "It shows how much you need to save for a sale.",
+    "q3": "What is list option?",
+    "a3": "You can choose whether to calculate only the vehicle or crew training too.",
+    "q4": "Can I export the list?",
+    "a4": "Yes, there's an Export button on the List page.",
+    "q5": "How do I change language?",
+    "a5": "Use the language switcher in the top right corner."
   }
 }

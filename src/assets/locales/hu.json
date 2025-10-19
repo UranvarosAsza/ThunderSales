@@ -9,6 +9,11 @@
     "list": "Lista",
     "help": "Súgó"
   },
+  "UI_Help": {
+    "faq": "GYIK",
+    "feedback": "Visszajelzés",
+    "restart_tour": "Útmutató újra (soon tm)"
+  },
   "UI_Home": {
     "select_nation": "Válassz nemzetet",
     "select_branch": "Válassz fegyvernemet",
@@ -73,5 +78,18 @@
     "heli": "Helikopterek",
     "boat": "Partmenti flotta",
     "ship": "Kékvizi flotta"
+  },
+  "UI_FAQ": {
+    "title": "Gyakran Ismételt Kérdések",
+    "q1": "Hogyan adjak hozzá járművet a listához?",
+    "a1": "Válassz nemzetett és fegyvernemet, majd kattints egy járműre.",
+    "q2": "Mire jó a leárazás számítás?",
+    "a2": "Megmutatja mennyit kell gyűjtened egy sale-re.",
+    "q3": "Mi az a list option?",
+    "a3": "Kiválaszthatod hogy csak a járművet, vagy crew-t is számoljon.",
+    "q4": "Exportálhatom a listát?",
+    "a4": "Igen, a Lista oldalon található az Export gomb.",
+    "q5": "Hogyan váltok nyelvet?",
+    "a5": "A jobb felső sarokban található a nyelvi kapcsoló."
   }
 }
