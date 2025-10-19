@@ -1,14 +1,14 @@
 FIXME - ge total nem számolódik export után -> valszeg rossz a sorrendje a lefutásnak   
     -vehicleModel 
         kis méretben csak text
-        fix kártya magasság méretek 210px talán jó is ? -> középre kell igazítani a dlgokat flex?
+        fix kártya magasság méretek 210px talán jó is -> nem kisebb kellene az egész UI kb 20-30%-al
 
     -egész listView
         modifier gombok a tetejére a számoláshoz:  esetleg az xp-t összegezni vagy nemzetenként
         FIXME edit rows kis info box hogy tudja szerkeszteni, és esetleg eredeti rp cost visszaállítás-gomb
 TODO
-    lang-select -cookie-store
-    https://primevue.org/selectbutton/
+    lang-select valami elegánsabb format, legördülő pl
+        https://primevue.org/selectbutton/
 
 TODO Css overhaul  -> ui ux desing?       
 FIXME tooltip idő paramétereivel játszani kicsit pl: v-tooltip="{ value: 'Confirm to proceed', showDelay: 1000, hideDelay: 300 }"

@@ -48,7 +48,7 @@
     "export": "Exportálás",
     "allready_have_a_list": "Ha már rendelkezel listával korábból, itt betöltheted",
     "squadron_vehicle_no_discount": "Ez egy osztagjármű, nem lesz leárazva",
-    "new_vehicle_no_discount": "Ez egy új jármű, csak a 2 nagy frissítéssel korábbiak kapnak kedvezményt",
+    "new_vehicle_no_discount": "Ez egy új jármű, csak a 2 nagy frissítésnél korábbiak kapnak kedvezményt",
     "invalid_csv_format": "Érvénytelen fájlformátum. Kérlek tölts fel egy CSV fájlt.",
     "csv_header_mismatch": "A CSV fejléc nem egyezik a várt formátummal.",
     "select_discount_first": "Kérlek válassz kedvezményt!"
@@ -64,7 +64,7 @@
     "usa": "USA",
     "germany": "Németország",
     "ussr": "Szovjetúnió",
-    "britain": "Nagy Britannia",
+    "britain": "Nagy-Britannia",
     "japan": "Japán",
     "china": "Kína",
     "italy": "Olaszország",
@@ -74,9 +74,9 @@
   },
   "branches": {
     "air": "Légierő",
-    "ground": "Szárazföld",
+    "ground": "Hadsereg",
     "heli": "Helikopterek",
-    "boat": "Partmenti flotta",
+    "boat": "Part menti flotta",
     "ship": "Kékvizi flotta"
   },
   "UI_FAQ": {
@@ -85,8 +85,8 @@
     "a1": "Válassz nemzetett és fegyvernemet, majd kattints egy járműre.",
     "q2": "Mire jó a leárazás számítás?",
     "a2": "Megmutatja mennyit kell gyűjtened egy sale-re.",
-    "q3": "Mi az a list option?",
-    "a3": "Kiválaszthatod hogy csak a járművet, vagy crew-t is számoljon.",
+    "q3": "Mi az a Lista Opció?",
+    "a3": "Kiválaszthatod hogy csak a járművet, vagy crew-t is számoljon. (nem tudtam rá jobb kifejezést)",
     "q4": "Exportálhatom a listát?",
     "a4": "Igen, a Lista oldalon található az Export gomb.",
     "q5": "Hogyan váltok nyelvet?",

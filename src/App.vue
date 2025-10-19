@@ -101,15 +101,15 @@
 <script setup lang="ts">
 import { RouterLink, RouterView } from 'vue-router'
 import { ref, onMounted, computed } from 'vue'
-import { getLocale, setLocale, t, type Locale } from './language-selector'
+import { getLocale, setLocale, type Locale } from './language-selector'
 
 const currentLocale = ref<Locale>(getLocale())
 const isDev = import.meta.env.DEV
 
 const feedbackUrl = computed(() => {
   return currentLocale.value === 'hu'
-    ? 'https://forms.gle/YOUR_HUNGARIAN_FORM_ID' // Magyar form
-    : 'https://forms.gle/YOUR_ENGLISH_FORM_ID' // Angol form
+    ? 'https://docs.google.com/spreadsheets/d/1BvY4t-WRbWKnIHGEqdEp2V1uO1A_a5u4QFT_i-dyxMY/edit?usp=sharing' // Magyar form
+    : 'https://docs.google.com/spreadsheets/d/1Fyl093Y_uZMBLGB83BRiVk7z5qnaJ6x-N8hQy0n0joM/edit?usp=sharing' // Angol form
 })
 
 onMounted(() => {
